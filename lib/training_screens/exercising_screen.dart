@@ -61,7 +61,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   @override
   void dispose() {
     _vpController!.dispose();
-    endTraining();
+    // endTraining();
     super.dispose();
   }
 
