@@ -9,7 +9,7 @@ import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
-import 'dart:developer' as developer;
+import 'dart:developer' as dev;
 
 import '../models/plans.dart';
 
@@ -388,7 +388,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     globalTimeStream = StartTimer().stopWatchStream();
     globalTimeSubscription = globalTimeStream!.listen((int newTick) {
       if (newTick % 5 == 0) {
-        developer.log(newTick.toString());
+        dev.log(newTick.toString());
       }
       setState(() {
         selectedPlan.time = newTick;
@@ -414,13 +414,13 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].repetitions ?? 0;
           actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
           progressValue = 1;
-          startPassiveTimerTrainignsMode(doingExercise, doingSetIndex);
+          startPassiveTimerTrainignsMode(exeIndex, doingSetIndex);
         } else {
           progressValue = 0.0;
           actualTimeorRep = 'sec';
           actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].time ?? 0;
           actualTimeOrRepNumber = 0;
-          startActiveTimerTrainignsMode(doingExercise, doingSetIndex);
+          startActiveTimerTrainignsMode(exeIndex, doingSetIndex);
         }
 
         ///Pause Mode
@@ -432,75 +432,75 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
         if (!exepause) {
           actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].pause ?? 0;
-          startActiveTimerPauseMode(doingExercise, doingSetIndex);
+          startActiveTimerPauseMode(exeIndex, doingSetIndex);
         } else {
           actualTimeOrRepNumberToDo = doingExercise.exePauseTime ?? 0;
-          startActiveTimerExePauseMode(doingExercise);
+          startActiveTimerExePauseMode(exeIndex);
         }
       }
     });
   }
 
-  void startPassiveTimerTrainignsMode(Exercises exercises, int setIndex) {
+  void startPassiveTimerTrainignsMode(int exeIndex, int setIndex) {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
     smallTimeStream = StartTimer().stopWatchStream();
     smallTimeSubscription = smallTimeStream!.listen((int newTick) {
       if (newTick % 5 == 0) {
-        developer.log('SmallTime: $newTick');
+        dev.log('SmallTime: $newTick');
       }
       setState(() {
-        exercises.sets![setIndex].timeDone = newTick;
+        selectedPlan.exercises![exeIndex].sets![setIndex].timeDone = newTick;
       });
     });
   }
 
-  void startActiveTimerTrainignsMode(Exercises exercises, int setIndex) {
+  void startActiveTimerTrainignsMode(int exeIndex, int setIndex) {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
     smallTimeStream = StartTimer().stopWatchStream();
     smallTimeSubscription = smallTimeStream!.listen((int newTick) {
       if (newTick % 5 == 0) {
-        developer.log('SmallTime: $newTick');
+        dev.log('SmallTime: $newTick');
       }
       setState(() {
-        exercises.sets![setIndex].timeDone = newTick;
+        selectedPlan.exercises![exeIndex].sets![setIndex].timeDone = newTick;
         actualTimeOrRepNumber = newTick;
         progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
       });
     });
   }
 
-  void startActiveTimerPauseMode(Exercises exercises, int setIndex) {
+  void startActiveTimerPauseMode(int exeIndex, int setIndex) {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
     smallTimeStream = StartTimer().stopWatchStream();
     smallTimeSubscription = smallTimeStream!.listen((int newTick) {
       if (newTick % 5 == 0) {
-        developer.log('SmallTime: $newTick');
+        dev.log('SmallTime: $newTick');
       }
       setState(() {
-        exercises.sets![setIndex].pauseDone = newTick;
+        selectedPlan.exercises![exeIndex].sets![setIndex].pauseDone = newTick;
         actualTimeOrRepNumber = newTick;
         progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
       });
     });
   }
 
-  void startActiveTimerExePauseMode(Exercises exercises) {
+  void startActiveTimerExePauseMode(int exeIndex) {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
     smallTimeStream = StartTimer().stopWatchStream();
     smallTimeSubscription = smallTimeStream!.listen((int newTick) {
       if (newTick % 5 == 0) {
-        developer.log('SmallTime: $newTick');
+        dev.log('SmallTime: $newTick');
       }
       setState(() {
-        exercises.exePauseTimeDone = newTick;
+        selectedPlan.exercises![exeIndex].exePauseTimeDone = newTick;
         actualTimeOrRepNumber = newTick;
         progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
       });
@@ -543,7 +543,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
   }
 
-  void endTraining() async {
+  void endTraining()  {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
@@ -551,7 +551,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       globalTimeSubscription!.cancel();
     }
 
-    await Navigator.pushReplacement(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson()),

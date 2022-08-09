@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/plans.dart';
+import 'package:higym/services/auth.dart';
 import 'package:higym/training_screens/exercise_start.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
-import 'package:higym/training_screens/rpe_scale.dart';
 
-import 'dart:developer' as developer;
+import 'dart:developer' as dev;
 
 
 class StartScreen extends StatefulWidget {
@@ -16,6 +16,8 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  final AuthService _auth = AuthService();
+
   Plans selectedPlan = Plans(
     name: 'ShowRoomTestPlan',
     exercises: [
@@ -367,7 +369,7 @@ class _StartScreenState extends State<StartScreen> {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                      onPressed: () async {
-                      developer.log('Open Profile Screen');
+                      dev.log('Exercising Screen');
 
                       await Navigator.push(
                         context,
@@ -386,7 +388,7 @@ class _StartScreenState extends State<StartScreen> {
                       elevation: 0.0,
                     ),
                     child: Text(
-                      'Profil',
+                      'Start Training',
                       style: Styles.title.copyWith(color:Styles.gymyGrey),
                     ),
                   ),
@@ -395,7 +397,7 @@ class _StartScreenState extends State<StartScreen> {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                     onPressed: () async {
-                      developer.log('Open Workout Screen');
+                      dev.log('Open Workout Screen');
 
                       await Navigator.push(
                         context,
@@ -423,14 +425,9 @@ class _StartScreenState extends State<StartScreen> {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                     onPressed: () async {
-                      developer.log('Open Meilensteine Screen');
+                      dev.log('Open Logout Screen');
 
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RPEScale(rpeScaleUpdater: () {}, exeScore: 15),
-                        ),
-                      );
+                     await _auth.signOut();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -442,7 +439,7 @@ class _StartScreenState extends State<StartScreen> {
                       elevation: 0.0,
                     ),
                     child: Text(
-                      'Meilensteine',
+                      'Logout',
                       style: Styles.title.copyWith(color:Styles.gymyGrey),
                     ),
                   ),

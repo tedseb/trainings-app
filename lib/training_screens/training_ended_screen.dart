@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/services/database.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import 'dart:developer' as dev;
+
+
 
 class TrainingEndedScreen extends StatefulWidget {
   const TrainingEndedScreen({
@@ -15,6 +23,7 @@ class TrainingEndedScreen extends StatefulWidget {
 }
 
 class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
+  AppUser? user;
   Color modeColor = Styles.white;
 
   late Plans selectedPlan;
@@ -29,6 +38,8 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<AppUser?>(context);
+    updatePlanWeights();
     return Scaffold(
       backgroundColor: modeColor,
       body: Padding(
@@ -53,40 +64,40 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
             ),
 
             /// Progress Indicator
-            Stack(
-              children: [
-                const Center(
-                  child: SizedBox(
-                    height: 200.0,
-                    width: 200.0,
-                    child: CircularProgressIndicator(
-                      value: 0.75,
-                      color: Styles.gymyGrey,
-                      strokeWidth: 6.0,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: SizedBox(
-                    height: 200.0,
-                    width: 200.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          '75%',
-                          style: TextStyle(color: Styles.gymyGrey, fontSize: 62.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Stack(
+            //   children: [
+            //     const Center(
+            //       child: SizedBox(
+            //         height: 200.0,
+            //         width: 200.0,
+            //         child: CircularProgressIndicator(
+            //           value: 0.75,
+            //           color: Styles.gymyGrey,
+            //           strokeWidth: 6.0,
+            //         ),
+            //       ),
+            //     ),
+            //     Center(
+            //       child: SizedBox(
+            //         height: 200.0,
+            //         width: 200.0,
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: const [
+            //             Text(
+            //               '100%',
+            //               style: TextStyle(color: Styles.gymyGrey, fontSize: 62.0),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
             ElevatedButton(
-              onPressed: () async {
-                Navigator.pop(context);
+              onPressed: () {
+                dev.log(user!.uid.toString());
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -100,7 +111,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Analyze Workout',
+                  'Analyze Workout / test',
                   style: TextStyle(
                     color: modeColor,
                     fontWeight: FontWeight.normal,
@@ -124,5 +135,17 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
         ),
       ),
     );
+  }
+
+    void updatePlanWeights() {
+    
+    if (user != null) {
+        DatabaseService(
+            uid: user!.uid,
+            selectedPlan: Plans.plansFromJson(widget.selectedPlan),
+            planNameOrDate: DateFormat('yyyy-MM-dd_kk:mm').format(DateTime.now()),
+            collectionPlansOrDonePlans: 'FinishedExercises')
+        .addToEndedPlans();
+    }
   }
 }

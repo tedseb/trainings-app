@@ -27,8 +27,9 @@ class LeaveExerciseScreen extends StatelessWidget {
 
     void yesPress() {
       if (leaveTraining) {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-
+        // Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pop(context);
+        endTraining();
         // Navigator.popUntil(context, (route) {
         //   return pagepop++ == 2;
         // });
