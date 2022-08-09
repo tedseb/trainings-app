@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340024325309",
+    "project_id": "higym-b2f87",
+    "storage_bucket": "higym-b2f87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340024325309:android:8ab8c89e40c663fb7ff3d4",
+        "android_client_info": {
+          "package_name": "com.example.higym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340024325309-gnueirt7dgnbesn62kgav4h3dj54a4bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhmFBbysZhGz1I5f1aSDtCZpmtSYyfBAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340024325309-gnueirt7dgnbesn62kgav4h3dj54a4bm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
