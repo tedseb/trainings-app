@@ -6,15 +6,17 @@ class RPEScale extends StatelessWidget {
   const RPEScale({
     Key? key,
     required this.rpeScaleUpdater,
+    required this.exerciseIndex,
     required this.exeScore,
     
   }) : super(key: key);
 
   final Function rpeScaleUpdater;
+  final int exerciseIndex;
   final int exeScore;
 
   final Color modeColor = Styles.backgroundActivity;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +35,7 @@ class RPEScale extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
+              rpeScaleUpdater(1, exerciseIndex, false);
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
@@ -53,6 +56,7 @@ class RPEScale extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
+              rpeScaleUpdater(2, exerciseIndex, false);
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
@@ -73,6 +77,7 @@ class RPEScale extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
+              rpeScaleUpdater(3, exerciseIndex, false);
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(

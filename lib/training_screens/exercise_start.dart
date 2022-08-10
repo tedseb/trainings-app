@@ -380,7 +380,8 @@ class _ExerciseStartState extends State<ExerciseStart> {
           builder: (context) {
             return Padding(
               padding: MediaQuery.of(context).viewInsets,
-              child: RPEScale(rpeScaleUpdater: () {}, exeScore: 100),
+              child: 
+              RPEScale(rpeScaleUpdater: () {}, exeScore: 100,exerciseIndex: exeIndex),
               // SizedBox(
               //   height: MediaQuery.of(context).size.height * 0.95,
               //   child: LeaveExerciseScreen(leaveTraining: true),
