@@ -499,7 +499,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex].exePauseTimeDone = newTick;
+        selectedPlan.exercises![exeIndex-1].exePauseTimeDone = newTick;
         actualTimeOrRepNumber = newTick;
         progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
       });
