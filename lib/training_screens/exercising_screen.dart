@@ -360,6 +360,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
             );
           },
         );
+        await waitUserForNextSet();
 
         if (!lastExe) {
           await waitUserForNextSet();
@@ -532,7 +533,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       }
     });
   }
-  /// Use Funktion to change RPE Scale lvl within the child widget
+  
   void changeRpeScale(int addNewValue, int exeIndex, bool userEdited) {
     int rpeScalLength = selectedPlan.exercises![exeIndex].rpeScale!.length;
 
@@ -541,6 +542,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     } else {
       selectedPlan.exercises![exeIndex].rpeScale!.add(addNewValue);
     }
+    nextExeButtonPressed();
   }
 
   void setExerciseVideo(Exercises doingExercise) {
