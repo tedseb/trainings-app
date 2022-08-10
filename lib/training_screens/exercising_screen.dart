@@ -535,6 +535,9 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   void setExerciseVideo(Exercises doingExercise) {
+
+    _vpController?.dispose();
+
     // _vpController = VideoPlayerController.asset('assets/videos/test7.mp4')
     _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.video}.mp4')
       ..addListener(() => setState(() {}))
