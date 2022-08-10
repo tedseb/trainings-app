@@ -67,7 +67,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         return await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
@@ -533,9 +532,18 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       }
     });
   }
+  /// Use Funktion to change RPE Scale lvl within the child widget
+  void changeRpeScale(int addNewValue, int exeIndex, bool userEdited) {
+    int rpeScalLength = selectedPlan.exercises![exeIndex].rpeScale!.length;
+
+    if (userEdited) {
+      selectedPlan.exercises![exeIndex].rpeScale![(rpeScalLength - 1)] = addNewValue;
+    } else {
+      selectedPlan.exercises![exeIndex].rpeScale!.add(addNewValue);
+    }
+  }
 
   void setExerciseVideo(Exercises doingExercise) {
-
     _vpController?.dispose();
 
     // _vpController = VideoPlayerController.asset('assets/videos/test7.mp4')
@@ -546,7 +554,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
   }
 
-  void endTraining()  {
+  void endTraining() {
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }

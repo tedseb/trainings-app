@@ -59,6 +59,7 @@ class DatabaseService {
       counter++;
       tempOneExerciseMap['name'] = element.name ?? 'database.ErrorExerciseName';
       tempOneExerciseMap['img'] = element.img ?? 'default';
+      tempOneExerciseMap['video'] = element.video ?? 'default';
       tempOneExerciseMap['info'] = element.info ?? 'default';
       tempOneExerciseMap['muscleGroup'] = element.muscleGroup ?? 'Muscle GroupssS';
       tempOneExerciseMap['pk'] = element.pk ?? 00;
@@ -125,6 +126,7 @@ class DatabaseService {
         Exercises comingExercise = Exercises(
           name: v['name'] ?? 'Error Exercise Name',
           img: v['image'] ?? 'default',
+          video: v['video'] ?? 'default',
           info: v['info'] ?? 'default',
           muscleGroup: v['muscleGroup'] ?? 'Muscle GroupssS',
           pk: v['pk'] ?? 00,

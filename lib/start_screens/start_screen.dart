@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/services/auth.dart';
+import 'package:higym/services/database.dart';
 import 'package:higym/training_screens/exercise_start.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 
 import 'dart:developer' as dev;
 
+import 'package:provider/provider.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -21,60 +24,6 @@ class _StartScreenState extends State<StartScreen> {
   Plans selectedPlan = Plans(
     name: 'ShowRoomTestPlan',
     exercises: [
-      Exercises(
-        name: 'Mmmmmmmm Mmmmmmmm',
-        img: '',
-        video: 'squats',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 229,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
       Exercises(
         name: 'Military Press',
         img: '',
@@ -353,6 +302,9 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AppUser?>(context);
+    List<Plans> myPlans = Provider.of<List<Plans>>(context);
+
     return Scaffold(
       backgroundColor: Styles.white,
       // backgroundColor: Colors.red,
@@ -368,8 +320,16 @@ class _StartScreenState extends State<StartScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
-                     onPressed: () async {
+                    onPressed: () async {
                       dev.log('Exercising Screen');
+                      // DatabaseService(
+                      //         oldPlanName: selectedPlan.name,
+                      //         uid: user?.uid,
+                      //         planNameOrDate: selectedPlan.name,
+                      //         collectionPlansOrDonePlans: 'UserExercisePlans',
+                      //         selectedPlan: selectedPlan)
+                      //     .updateUserPlan();
+                      selectedPlan = myPlans.firstWhere((element) => element.name == 'ShowRoomTestPlan', orElse: () => Plans());
 
                       await Navigator.push(
                         context,
@@ -389,7 +349,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     child: Text(
                       'Start Training',
-                      style: Styles.title.copyWith(color:Styles.gymyGrey),
+                      style: Styles.title.copyWith(color: Styles.gymyGrey),
                     ),
                   ),
                 ),
@@ -417,7 +377,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     child: Text(
                       'Workout',
-                     style: Styles.title.copyWith(color:Styles.gymyGrey),
+                      style: Styles.title.copyWith(color: Styles.gymyGrey),
                     ),
                   ),
                 ),
@@ -427,7 +387,7 @@ class _StartScreenState extends State<StartScreen> {
                     onPressed: () async {
                       dev.log('Open Logout Screen');
 
-                     await _auth.signOut();
+                      await _auth.signOut();
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -440,7 +400,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     child: Text(
                       'Logout',
-                      style: Styles.title.copyWith(color:Styles.gymyGrey),
+                      style: Styles.title.copyWith(color: Styles.gymyGrey),
                     ),
                   ),
                 ),
