@@ -4,7 +4,7 @@ import 'package:higym/models/plans.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/start_screens/start_screen.dart';
 import 'package:higym/app_utils/styles.dart';
-import 'package:higym/trainings_plan_screen.dart';
+import 'package:higym/training_screens/trainings_plan_screen.dart';
 import 'package:higym/zzzPlaceholder/random_screen_one.dart';
 import 'package:higym/zzzPlaceholder/random_screen_two.dart';
 import 'dart:developer' as developer;
@@ -23,8 +23,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedItem = 0;
   final _pages = [
-    const StartScreen(),
     const TrainingsPlanScreen(),
+    const StartScreen(),
     const RandomScreenOne(),
     const RandomScreenTwo(),
   ];
@@ -84,7 +84,8 @@ class _HomeState extends State<Home> {
         ),
         bottomNavigationBar: BottomAppBar(
           //bottom navigation bar on scaffold
-          color: Colors.white70,
+          color: Colors.white,
+          elevation: 0.0,
           // shape: const CircularNotchedRectangle(), //shape of notch
           notchMargin: 5, //notche margin between floating button and bottom appbar
           child: Row(
@@ -126,7 +127,16 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        //////////////////////////////////////////////////////ButtomNavBar original
+       
+      ),
+    );
+  }
+}
+
+
+
+
+ //////////////////////////////////////////////////////ButtomNavBar original
         // bottomNavigationBar: BottomNavigationBar(
         //   elevation: 0.0,
         //   backgroundColor: Styles.white,
@@ -222,7 +232,3 @@ class _HomeState extends State<Home> {
         //   ),
         // ),
         ///////////////////////////////////////////////////////End Design1
-      ),
-    );
-  }
-}

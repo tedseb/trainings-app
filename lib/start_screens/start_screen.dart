@@ -6,6 +6,7 @@ import 'package:higym/services/auth.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/training_screens/exercise_start.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
+import 'package:higym/training_screens/trainings_plan_screen.dart';
 
 import 'dart:developer' as dev;
 
@@ -349,7 +350,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     child: Text(
                       'Start Training',
-                      style: Styles.title.copyWith(color: Styles.gymyGrey),
+                      style: Styles.title,
                     ),
                   ),
                 ),
@@ -357,12 +358,12 @@ class _StartScreenState extends State<StartScreen> {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                     onPressed: () async {
-                      dev.log('Open Workout Screen');
+                      dev.log('Open Trainings Plan Screen');
 
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ExerciseStart(selectedPlan: selectedPlan.plansToJson()),
+                          builder: (context) => const TrainingsPlanScreen(),
                         ),
                       );
                     },
@@ -376,8 +377,8 @@ class _StartScreenState extends State<StartScreen> {
                       elevation: 0.0,
                     ),
                     child: Text(
-                      'Workout',
-                      style: Styles.title.copyWith(color: Styles.gymyGrey),
+                      'Trainings Plan',
+                      style: Styles.title,
                     ),
                   ),
                 ),
@@ -400,7 +401,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                     child: Text(
                       'Logout',
-                      style: Styles.title.copyWith(color: Styles.gymyGrey),
+                      style: Styles.title,
                     ),
                   ),
                 ),
