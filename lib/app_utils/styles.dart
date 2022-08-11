@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 class Styles {
   ///Color Styles
-  static const Color primaryColor = Color(0xFF49AD33);
+  static const Color primaryColor = Color(0xFFffcd16);
+  // static const Color primaryColor = Color(0xFF49AD33);
   static const Color secondaryColor = Color(0xFFF7A70B);
   static const Color tertiaryColor = Color(0xFF1A1F24);
 
@@ -20,7 +20,7 @@ class Styles {
 
   ///Text Styles
   static TextStyle get title => const TextStyle(
-        color: white,
+        color: gymyGrey,
         fontWeight: FontWeight.normal,
         fontSize: 36,
       );
@@ -29,18 +29,48 @@ class Styles {
         fontWeight: FontWeight.normal,
         fontSize: 24,
       );
-  static TextStyle get subtitle => const TextStyle(
+  static TextStyle get exercisingSubTitle => const TextStyle(
         color: white,
         fontWeight: FontWeight.normal,
         fontSize: 20,
       );
+  static TextStyle get trainingsplanTitle => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
+  static TextStyle get trainingsplanSubTitle => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
+      );
+  static TextStyle get trainingsplanIconTitle => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 11,
+      );
+  static TextStyle get trainingsplanCardExeTitle => const TextStyle(
+        color: gymyGrey,
+      fontWeight: FontWeight.w600,
+        fontSize: 16,
+      );
+  static TextStyle get trainingsplanCardExeSubTitle => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      );
+  static TextStyle get trainingsplanCardExeinfo => TextStyle(
+        color: Colors.grey[400],
+        fontWeight: FontWeight.w600,
+        fontSize: 10,
+      );
 
-      //   static TextStyle get subtitle1 => GoogleFonts.getFont(
-      //   'Montserrat',
-      //   color: white,
-      //   fontWeight: FontWeight.w500,
-      //   fontSize: 18,
-      // );
+  //   static TextStyle get subtitle1 => GoogleFonts.getFont(
+  //   'Montserrat',
+  //   color: white,
+  //   fontWeight: FontWeight.w500,
+  //   fontSize: 18,
+  // );
 
   ///Icon Styles
   static Icon get closeIcon => const Icon(
@@ -52,5 +82,25 @@ class Styles {
         Icons.fast_forward_rounded,
         color: white,
         size: 32.0,
+      );
+  static Icon get emergencyIcon => Icon(
+        Icons.emergency_rounded,
+        color: Colors.red[400],
+        size: 32.0,
+      );
+  static Icon get fitnessIcon => const Icon(
+        Icons.fitness_center_rounded,
+        color: gymyGrey,
+        size: 28.0,
+      );
+  static Icon get statusBarIcon => const Icon(
+        Icons.bar_chart_rounded,
+        color: gymyGrey,
+        size: 32.0,
+      );
+  static Icon get plusIcon => const Icon(
+        Icons.add_rounded,
+        color: gymyGrey,
+        size: 34.0,
       );
 }
