@@ -35,6 +35,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   int actualTimeOrRepNumber = 0;
   late String exeriseName;
   late String exeriseSubName;
+  late String prepareFor;
   double progressValue = 0.0;
 
   late Plans selectedPlan;
@@ -52,7 +53,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   void initState() {
     selectedPlan = Plans.plansFromJson(widget.selectedPlan);
     selectedPlan.time = 0;
-
+    setExerciseVideo(selectedPlan.exercises![0]);
     screenExerciseDataUpdater(0, 0, true);
 
     super.initState();
@@ -153,6 +154,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(prepareFor, style: Styles.exercisingSubTitle),
                         Text(
                           helper_utils.truncateExerciseName(exeriseName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
                           style: Styles.exercisingTitle,
@@ -309,7 +311,9 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
     for (int exe = 0; exe <= exercisesLength; exe++) {
       if (exe == exercisesLength) {
-        lastExe = true;
+        setState(() {
+          lastExe = true;
+        });
       }
       setState(() {
         playDoneButton = Icons.check_circle_rounded;
@@ -406,6 +410,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
       ///Trainings Mode
       if (trainingsMode) {
+        prepareFor = 'train';
         modeColor = Styles.backgroundActivity;
         if (doingExercise.sets![doingSetIndex].repetitions != null) {
           actualTimeorRep = 'rep';
@@ -429,9 +434,12 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         actualTimeOrRepNumber = 0;
 
         if (!exepause) {
+          prepareFor = 'pause';
           actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].pause ?? 0;
           startActiveTimerPauseMode(exeIndex, doingSetIndex);
         } else {
+          prepareFor = 'pause - next';
+          setExerciseVideo(doingExercise);
           actualTimeOrRepNumberToDo = doingExercise.exePauseTime ?? 0;
           startActiveTimerExePauseMode(exeIndex);
         }
@@ -507,7 +515,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   void screenExerciseDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode) {
     Exercises doingExercise = selectedPlan.exercises![exeIndex];
-    setExerciseVideo(doingExercise);
 
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
@@ -517,6 +524,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       exeriseSubName = 'Exercise';
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.sets![doingSetIndex].weight;
+      prepareFor = 'Next Exercise';
 
       modeColor = Styles.backgroundActivity;
       if (doingExercise.sets![doingSetIndex].repetitions != null) {
