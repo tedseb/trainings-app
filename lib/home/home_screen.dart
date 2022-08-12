@@ -14,14 +14,14 @@ import 'dart:developer' as dev;
 
 import 'package:provider/provider.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<StartScreen> createState() => _StartScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final AuthService _auth = AuthService();
 
   Plans selectedPlan = Plans(

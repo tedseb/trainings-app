@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
-import 'package:higym/services/database.dart';
-import 'package:higym/start_screens/home_screen.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
 import 'package:higym/widgets/loading_widget.dart';
 import 'package:higym/widgets/navbar_icon_button_widget.dart';
 import 'package:higym/zzzPlaceholder/random_screen_one.dart';
-import 'package:higym/zzzPlaceholder/random_screen_two.dart';
 
 import 'package:provider/provider.dart';
 
@@ -25,7 +23,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
   int _selectedItem = 0;
   final _pages = [
-    const StartScreen(),
+    const HomeScreen(),
     const RandomScreenOne(),
     const TrainingsPlanScreen(),
     const LoadingWidget(),
