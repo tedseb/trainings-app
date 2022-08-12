@@ -6,8 +6,6 @@ import 'package:higym/services/auth.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
 // ignore: unused_import
-import 'package:higym/training_screens/exercise_start.dart';
-// ignore: unused_import
 import 'package:higym/services/database.dart';
 
 import 'dart:developer' as dev;
