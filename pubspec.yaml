@@ -41,10 +41,22 @@ dependencies:
   firebase_auth: ^3.6.2
   provider: ^6.0.3
   intl: ^0.17.0
+  flutter_spinkit: ^5.1.0
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_native_splash: ^2.2.7
+
+# Run Command to generate Splash Screen
+# 1) flutter clean
+# 2) flutter pub get
+# 3) flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/logo/gymy_logo.png
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
