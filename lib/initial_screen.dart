@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/services/database.dart';
-import 'package:higym/start_screens/start_screen.dart';
+import 'package:higym/start_screens/home_screen.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
