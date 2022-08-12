@@ -7,7 +7,7 @@ import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
 import 'package:higym/widgets/loading_widget.dart';
 import 'package:higym/widgets/navbar_icon_button_widget.dart';
-import 'package:higym/zzzPlaceholder/random_screen_one.dart';
+import 'package:higym/zzz_deleteable/random_screen_one.dart';
 
 import 'package:provider/provider.dart';
 
