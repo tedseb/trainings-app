@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'dart:developer' as dev;
 
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/plans.dart';
-import 'package:higym/widgets/exercise_card.dart';
-import 'package:higym/widgets/glas_box.dart';
-import 'package:higym/widgets/shadow_icon_button.dart';
+import 'package:higym/widgets/exercise_card_widget.dart';
 import 'package:provider/provider.dart';
 
 class TrainingsPlanScreen extends StatefulWidget {
@@ -111,15 +108,15 @@ class _TrainingsPlanScreenState extends State<TrainingsPlanScreen> {
             child: ListView(
               padding: const EdgeInsets.only(top: 50.0, bottom: 50.0),
               children: const [
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
-                ExerciseCard(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
+                ExerciseCardWidget(),
               
               ],
             ),

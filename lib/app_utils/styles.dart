@@ -5,7 +5,8 @@ class Styles {
   static const Color primaryColor = Color(0xFFffcd16);
   // static const Color primaryColor = Color(0xFF49AD33);
   static const Color secondaryColor = Color(0xFFF7A70B);
-  static const Color tertiaryColor = Color(0xFF1A1F24);
+  static const Color tertiaryColor = Color.fromRGBO(26, 31, 36, 1);
+  static const Color grey= Colors.grey;
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color gymyGrey = Color(0xFF555453);
@@ -76,12 +77,10 @@ class Styles {
   static Icon get closeIcon => const Icon(
         Icons.close_rounded,
         color: white,
-        size: 32.0,
       );
   static Icon get skipIcon => const Icon(
         Icons.fast_forward_rounded,
         color: white,
-        size: 32.0,
       );
   static Icon get emergencyIcon => Icon(
         Icons.emergency_rounded,
@@ -103,4 +102,7 @@ class Styles {
         color: gymyGrey,
         size: 34.0,
       );
+
+    //       double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
 }

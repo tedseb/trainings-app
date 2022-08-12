@@ -13,7 +13,7 @@ class _RandomScreenTwoState extends State<RandomScreenTwo> {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Styles.white,
-      body: Center(child: Text('Training Plans Screen'),),
+      body: Center(child: Text('Mile Stone Screen'),),
     );
   }
 }

@@ -1,24 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
-import 'package:higym/widgets/shadow_icon_button.dart';
+import 'package:higym/widgets/shadow_icon_button_widget.dart';
 
-import 'glas_box.dart';
+import 'glas_box_widget.dart';
 
-class ExerciseCard extends StatelessWidget {
-  const ExerciseCard({Key? key}) : super(key: key);
+class ExerciseCardWidget extends StatelessWidget {
+  const ExerciseCardWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 26.0, top: 0.0, right: 26.0, bottom: 32.0),
       child: SizedBox(
-        height: 80.0,
+        height: 75.0,
         // color: Colors.grey[50],
         child: Row(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GlasBox(exerciseImage: 'squats'),
+            GlasBoxWidget(exerciseImage: 'squats'),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 26.0, top: 4.0, right: 26.0, bottom: 4.0),
@@ -41,7 +40,7 @@ class ExerciseCard extends StatelessWidget {
                 ),
               ),
             ),
-            ShadowIconButton(buttonInput: 'buttonInput', onPressFunction: () {}),
+            ShadowIconButtonWidget(buttonInput: 'buttonInput', onPressFunction: () {}),
           ],
         ),
       ),

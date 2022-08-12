@@ -57,10 +57,10 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
+                  iconSize: 32,
                   icon: const Icon(
                     Icons.close_rounded,
                     color: Colors.transparent,
-                    size: 32.0,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),

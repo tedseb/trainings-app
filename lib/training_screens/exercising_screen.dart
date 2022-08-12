@@ -84,12 +84,14 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
+                    iconSize: 32,
                     icon: Styles.closeIcon,
                     onPressed: () async {
                       await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
                     },
                   ),
                   IconButton(
+                    iconSize: 32,
                     icon: Styles.skipIcon,
                     onPressed: () async {
                       await helper_utils.myBottomSheet(
@@ -278,22 +280,18 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
             ///Play Button
             Padding(
               padding: const EdgeInsets.only(bottom: 18.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 110,
-                child: IconButton(
-                  onPressed: () {
-                    if (globalTimeStream == null) {
-                      startPlan();
-                    } else {
-                      nextExeButtonPressed();
-                    }
-                  },
-                  icon: Icon(
-                    playDoneButton,
-                    color: Styles.white,
-                    size: 72,
-                  ),
+              child: IconButton(
+                onPressed: () {
+                  if (globalTimeStream == null) {
+                    startPlan();
+                  } else {
+                    nextExeButtonPressed();
+                  }
+                },
+                iconSize: 72,
+                icon: Icon(
+                  playDoneButton,
+                  color: Styles.white,
                 ),
               ),
             ),
@@ -500,7 +498,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex-1].exePauseTimeDone = newTick;
+        selectedPlan.exercises![exeIndex - 1].exePauseTimeDone = newTick;
         actualTimeOrRepNumber = newTick;
         progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
       });
@@ -533,7 +531,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       }
     });
   }
-  
+
   void changeRpeScale(int addNewValue, int exeIndex, bool userEdited) {
     int rpeScalLength = selectedPlan.exercises![exeIndex].rpeScale!.length;
 

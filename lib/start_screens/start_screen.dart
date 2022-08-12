@@ -3,10 +3,12 @@ import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/services/auth.dart';
-import 'package:higym/services/database.dart';
-import 'package:higym/training_screens/exercise_start.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
+// ignore: unused_import
+import 'package:higym/training_screens/exercise_start.dart';
+// ignore: unused_import
+import 'package:higym/services/database.dart';
 
 import 'dart:developer' as dev;
 
@@ -303,6 +305,7 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final user = Provider.of<AppUser?>(context);
     List<Plans> myPlans = Provider.of<List<Plans>>(context);
 

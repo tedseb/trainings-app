@@ -1,13 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
 
-class GlasBox extends StatelessWidget {
-  GlasBox({
+class GlasBoxWidget extends StatelessWidget {
+  GlasBoxWidget({
     Key? key,
     required this.exerciseImage,
   }) : super(key: key);
@@ -21,8 +17,8 @@ class GlasBox extends StatelessWidget {
     return ClipRRect(
       borderRadius: borderRadius,
       child: SizedBox(
-        width: 80.0,
-        height: 80.0,
+        width: 75.0,
+        height: 75.0,
         child: Stack(
           children: [
             ///blurr effect

@@ -125,10 +125,10 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
               height: 110,
               child: IconButton(
                   onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                  iconSize: 72,
                   icon: const Icon(
                     Icons.check_circle_rounded,
                     color: Styles.gymyGrey,
-                    size: 72,
                   )),
             ),
           ],
