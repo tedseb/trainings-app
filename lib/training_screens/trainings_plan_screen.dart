@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/widgets/exercise_card_widget.dart';
@@ -73,20 +72,20 @@ class _TrainingsPlanScreenState extends State<TrainingsPlanScreen> {
               children: [
                 Column(
                   children: [
-                    Text('Parameter', style: Styles.trainingsplanIconTitle),
-                    Styles.fitnessIcon,
+                    Text(selectedPlan.parameters!.values.elementAt(0), style: Styles.trainingsplanIconTitle),
+                    Styles.getIcons(selectedPlan.parameters!.keys.elementAt(0)),
                   ],
                 ),
                 Column(
                   children: [
-                    Text('Parameter', style: Styles.trainingsplanIconTitle),
-                    Styles.statusBarIcon,
+                    Text(selectedPlan.parameters!.values.elementAt(1), style: Styles.trainingsplanIconTitle),
+                    Styles.getIcons(selectedPlan.parameters!.keys.elementAt(1)),
                   ],
                 ),
                 Column(
                   children: [
-                    Text('Parameter', style: Styles.trainingsplanIconTitle),
-                    Styles.plusIcon,
+                    Text(selectedPlan.parameters!.values.elementAt(2), style: Styles.trainingsplanIconTitle),
+                    Styles.getIcons(selectedPlan.parameters!.keys.elementAt(2)),
                   ],
                 ),
               ],
@@ -117,7 +116,6 @@ class _TrainingsPlanScreenState extends State<TrainingsPlanScreen> {
                 ExerciseCardWidget(),
                 ExerciseCardWidget(),
                 ExerciseCardWidget(),
-              
               ],
             ),
           ),
@@ -125,8 +123,6 @@ class _TrainingsPlanScreenState extends State<TrainingsPlanScreen> {
       ),
     );
   }
-
-
 
   // void actualPlan() {
   //   setState(() {

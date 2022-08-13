@@ -6,7 +6,7 @@ class Styles {
   // static const Color primaryColor = Color(0xFF49AD33);
   static const Color secondaryColor = Color(0xFFF7A70B);
   static const Color tertiaryColor = Color.fromRGBO(26, 31, 36, 1);
-  static const Color grey= Colors.grey;
+  static const Color grey = Colors.grey;
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color gymyGrey = Color(0xFF555453);
@@ -52,7 +52,7 @@ class Styles {
       );
   static TextStyle get trainingsplanCardExeTitle => const TextStyle(
         color: gymyGrey,
-      fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w600,
         fontSize: 16,
       );
   static TextStyle get trainingsplanCardExeSubTitle => const TextStyle(
@@ -92,17 +92,33 @@ class Styles {
         color: gymyGrey,
         size: 28.0,
       );
-  static Icon get statusBarIcon => const Icon(
-        Icons.bar_chart_rounded,
+  static Icon get bodyIcon => const Icon(
+        Icons.boy_rounded,
         color: gymyGrey,
-        size: 32.0,
+        size: 30.0,
       );
-  static Icon get plusIcon => const Icon(
-        Icons.add_rounded,
+  static Icon get timerIcon => const Icon(
+        Icons.timer_rounded,
         color: gymyGrey,
-        size: 34.0,
+        size: 28.0,
       );
 
-    //       double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
+  static Icon getIcons(String myIcon) {
+    Icon returnIcon = fitnessIcon;
+    switch (myIcon) {
+      case 'fitnessIcon':
+        returnIcon = fitnessIcon;
+        break;
+      case 'bodyIcon':
+        returnIcon = bodyIcon;
+        break;
+      case 'timerIcon':
+        returnIcon = timerIcon;
+        break;
+    }
+    return returnIcon;
+  }
+
+  //       double width = MediaQuery.of(context).size.width;
+  // double height = MediaQuery.of(context).size.height;
 }

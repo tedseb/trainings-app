@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Plans selectedPlan = Plans(
     name: 'ShowRoomTestPlan',
+    parameters: {'fitnessIcon': 'Endurance', 'bodyIcon': 'Full Body', 'timerIcon': 'ca. 30min'},
     exercises: [
       Exercises(
         name: 'Military Press',
@@ -303,8 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    final user = Provider.of<AppUser?>(context);
+    // final user = Provider.of<AppUser?>(context);
     List<Plans> myPlans = Provider.of<List<Plans>>(context);
 
     return Scaffold(

@@ -8,6 +8,7 @@ class Plans {
   int? success;
   bool? higymAutomated;
   String? planDoneTime;
+  Map<String, String>? parameters;
   List<Exercises>? exercises;
 
   Plans({
@@ -20,6 +21,7 @@ class Plans {
     this.success,
     this.higymAutomated,
     this.planDoneTime,
+    this.parameters,
     this.exercises,
   });
 
@@ -33,6 +35,7 @@ class Plans {
         'success': success,
         'higymAutomated': higymAutomated,
         'planDoneTime': planDoneTime,
+        'parameters': parameters,
         'exercises': exercises?.map((exe) => exe.exercisesToJson()).toList(),
       };
 
@@ -47,6 +50,7 @@ class Plans {
       success: json['success'],
       higymAutomated: json['higymAutomated'],
       planDoneTime: json['planDoneTime'],
+      parameters: json['parameters'],
       exercises: json['exercises'] != null ? json['exercises'].map<Exercises>((exe) => Exercises.exercisesFromJson(exe)).toList() : [],
     );
   }

@@ -50,6 +50,11 @@ class DatabaseService {
     tempPlanMap['score'] = selectedPlan!.score ?? 0;
     tempPlanMap['success'] = selectedPlan!.success ?? 0;
     tempPlanMap['time'] = selectedPlan!.time ?? 0;
+    tempPlanMap['parameters'] = {
+      selectedPlan!.parameters!.keys.elementAt(0): selectedPlan!.parameters!.values.elementAt(0),
+      selectedPlan!.parameters!.keys.elementAt(1): selectedPlan!.parameters!.values.elementAt(1),
+      selectedPlan!.parameters!.keys.elementAt(2): selectedPlan!.parameters!.values.elementAt(2)
+    };
 
     Map<String, dynamic> tempExercisesMap = {};
 
@@ -113,6 +118,12 @@ class DatabaseService {
           kcal: doc.get('kcal') ?? 0,
           score: doc.get('score') ?? 0,
           success: doc.get('success') ?? 0,
+          // parameters: doc.get('parameters') ?? {},
+          parameters: {
+            doc.get('parameters').keys.elementAt(2): doc.get('parameters').values.elementAt(2),
+            doc.get('parameters').keys.elementAt(1): doc.get('parameters').values.elementAt(1),
+            doc.get('parameters').keys.elementAt(0): doc.get('parameters').values.elementAt(0),
+          },
           exercises: _selectedPlanExercises(doc.get('exercises')));
     }).toList();
   }
@@ -202,6 +213,7 @@ class DatabaseService {
             kcal: doc.get('kcal') ?? 0,
             score: doc.get('score') ?? 0,
             success: doc.get('success') ?? 0,
+            parameters: doc.get('parameters') ?? {},
             planDoneTime: tempTime,
             exercises: _selectedPlanExercises(doc.get('exercises'))));
       } else {
@@ -212,6 +224,7 @@ class DatabaseService {
               kcal: doc.get('kcal') ?? 0,
               score: doc.get('score') ?? 0,
               success: doc.get('success') ?? 0,
+              parameters: doc.get('parameters') ?? 0,
               planDoneTime: tempTime,
               exercises: _selectedPlanExercises(doc.get('exercises')))
         ];
@@ -239,6 +252,7 @@ class DatabaseService {
           kcal: doc.get('kcal') ?? 0,
           score: doc.get('score') ?? 0,
           success: doc.get('success') ?? 0,
+          parameters: doc.get('parameters') ?? 0,
           exercises: _selectedPlanExercises(doc.get('exercises')));
     }
 
