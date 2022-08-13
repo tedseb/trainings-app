@@ -39,6 +39,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   double progressValue = 0.0;
 
   late Plans selectedPlan;
+  late Exercises selectedExercise;
   Completer<void>? buttonCompleter;
   VideoPlayerController? _vpController;
 
@@ -79,7 +80,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             /// TopBar Close - Skip - Buttons
-            Padding(
+            Container(
+              height: 100,
               padding: const EdgeInsets.only(left: 16.0, top: 26.0, right: 16.0, bottom: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,15 +116,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                   SizedBox(
                     width: 40.0,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ExerciseInfoScreen(
-                                    selectedExercise: selectedPlan.exercises![0].exercisesToJson(),
-                                  )),
-                        );
-                      },
+                      onPressed: () => openExerciseInfo(),
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -400,6 +394,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   void screenTrainingsDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode, bool exepause) {
     Exercises doingExercise = selectedPlan.exercises![exeIndex];
+    selectedExercise = doingExercise;
 
     ///Initialize Screen Info
     setState(() {
@@ -515,7 +510,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   void screenExerciseDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode) {
     Exercises doingExercise = selectedPlan.exercises![exeIndex];
-
+    selectedExercise = doingExercise;
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
@@ -560,6 +555,23 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       ..setLooping(true)
       ..setVolume(0.0)
       ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
+  }
+
+  Future<void> openExerciseInfo() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ExerciseInfoScreen(selectedExercise: selectedExercise.exercisesToJson())),
+    );
+
+    if (result) {
+      resumeExerciseVideo();
+    }
+  }
+
+  void resumeExerciseVideo() {
+    if (_vpController != null) {
+      _vpController!.play();
+    }
   }
 
   void endTraining() {
