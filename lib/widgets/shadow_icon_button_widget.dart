@@ -14,14 +14,18 @@ class ShadowIconButtonWidget extends StatelessWidget {
       onTap: () => onPressFunction(),
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(12.0), boxShadow: [
-          ///bottom right
-          BoxShadow(
-            color: Colors.grey.shade400,
-            offset: const Offset(3, 3),
-            blurRadius: 3,
-          ),
-        ]),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            ///bottom right
+            BoxShadow(
+              color: Colors.grey.shade400,
+              offset: const Offset(3, 3),
+              blurRadius: 3,
+            ),
+          ],
+        ),
         child: const Icon(
           Icons.info_outline_rounded,
           color: Styles.gymyGrey,
