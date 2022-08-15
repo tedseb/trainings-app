@@ -54,7 +54,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   void initState() {
     selectedPlan = Plans.plansFromJson(widget.selectedPlan);
     selectedPlan.time = 0;
-    setExerciseVideo(selectedPlan.exercises![0]);
+    setExerciseVideo(selectedPlan.exercises?[0]);
     screenExerciseDataUpdater(0, 0, true);
 
     super.initState();
@@ -274,7 +274,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
             ),
 
             ///Play Button
-            Padding(
+            Container(
+              height: 105,
               padding: const EdgeInsets.only(bottom: 18.0),
               child: IconButton(
                 onPressed: () {
@@ -546,21 +547,23 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     nextExeButtonPressed();
   }
 
-  void setExerciseVideo(Exercises doingExercise) {
+  void setExerciseVideo(Exercises? doingExercise) {
     _vpController?.dispose();
 
     // _vpController = VideoPlayerController.asset('assets/videos/test7.mp4')
-    _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.video}.mp4')
-      ..addListener(() => setState(() {}))
-      ..setLooping(true)
-      ..setVolume(0.0)
-      ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
+    if (doingExercise != null) {
+      _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.video}.mp4')
+        ..addListener(() => setState(() {}))
+        ..setLooping(true)
+        ..setVolume(0.0)
+        ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
+    }
   }
 
   Future<void> openExerciseInfo() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ExerciseInfoScreen(selectedExercise: selectedExercise.exercisesToJson())),
+      MaterialPageRoute(builder: (context) => ExerciseInfoScreen(selectedExercise: selectedExercise.exercisesToJson(), modeColor: modeColor,)),
     );
 
     if (result) {

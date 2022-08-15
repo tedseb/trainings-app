@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/plans.dart';
+import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/widgets/exercise_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -104,29 +105,25 @@ class _TrainingsPlanScreenState extends State<TrainingsPlanScreen> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.only(top: 50.0, bottom: 50.0),
-              children: const [
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-                ExerciseCardWidget(),
-              ],
-            ),
+            child: ListView.builder(
+                padding: const EdgeInsets.only(top: 50.0, bottom: 100.0),
+                itemCount: selectedPlan.exercises?.length,
+                itemBuilder: (context, index) {
+                  return ExerciseCardWidget(
+                    selectedExercise: selectedPlan.exercises![index],
+                    showInfoScreen: openExerciseInfo,
+                  );
+                }),
           ),
         ],
       ),
     );
   }
 
-  // void actualPlan() {
-  //   setState(() {
-  //     selectedPlan = myPlans?.firstWhere((element) => element.name == 'ShowRoomTestPlan', orElse: () => Plans());
-  //   });
-  // }
+  Future<void> openExerciseInfo(Exercises selectedExercise) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ExerciseInfoScreen(selectedExercise: selectedExercise.exercisesToJson(),modeColor: Styles.grey,)),
+    );
+  }
 }
