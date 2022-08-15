@@ -5,6 +5,7 @@ class Styles {
   static const Color primaryColor = Color(0xFFffcd16);
   // static const Color primaryColor = Color(0xFF49AD33);
   static const Color secondaryColor = Color(0xFFF7A70B);
+
   static const Color tertiaryColor = Color.fromRGBO(26, 31, 36, 1);
   static const Color grey = Colors.grey;
 
@@ -15,6 +16,7 @@ class Styles {
 
   static const Color backgroundPause = Color(0xFF7DB3BC);
   static const Color backgroundActivity = Color(0xFF8EA569);
+  static const Color backgroundYellow = Color(0xFFDEB55C);
 
   static const Color backgroundActivityTrans = Color(0x508EA569);
   // static const Color backgroundActivity = Color(0xFF52751B);
@@ -64,6 +66,11 @@ class Styles {
         color: Colors.grey[400],
         fontWeight: FontWeight.w600,
         fontSize: 10,
+      );
+  static TextStyle get rpeScaleTitle => const TextStyle(
+        color: white,
+        fontWeight: FontWeight.normal,
+        fontSize: 28,
       );
 
   //   static TextStyle get subtitle1 => GoogleFonts.getFont(

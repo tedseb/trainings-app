@@ -95,31 +95,31 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
             //   ],
             // ),
 
-            ElevatedButton(
-              onPressed: () {
-                dev.log(user!.uid.toString());
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                  side: BorderSide.none,
-                ),
-                primary: Styles.gymyGrey,
-                onPrimary: Styles.white,
-                elevation: 0.0,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  'Analyze Workout / test',
-                  style: TextStyle(
-                    color: modeColor,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     dev.log(user!.uid.toString());
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(16.0),
+            //       side: BorderSide.none,
+            //     ),
+            //     primary: Styles.gymyGrey,
+            //     onPrimary: Styles.white,
+            //     elevation: 0.0,
+            //   ),
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(12.0),
+            //     child: Text(
+            //       'Analyze Workout / test',
+            //       style: TextStyle(
+            //         color: modeColor,
+            //         fontWeight: FontWeight.normal,
+            //         fontSize: 22,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               width: double.infinity,
               height: 110,
