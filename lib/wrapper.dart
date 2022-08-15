@@ -27,6 +27,10 @@ class Wrapper extends StatelessWidget {
           value: DatabaseService(uid: user?.uid, collectionPlansOrDonePlans: 'FinishedExercises').donePlans,
           initialData: const [],
         ),
+        StreamProvider<AppUser>.value(
+          value: DatabaseService(uid: user?.uid).getUserData,
+          initialData: AppUser(),
+        ),
       ],
       child: user == null ? const Authenticate() : const InitialScreen(),
     );

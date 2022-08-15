@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
 import 'dart:developer' as developer;
 
@@ -34,6 +35,16 @@ class DatabaseService {
       'userWeight': userWeight,
       'studioName': studioName,
     });
+  }
+
+  // Get User-Data
+  Stream<AppUser> get getUserData {
+    final docUser = usersCollection.doc(uid);
+    return docUser.snapshots().map(
+          (event) => AppUser(
+            name: event.get('userName'),
+          ),
+        );
   }
 
   // Delete Plan

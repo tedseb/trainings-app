@@ -383,29 +383,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      dev.log('Open Logout Screen');
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 16.0),
+                //   child: ElevatedButton(
+                //     onPressed: () async {
+                //       dev.log('Open Logout Screen');
 
-                      await _auth.signOut();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide.none,
-                      ),
-                      primary: Colors.transparent,
-                      onPrimary: Styles.white,
-                      elevation: 0.0,
-                    ),
-                    child: Text(
-                      'Logout',
-                      style: Styles.title,
-                    ),
-                  ),
-                ),
+                //       await _auth.signOut();
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(16.0),
+                //         side: BorderSide.none,
+                //       ),
+                //       primary: Colors.transparent,
+                //       onPrimary: Styles.white,
+                //       elevation: 0.0,
+                //     ),
+                //     child: Text(
+                //       'Logout',
+                //       style: Styles.title,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],
