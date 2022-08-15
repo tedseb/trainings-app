@@ -7,6 +7,7 @@ import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
+import 'package:higym/widgets/loading_widget.dart';
 import 'package:video_player/video_player.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 import 'dart:developer' as dev;
@@ -231,7 +232,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
             /// Progress Indicator
             Expanded(
-              child: Stack(
+              child: !_vpController!.value.isInitialized ? const LoadingWidget(): Stack(
                 children: [
                   /// Video
                   Center(
@@ -343,6 +344,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         }
         showModalBottomSheet(
           isScrollControlled: true,
+          enableDrag: false,
+          isDismissible: false,
           backgroundColor: Colors.transparent,
           barrierColor: Colors.transparent,
           context: context,
