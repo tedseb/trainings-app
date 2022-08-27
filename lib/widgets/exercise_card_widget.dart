@@ -50,7 +50,7 @@ class ExerciseCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            ShadowIconButtonWidget(buttonInput: 'buttonInput', onPressFunction: () => showInfoScreen(selectedExercise)),
+            ShadowIconButtonWidget(buttonIcon: Icons.info_outline_rounded, onPressFunction: () => showInfoScreen(selectedExercise)),
           ],
         ),
       ),

@@ -8,10 +8,12 @@ class NavbarIconButtonWidget extends StatefulWidget {
     required this.iconData,
     required this.index,
     required this.selectedItem,
+    required this.menuAndIcon,
   }) : super(key: key);
 
   final Function onPressedFunction;
   final List<IconData> iconData;
+  final Map<String,IconData> menuAndIcon;
   final int index;
   final int selectedItem;
 
@@ -30,10 +32,15 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            widget.iconData[widget.index],
-            size: 26,
-            color: Styles.gymyGrey,
+          Column(
+            children: [
+              Icon(
+                widget.menuAndIcon.values.elementAt(widget.index),
+                size: 26,
+                color: Styles.gymyGrey,
+              ),
+              Text(widget.menuAndIcon.keys.elementAt(widget.index), style: Styles.navBarMenuText,),
+            ],
           ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),

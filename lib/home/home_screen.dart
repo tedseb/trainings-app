@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:higym/app_utils/circle_painter.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/plans.dart';
-import 'package:higym/services/auth.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
 // ignore: unused_import
@@ -20,397 +20,140 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AuthService _auth = AuthService();
-
-  Plans selectedPlan = Plans(
-    name: 'ShowRoomTestPlan',
-    parameters: {'fitnessIcon': 'Endurance', 'bodyIcon': 'Full Body', 'timerIcon': 'ca. 30min'},
-    exercises: [
-      Exercises(
-        name: 'Military Press',
-        img: '',
-        video: 'military_press',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 229,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
-      Exercises(
-        name: 'Squats',
-        img: '',
-        video: 'squats',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 111,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
-      Exercises(
-        name: 'Deadlifts',
-        img: '',
-        video: 'deadlifts',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 105,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
-      Exercises(
-        name: 'Rudern Stehend',
-        img: '',
-        video: 'rudern_stehend',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 106,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
-      Exercises(
-        name: 'Bankdrücken',
-        img: '',
-        video: 'bankdruecken',
-        info: '',
-        muscleGroup: '',
-        exePauseTime: 90,
-        exePauseTimeDone: 0,
-        exerciseFinished: false,
-        exercisePauseFinished: false,
-        pk: 102,
-        rpeScale: [],
-        sets: [
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-          Sets(
-            repetitions: 10,
-            repetitionsDone: 0,
-            time: 30,
-            timeDone: 0,
-            weight: 0,
-            weightDone: 0,
-            pause: 45,
-            pauseDone: 0,
-            success: 0,
-            setFinished: false,
-            setPauseFinished: false,
-          ),
-        ],
-      ),
-    ],
-    kcal: 0,
-    time: 0,
-    higymAutomated: true,
-  );
-
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<AppUser?>(context);
     List<Plans> myPlans = Provider.of<List<Plans>>(context);
+    Size screenSize = MediaQuery.of(context).size;
+
+        dev.log('Width:  ${screenSize.width}');
+    dev.log('Heigth:  ${screenSize.height}');
 
     return Scaffold(
-      backgroundColor: Styles.white,
-      // backgroundColor: Colors.red,
-      body: Padding(
-        padding: const EdgeInsets.all(26.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+        backgroundColor: Styles.white,
+        body: ListView(
+          padding: EdgeInsets.zero,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      dev.log('Exercising Screen');
-                      // DatabaseService(
-                      //         oldPlanName: selectedPlan.name,
-                      //         uid: user?.uid,
-                      //         planNameOrDate: selectedPlan.name,
-                      //         collectionPlansOrDonePlans: 'UserExercisePlans',
-                      //         selectedPlan: selectedPlan)
-                      //     .updateUserPlan();
-                      selectedPlan = myPlans.firstWhere((element) => element.name == 'ShowRoomTestPlan', orElse: () => Plans());
+            /// Home Welcome Card height ca 195
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32.0, 96.0, 32.0, 0.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical:16.0, horizontal: 32.0),
+                decoration: BoxDecoration(
+                  color: Styles.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                  boxShadow: [
+                    ///bottom right
+                    BoxShadow(
+                      color: Colors.grey.shade400,
+                      offset: const Offset(3, 3),
+                      blurRadius: 3,
+                    ),
 
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ExercisingScreen(selectedPlan: selectedPlan.plansToJson()),
+                    ///top left
+                    BoxShadow(
+                      color: Colors.grey.shade200,
+                      offset: const Offset(-3, -3),
+                      blurRadius: 3,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    /// Name and Badge
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: Styles.homeCardName,
+                                children: const [
+                                  TextSpan(text: 'Hi ', style: TextStyle(fontWeight: FontWeight.w500)),
+                                  TextSpan(text: 'Nico'),
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide.none,
+                        Image.asset('assets/badges/weight_nike_badge.png', height: 75)
+                      ],
+                    ),
+                    const SizedBox(height: 24.0),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text('Du musst diese Woche noch einmal trainieren.', style: Styles.homeCardText),
+                      ],
+                    ),
+                    const SizedBox(height: 24.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Parameter',
+                          style: Styles.homeCardText,
+                        ),
+                        Text(
+                          'Parameter',
+                          style: Styles.homeCardText,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0,0.0,0.0,100.0),
+              child: SizedBox(
+                height: screenSize.width,
+                width: screenSize.width,
+                child: CustomPaint(
+                  foregroundPainter: BackgroundCirclePainter(progressBigPercent: 9 / 16, progressBigReachPercent: 10/16,progressSmallPercet: 6 / 16, progressSmallReachPercet: 9/16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: const BoxDecoration(
+                              color: Styles.progressCircleBig,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text('50', style: Styles.homeProgressText),
+                        ],
                       ),
-                      primary: Colors.transparent,
-                      onPrimary: Styles.white,
-                      elevation: 0.0,
-                    ),
-                    child: Text(
-                      'Start Training',
-                      style: Styles.title,
-                    ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                           Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: const BoxDecoration(
+                              color: Styles.progressCircleSmall,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text('32', style: Styles.homeProgressText),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      dev.log('Open Trainings Plan Screen');
-
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TrainingsPlanScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide.none,
-                      ),
-                      primary: Colors.transparent,
-                      onPrimary: Styles.white,
-                      elevation: 0.0,
-                    ),
-                    child: Text(
-                      'Trainings Plan',
-                      style: Styles.title,
-                    ),
-                  ),
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 16.0),
-                //   child: ElevatedButton(
-                //     onPressed: () async {
-                //       dev.log('Open Logout Screen');
-
-                //       await _auth.signOut();
-                //     },
-                //     style: ElevatedButton.styleFrom(
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(16.0),
-                //         side: BorderSide.none,
-                //       ),
-                //       primary: Colors.transparent,
-                //       onPrimary: Styles.white,
-                //       elevation: 0.0,
-                //     ),
-                //     child: Text(
-                //       'Logout',
-                //       style: Styles.title,
-                //     ),
-                //   ),
-                // ),
-              ],
+              ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

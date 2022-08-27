@@ -101,7 +101,7 @@ class DatabaseService {
     }
 
     tempPlanMap['exercises'] = tempExercisesMap;
-    return await usersCollection.doc(uid).collection(collectionPlansOrDonePlans!).doc(planNameOrDate).set(tempPlanMap);
+    return usersCollection.doc(uid).collection(collectionPlansOrDonePlans!).doc(planNameOrDate).set(tempPlanMap);
   }
 
   // Update Plan

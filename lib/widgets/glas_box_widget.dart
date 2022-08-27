@@ -47,7 +47,7 @@ class GlasBoxWidget extends StatelessWidget {
             ///child
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Image.asset('assets/exercises/$exerciseImage.png'),
+              child: Center(child: Image.asset('assets/exercises/$exerciseImage.png')),
             ),
           ],
         ),

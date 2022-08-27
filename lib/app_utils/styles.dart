@@ -18,7 +18,11 @@ class Styles {
   static const Color backgroundActivity = Color(0xFF8EA569);
   static const Color backgroundYellow = Color(0xFFDEB55C);
 
-  static const Color backgroundActivityTrans = Color(0x508EA569);
+  static const Color progressCircleBackground = Color(0xFFe7e7e7);
+  static const Color progressCircleBig = Color(0xFFf68b00);
+  static const Color progressCircleSmall = Color(0xFF49a9e5);
+
+  // static const Color backgroundActivityTrans = Color(0x508EA569);
   // static const Color backgroundActivity = Color(0xFF52751B);
 
   ///Text Styles
@@ -71,6 +75,31 @@ class Styles {
         color: white,
         fontWeight: FontWeight.normal,
         fontSize: 28,
+      );
+  static TextStyle get homeCardName => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w300,
+        fontSize: 28,
+      );
+  static TextStyle get homeCardText => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+      );
+  static TextStyle get homeProgressText => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      );
+  static TextStyle get navBarMenuText => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 10,
+      );
+  static TextStyle get profileItemText => const TextStyle(
+        color: gymyGrey,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
       );
 
   //   static TextStyle get subtitle1 => GoogleFonts.getFont(

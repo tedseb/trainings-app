@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:higym/achievements/achievements.dart';
 import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/profile/profile_screen.dart';
+import 'package:higym/services/downloader.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
 import 'package:higym/widgets/loading_widget.dart';
@@ -298,12 +300,15 @@ class _InitialScreenState extends State<InitialScreen> {
     higymAutomated: true,
   );
 
+  
+
+
   int _selectedItem = 0;
   final _pages = [
     const HomeScreen(),
     const ProfileScreen(),
     const TrainingsPlanScreen(),
-    const LoadingWidget(),
+    const Achievement(),
   ];
   final List<IconData> _icons = [
     Icons.home_outlined,
@@ -311,13 +316,19 @@ class _InitialScreenState extends State<InitialScreen> {
     Icons.phone_iphone_rounded,
     Icons.outlined_flag_rounded,
   ];
+  final Map<String,IconData> menuAndIcon = {
+    'Home':Icons.home_outlined,
+    'Profile':Icons.person_outline_rounded,
+    'Plans': Icons.phone_iphone_rounded,
+    'Status':Icons.outlined_flag_rounded,
+  };
   final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<AppUser?>(context);
     List<Plans> myPlans = Provider.of<List<Plans>>(context);
-
+// Downloader.checkAndDownload( selectedPlan);
     return Scaffold(
       backgroundColor: Styles.white,
       extendBody: true,
@@ -347,8 +358,8 @@ class _InitialScreenState extends State<InitialScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Expanded(child: SizedBox()),
-              NavbarIconButtonWidget(onPressedFunction: _onItemTapped, iconData: _icons, selectedItem: _selectedItem, index: 0),
-              NavbarIconButtonWidget(onPressedFunction: _onItemTapped, iconData: _icons, selectedItem: _selectedItem, index: 1),
+              NavbarIconButtonWidget(onPressedFunction: _onItemTapped,menuAndIcon: menuAndIcon, iconData: _icons, selectedItem: _selectedItem, index: 0),
+              NavbarIconButtonWidget(onPressedFunction: _onItemTapped,menuAndIcon: menuAndIcon,  iconData: _icons, selectedItem: _selectedItem, index: 1),
               IconButton(
                 iconSize: 80,
                 color: Styles.primaryColor,
@@ -370,8 +381,8 @@ class _InitialScreenState extends State<InitialScreen> {
                   );
                 },
               ),
-              NavbarIconButtonWidget(onPressedFunction: _onItemTapped, iconData: _icons, selectedItem: _selectedItem, index: 2),
-              NavbarIconButtonWidget(onPressedFunction: _onItemTapped, iconData: _icons, selectedItem: _selectedItem, index: 3),
+              NavbarIconButtonWidget(onPressedFunction: _onItemTapped,menuAndIcon: menuAndIcon,  iconData: _icons, selectedItem: _selectedItem, index: 2),
+              NavbarIconButtonWidget(onPressedFunction: _onItemTapped,menuAndIcon: menuAndIcon,  iconData: _icons, selectedItem: _selectedItem, index: 3),
               const Expanded(child: SizedBox()),
             ],
           )),
