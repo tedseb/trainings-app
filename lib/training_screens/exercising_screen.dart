@@ -232,46 +232,49 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
             /// Progress Indicator
             Expanded(
-              child: !_vpController!.value.isInitialized ? const LoadingWidget(): Stack(
-                children: [
-                  /// Video
-                  Center(
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(modeColor, BlendMode.modulate),
-                      // child: VideoPlayer(_vpController!),
-                      child: AspectRatio(
-                        aspectRatio: _vpController!.value.aspectRatio,
-                        child: VideoPlayer(_vpController!),
-                      ),
-                    ),
-                  ),
-
-                  /// Circle
-                  Center(
-                    child: SizedBox(
-                      height: (MediaQuery.of(context).size.height / 10) * 3,
-                      width: (MediaQuery.of(context).size.height / 10) * 3,
-                      child: CircularProgressIndicator(
-                        value: progressValue,
-                        color: Styles.white,
-                        strokeWidth: 8.0,
-                      ),
-                    ),
-                  ),
-
-                  /// Counter
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+              child: !_vpController!.value.isInitialized
+                  ? const LoadingWidget()
+                  : Stack(
                       children: [
-                        Text(actualTimeOrRepNumber.toString(),
-                            style: const TextStyle(color: Styles.white, fontSize: 100.0, fontWeight: FontWeight.w300)),
-                        Text(actualTimeorRep, style: const TextStyle(color: Styles.white, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3)),
+                        /// Video
+                        Center(
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(modeColor, BlendMode.modulate),
+                            // child: VideoPlayer(_vpController!),
+                            child: AspectRatio(
+                              aspectRatio: _vpController!.value.aspectRatio,
+                              child: VideoPlayer(_vpController!),
+                            ),
+                          ),
+                        ),
+
+                        /// Circle
+                        Center(
+                          child: SizedBox(
+                            height: (MediaQuery.of(context).size.height / 10) * 3,
+                            width: (MediaQuery.of(context).size.height / 10) * 3,
+                            child: CircularProgressIndicator(
+                              value: progressValue,
+                              color: Styles.white,
+                              strokeWidth: 8.0,
+                            ),
+                          ),
+                        ),
+
+                        /// Counter
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(actualTimeOrRepNumber.toString(),
+                                  style: const TextStyle(color: Styles.white, fontSize: 100.0, fontWeight: FontWeight.w300)),
+                              Text(actualTimeorRep,
+                                  style: const TextStyle(color: Styles.white, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3)),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
             ),
 
             ///Play Button
@@ -303,6 +306,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     int exercisesLength = selectedPlan.exercises!.length - 1;
     bool lastExe = false;
 
+    ///Start only the Global Time for Training duration
     startGlobalTimer();
 
     for (int exe = 0; exe <= exercisesLength; exe++) {
@@ -331,42 +335,40 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     for (int sets = 0; sets <= setsLength; sets++) {
       ///Trainings Screen
       screenTrainingsDataUpdater(exeIndex, sets, true, false);
-
       await waitUserForNextSet();
+
+      ///Pause Screen
       if (sets < setsLength) {
-        ///Pause Screen
         screenTrainingsDataUpdater(exeIndex, sets, false, false);
         await waitUserForNextSet();
-      } else {
-        ///Exercise Pause Screen
-        if (!lastExe) {
-          screenTrainingsDataUpdater(exeIndex + 1, 0, false, true);
-        }
-        showModalBottomSheet(
-          isScrollControlled: true,
-          enableDrag: false,
-          isDismissible: false,
-          backgroundColor: Colors.transparent,
-          barrierColor: Colors.transparent,
-          context: context,
-          builder: (context) {
-            return Padding(
-              padding: MediaQuery.of(context).viewInsets,
-              child: RPEScale(rpeScaleUpdater: changeRpeScale, exeScore: 100, exerciseIndex: exeIndex),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.95,
-              //   child: LeaveExerciseScreen(leaveTraining: true),
-              // ),
-            );
-          },
-        );
-        await waitUserForNextSet();
-
-        if (!lastExe) {
-          await waitUserForNextSet();
-          screenExerciseDataUpdater(exeIndex + 1, 0, false);
-        }
       }
+    }
+
+    ///Exercise Pause Screen
+    if (!lastExe) {
+      screenTrainingsDataUpdater(exeIndex + 1, 0, false, true);
+    }
+    showModalBottomSheet(
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: RPEScale(rpeScaleUpdater: changeRpeScale, exeScore: 100, exerciseIndex: exeIndex),
+        );
+      },
+    );
+
+    /// Wait for RPE Scale Pressed
+    await waitUserForNextSet();
+
+    if (!lastExe) {
+      await waitUserForNextSet();
+      screenExerciseDataUpdater(exeIndex + 1, 0, false);
     }
   }
 
@@ -566,7 +568,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   Future<void> openExerciseInfo() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ExerciseInfoScreen(selectedExercise: selectedExercise.exercisesToJson(), modeColor: modeColor,)),
+      MaterialPageRoute(
+          builder: (context) => ExerciseInfoScreen(
+                selectedExercise: selectedExercise.exercisesToJson(),
+                modeColor: modeColor,
+              )),
     );
 
     if (result) {

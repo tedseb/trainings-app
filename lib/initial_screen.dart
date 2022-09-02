@@ -4,6 +4,8 @@ import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/plans.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/profile/profile_screen.dart';
+import 'package:higym/screen_widgets/expanded_example.dart';
+import 'package:higym/screen_widgets/goals_screen.dart';
 import 'package:higym/services/downloader.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_plan_screen.dart';
@@ -308,7 +310,9 @@ class _InitialScreenState extends State<InitialScreen> {
     const HomeScreen(),
     const ProfileScreen(),
     const TrainingsPlanScreen(),
-    const Achievement(),
+    ExpandExample(),
+    // const GoalsScreen(),
+    // const Achievement(),
   ];
   final List<IconData> _icons = [
     Icons.home_outlined,

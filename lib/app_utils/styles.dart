@@ -14,6 +14,11 @@ class Styles {
   static const Color tertiaryDark = Color(0xFF131619);
   static const Color tertiaryTransparent = Color(0x801A1F24);
 
+    static const Color pastelBlue = Color(0xFF7DB3BC);
+    static const Color pastelGreen = Color(0xFF92AF5B);
+    static const Color pastelYellow = Color(0xFFDEB55C);
+    static const Color pastelRed = Color(0xFFC15959);
+
   static const Color backgroundPause = Color(0xFF7DB3BC);
   static const Color backgroundActivity = Color(0xFF8EA569);
   static const Color backgroundYellow = Color(0xFFDEB55C);
@@ -100,6 +105,11 @@ class Styles {
         color: gymyGrey,
         fontWeight: FontWeight.w500,
         fontSize: 18,
+      );
+  static TextStyle get goalsCardTitle => const TextStyle(
+        color: white,
+        fontWeight: FontWeight.w500,
+        fontSize: 30,
       );
 
   //   static TextStyle get subtitle1 => GoogleFonts.getFont(

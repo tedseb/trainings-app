@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/screen_widgets/settings_screen.dart';
 import 'package:higym/services/auth.dart';
 import 'package:higym/widgets/shadow_icon_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -52,46 +51,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 100),
 
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.flag_outlined, color: Styles.gymyGrey),
+                   Row(
+                     children: [
+                       const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Styles.gymyGrey,
+                        child: Icon(Icons.flag_outlined, color: Styles.white),
+                  ),
+                  const SizedBox( width: 32.0),
                   Text('My Goals', style: Styles.profileItemText),
+                     ],
+                   ),
                   ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.accessibility_new_rounded, color: Styles.gymyGrey),
+                   Row(
+                     children: [
+                       const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Styles.gymyGrey,
+                        child: Icon(Icons.accessibility_new_rounded, color: Styles.white),
+                  ),
+                  const SizedBox( width: 32.0),
                   Text('My Body', style: Styles.profileItemText),
+                     ],
+                   ),
                   ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.surround_sound_outlined, color: Styles.gymyGrey),
+                   Row(
+                     children: [
+                       const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Styles.gymyGrey,
+                        child: Icon(Icons.surround_sound_outlined, color: Styles.white),
+                  ),
+                  const SizedBox( width: 32.0),
                   Text('Talk AI', style: Styles.profileItemText),
+                     ],
+                   ),
                   ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.settings_outlined, color: Styles.gymyGrey),
-                  Text('Settings', style: Styles.profileItemText),
-                  ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Styles.gymyGrey,
+                        child: Icon(Icons.settings_outlined, color: Styles.white),
+                      ),
+                      const SizedBox( width: 32.0),
+                      Text('Settings', style: Styles.profileItemText),
+                    ],
+                  ),
+                  ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SettingsScreen(),
+                    ),
+                  );}),
                 ],
               ),
             ),
