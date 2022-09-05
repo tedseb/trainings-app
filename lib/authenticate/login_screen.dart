@@ -4,6 +4,8 @@ import 'package:higym/services/auth.dart';
 
 import 'dart:developer' as dev;
 
+import 'package:higym/widgets/loading_widget.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
     Key? key,
@@ -23,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool loading = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -33,46 +37,48 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40),
-            TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              cursorColor: Styles.gymyGrey,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            const SizedBox(height: 4),
-            TextField(
-              controller: passwordController,
-              cursorColor: Styles.gymyGrey,
-              textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _signInWithEmail,
-              icon: const Icon(Icons.lock_open_rounded, size: 32),
-              label: const Text('Sign In', style: TextStyle(fontSize: 24)),
-              style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: ElevatedButton(
-                onPressed: ()=> widget.toggleView(),
-                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
-                child: const Text('Go to Register'),
+            body: loading
+        ? const Center(child:  LoadingWidget())
+        : SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 40),
+                  TextField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    cursorColor: Styles.gymyGrey,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(labelText: 'Email'),
+                  ),
+                  const SizedBox(height: 4),
+                  TextField(
+                    controller: passwordController,
+                    cursorColor: Styles.gymyGrey,
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: _signInWithEmail,
+                    icon: const Icon(Icons.login_rounded, size: 32),
+                    label: const Text('Sign In', style: TextStyle(fontSize: 24)),
+                    style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0),
+                    child: ElevatedButton(
+                      onPressed: () => widget.toggleView(),
+                      style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
+                      child: const Text('Go to Register'),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          );
   }
 
   _signInWithEmail() async {
@@ -80,11 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
     // await _auth.signInWithEmailAndPassword(emailController.text, passwordController.text);
 
     if (result == null) {
+      setState(() => loading = false);
       // setState(() {
       //   error = 'Could not sign in with those credentials.';
       //   loading = false;
       // });
     } else {
+      setState(() => loading = true);
       dev.log(result.toString());
     }
   }

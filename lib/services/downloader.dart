@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:archive/archive.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:higym/models/firebase_files.dart';
-import 'package:higym/models/plans.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'dart:developer' as dev;
+
+import '../models/goal.dart';
 
 class Downloader {
   // final Plans? selectedPlan;
@@ -77,9 +77,9 @@ class Downloader {
       await videosDir.create();
     
 
-    for (Exercises exe in myPlan.exercises!) {
-      _downloadAndSave('images/${exe.video!}.png', videosDir);
-      _downloadAndSave('videos/${exe.video!}.mp4', videosDir);
+    for (Exercises exe in myPlan.exercises) {
+      _downloadAndSave('images/${exe.media}.png', videosDir);
+      _downloadAndSave('videos/${exe.media}.mp4', videosDir);
     }
   }
 

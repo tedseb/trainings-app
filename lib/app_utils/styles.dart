@@ -14,10 +14,10 @@ class Styles {
   static const Color tertiaryDark = Color(0xFF131619);
   static const Color tertiaryTransparent = Color(0x801A1F24);
 
-    static const Color pastelBlue = Color(0xFF7DB3BC);
-    static const Color pastelGreen = Color(0xFF92AF5B);
-    static const Color pastelYellow = Color(0xFFDEB55C);
-    static const Color pastelRed = Color(0xFFC15959);
+  static const Color pastelBlue = Color(0xFF7DB3BC);
+  static const Color pastelGreen = Color(0xFF92AF5B);
+  static const Color pastelYellow = Color(0xFFDEB55C);
+  static const Color pastelRed = Color(0xFFC15959);
 
   static const Color backgroundPause = Color(0xFF7DB3BC);
   static const Color backgroundActivity = Color(0xFF8EA569);
@@ -128,42 +128,63 @@ class Styles {
         Icons.fast_forward_rounded,
         color: white,
       );
-  static Icon get emergencyIcon => Icon(
-        Icons.emergency_rounded,
-        color: Colors.red[400],
-        size: 32.0,
-      );
+  // static Icon get talkToAiOnTrainingsprogramm => const Icon(
+  //      Icons.surround_sound_outlined,
+  //       color: gymyGrey,
+  //       size: 32.0,
+  //     );
   static Icon get fitnessIcon => const Icon(
         Icons.fitness_center_rounded,
         color: gymyGrey,
-        size: 28.0,
+        size: 30.0,
       );
   static Icon get bodyIcon => const Icon(
         Icons.boy_rounded,
         color: gymyGrey,
         size: 30.0,
       );
+  static Icon get levelIcon => const Icon(
+        Icons.signal_cellular_alt_2_bar,
+        color: gymyGrey,
+        size: 30.0,
+      );
   static Icon get timerIcon => const Icon(
         Icons.timer_rounded,
         color: gymyGrey,
-        size: 28.0,
+        size: 30.0,
       );
 
-  static Icon getIcons(String myIcon) {
-    Icon returnIcon = fitnessIcon;
+  static Icon getFitnessTypeIcons(String myIcon) {
+    Icon returnIcon;
     switch (myIcon) {
-      case 'fitnessIcon':
+      case 'Kraft':
         returnIcon = fitnessIcon;
         break;
-      case 'bodyIcon':
-        returnIcon = bodyIcon;
-        break;
-      case 'timerIcon':
-        returnIcon = timerIcon;
+      default:
+        returnIcon = fitnessIcon;
         break;
     }
     return returnIcon;
   }
+  static String getFitnessLevelText(int lvl) {
+    String returnText;
+    switch (lvl) {
+      case 1:
+        returnText = 'Easy';
+        break;
+      case 2:
+        returnText = 'Medium';
+        break;
+      case 3:
+        returnText = 'Hard';
+        break;
+      default:
+        returnText = 'Easy';
+        break;
+    }
+    return returnText;
+  }
+  
 
   //       double width = MediaQuery.of(context).size.width;
   // double height = MediaQuery.of(context).size.height;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/models/plans.dart';
+import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/exercise_info_text_screen.dart';
 import 'package:video_player/video_player.dart';
@@ -34,7 +34,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
 
   Color modeColor = Styles.backgroundActivity;
 
-  Exercises? selectedExercise;
+  late Exercises selectedExercise;
 
   late VideoPlayerController _vpController;
 
@@ -42,7 +42,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
   void initState() {
     selectedExercise = Exercises.exercisesFromJson(widget.selectedExercise);
 
-    _vpController = VideoPlayerController.asset('assets/videos/${selectedExercise!.video}.mp4')
+    _vpController = VideoPlayerController.asset('assets/videos/${selectedExercise.media}.mp4')
       ..addListener(() => setState(() {}))
       ..setLooping(true)
       ..setVolume(0.0)
@@ -120,7 +120,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            selectedExercise!.name!,
+                            selectedExercise.name,
                             style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
                           ),
                           Text(
@@ -167,7 +167,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
-                        builder: (context) => const ExerciseInfoTextScreen(),
+                        builder: (context) =>  ExerciseInfoTextScreen(exeInfo: selectedExercise.info),
                       ).then((_) => setState(() {
                             swipeVisibility = true;
                           }));
@@ -202,53 +202,5 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
     );
   }
 
-  // Widget makeDismissible({required Widget child}) {
-  //   return GestureDetector(
-  //     behavior: HitTestBehavior.opaque,
-  //     onTap: () => Navigator.of(context).pop,
-  //     child: GestureDetector(
-  //       onTap: () {},
-  //       child: child,
-  //     ),
-  //   );
-  // }
+  
 }
-
-
-
-/**
- *
-  SlideTransition(
-            position: _tween.animate(_controller),
-            child: DraggableScrollableSheet(
-              initialChildSize: initialHight,
-              minChildSize: initialHight,
-              maxChildSize: 0.8,
-              builder: ((context, scrollController) {
-                // print(draggableScrollableController);
-
-                return Container(
-                  color: Colors.white70,
-                  child: ListView(
-                    padding: const EdgeInsets.only(left: 32.0, top: 8.0, right: 32.0, bottom: 32.0),
-                    controller: scrollController,
-                    children: [
-                      Text(
-                        '1.) Be carefull!',
-                        style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
-                      ),
-                      Text(
-                        '2.) Train Hard!',
-                        style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
-                      ),
-                      Text(
-                        '3.) Train Good!',
-                        style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
- */

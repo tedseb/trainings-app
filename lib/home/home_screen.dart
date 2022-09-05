@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/circle_painter.dart';
 import 'package:higym/app_utils/styles.dart';
-import 'package:higym/models/app_user.dart';
-import 'package:higym/models/plans.dart';
-import 'package:higym/training_screens/exercising_screen.dart';
-import 'package:higym/training_screens/trainings_plan_screen.dart';
-// ignore: unused_import
-import 'package:higym/services/database.dart';
 
 import 'dart:developer' as dev;
 
+import 'package:higym/models/app_user.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,11 +17,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<AppUser?>(context);
-    List<Plans> myPlans = Provider.of<List<Plans>>(context);
+    final user = Provider.of<AppUser?>(context);
     Size screenSize = MediaQuery.of(context).size;
 
-        dev.log('Width:  ${screenSize.width}');
+    dev.log('Width:  ${screenSize.width}');
     dev.log('Heigth:  ${screenSize.height}');
 
     return Scaffold(
@@ -39,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(32.0, 96.0, 32.0, 0.0),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical:16.0, horizontal: 32.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
                 decoration: BoxDecoration(
                   color: Styles.white,
                   borderRadius: BorderRadius.circular(12.0),
@@ -63,23 +57,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     /// Name and Badge
+                    /// User Name and Badge
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                style: Styles.homeCardName,
-                                children: const [
-                                  TextSpan(text: 'Hi ', style: TextStyle(fontWeight: FontWeight.w500)),
-                                  TextSpan(text: 'Nico'),
-                                ],
-                              ),
-                            )
-                          ],
+                        Flexible(
+                          child: RichText(
+                            text: TextSpan(
+                              style: Styles.homeCardName,
+                              children: [
+                                TextSpan(text: 'Hi ', style: Styles.title.copyWith(fontWeight: FontWeight.w500)),
+                                TextSpan(text: user!.name.toString(), style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
+                              ],
+                            ),
+                          ),
                         ),
-                        Image.asset('assets/badges/weight_nike_badge.png', height: 75)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Image.asset('assets/badges/weight_nike_badge.png', height: 75),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 24.0),
@@ -108,12 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0,0.0,0.0,100.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 100.0),
               child: SizedBox(
                 height: screenSize.width,
                 width: screenSize.width,
                 child: CustomPaint(
-                  foregroundPainter: BackgroundCirclePainter(progressBigPercent: 9 / 16, progressBigReachPercent: 10/16,progressSmallPercet: 6 / 16, progressSmallReachPercet: 9/16),
+                  foregroundPainter: BackgroundCirclePainter(
+                      progressBigPercent: 9 / 16, progressBigReachPercent: 10 / 16, progressSmallPercet: 6 / 16, progressSmallReachPercet: 9 / 16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -136,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           Container(
+                          Container(
                             width: 20.0,
                             height: 20.0,
                             decoration: const BoxDecoration(

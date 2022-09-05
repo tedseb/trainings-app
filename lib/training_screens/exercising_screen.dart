@@ -2,17 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/timer_utils.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
 import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/models/goal.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 import 'dart:developer' as dev;
-
-import '../models/plans.dart';
 
 class ExercisingScreen extends StatefulWidget {
   const ExercisingScreen({
@@ -30,14 +32,17 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   ///Screen Informations
   Color modeColor = Styles.backgroundActivity;
   late int actualSetNumber;
-  double? actualWeight;
+  late double actualWeight;
   late String actualTimeorRep;
   int actualTimeOrRepNumberToDo = 0;
+  int trainModeTimeDone = 0;
   int actualTimeOrRepNumber = 0;
   late String exeriseName;
   late String exeriseSubName;
   late String prepareFor;
   double progressValue = 0.0;
+
+  Color progressColor = Styles.white;
 
   late Plans selectedPlan;
   late Exercises selectedExercise;
@@ -51,11 +56,25 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   IconData playDoneButton = Icons.play_circle_fill_rounded;
 
+  String toDay = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  AppUser? user;
+
+  // late List<List<Map<String,num>>> fillPlanList;
+
   @override
   void initState() {
     selectedPlan = Plans.plansFromJson(widget.selectedPlan);
     selectedPlan.time = 0;
-    setExerciseVideo(selectedPlan.exercises?[0]);
+    // fillPlanList = List.generate(
+    //   selectedPlan.exercises.length,
+    //   (exe) => List.generate(
+    //     selectedPlan.exercises[exe].sets.length,
+    //     (set) => {},
+    //     growable: false,
+    //   ),
+    //   growable: false,
+    // );
+    setExerciseVideo(selectedPlan.exercises[0]);
     screenExerciseDataUpdater(0, 0, true);
 
     super.initState();
@@ -70,6 +89,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<AppUser?>(context);
+
     return WillPopScope(
       onWillPop: () async {
         return await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
@@ -240,7 +261,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                         Center(
                           child: ColorFiltered(
                             colorFilter: ColorFilter.mode(modeColor, BlendMode.modulate),
-                            // child: VideoPlayer(_vpController!),
                             child: AspectRatio(
                               aspectRatio: _vpController!.value.aspectRatio,
                               child: VideoPlayer(_vpController!),
@@ -255,7 +275,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                             width: (MediaQuery.of(context).size.height / 10) * 3,
                             child: CircularProgressIndicator(
                               value: progressValue,
-                              color: Styles.white,
+                              color: progressColor,
                               strokeWidth: 8.0,
                             ),
                           ),
@@ -266,10 +286,14 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(actualTimeOrRepNumber.toString(),
-                                  style: const TextStyle(color: Styles.white, fontSize: 100.0, fontWeight: FontWeight.w300)),
-                              Text(actualTimeorRep,
-                                  style: const TextStyle(color: Styles.white, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3)),
+                              Text(
+                                actualTimeOrRepNumber.toString(),
+                                style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
+                              ),
+                              Text(
+                                actualTimeorRep,
+                                style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
+                              ),
                             ],
                           ),
                         ),
@@ -303,7 +327,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   Future<void> startPlan() async {
-    int exercisesLength = selectedPlan.exercises!.length - 1;
+    int exercisesLength = selectedPlan.exercises.length - 1;
     bool lastExe = false;
 
     ///Start only the Global Time for Training duration
@@ -330,21 +354,26 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   Future<void> startExercise(int exeIndex, bool lastExe) async {
-    Exercises exercise = selectedPlan.exercises![exeIndex];
-    int setsLength = exercise.sets!.length - 1;
-    for (int sets = 0; sets <= setsLength; sets++) {
-      ///Trainings Screen
-      screenTrainingsDataUpdater(exeIndex, sets, true, false);
+    Exercises exercise = selectedPlan.exercises[exeIndex];
+    int setsLength = exercise.sets.length - 1;
+    for (int setIndex = 0; setIndex <= setsLength; setIndex++) {
+      /// Trainings Screen
+      screenTrainingsDataUpdater(exeIndex, setIndex, true, false);
       await waitUserForNextSet();
+      // Fill Repetitions and Trainings TimeDone after done Button Pressed
+      selectedPlan.exercises[exeIndex].sets[setIndex].repetitions[toDay] = selectedPlan.exercises[exeIndex].repetitionsScale['actualToDo']!;
+      selectedPlan.exercises[exeIndex].sets[setIndex].setTime[toDay] = trainModeTimeDone;
 
-      ///Pause Screen
-      if (sets < setsLength) {
-        screenTrainingsDataUpdater(exeIndex, sets, false, false);
+      /// Pause Screen
+      if (setIndex < setsLength) {
+        screenTrainingsDataUpdater(exeIndex, setIndex, false, false);
         await waitUserForNextSet();
+        // Fill Rest Time after done Button Pressed
+        selectedPlan.exercises[exeIndex].sets[setIndex].setRestTime[toDay] = actualTimeOrRepNumber;
       }
     }
 
-    ///Exercise Pause Screen
+    /// Exercise Pause Screen
     if (!lastExe) {
       screenTrainingsDataUpdater(exeIndex + 1, 0, false, true);
     }
@@ -368,6 +397,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
     if (!lastExe) {
       await waitUserForNextSet();
+      // Fill Exercise Rest Time after done Button Pressed
+      selectedPlan.exercises[exeIndex].exerciseRestTime[toDay] = actualTimeOrRepNumber;
       screenExerciseDataUpdater(exeIndex + 1, 0, false);
     }
   }
@@ -399,30 +430,32 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   void screenTrainingsDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode, bool exepause) {
-    Exercises doingExercise = selectedPlan.exercises![exeIndex];
+    Exercises doingExercise = selectedPlan.exercises[exeIndex];
     selectedExercise = doingExercise;
 
     ///Initialize Screen Info
     setState(() {
-      exeriseName = doingExercise.name!;
+      exeriseName = doingExercise.name;
       exeriseSubName = 'Exercise';
       actualSetNumber = doingSetIndex + 1;
-      actualWeight = doingExercise.sets![doingSetIndex].weight;
+      actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
 
       ///Trainings Mode
       if (trainingsMode) {
         prepareFor = 'train';
         modeColor = Styles.backgroundActivity;
-        if (doingExercise.sets![doingSetIndex].repetitions != null) {
+        if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
           actualTimeorRep = 'rep';
-          actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].repetitions ?? 0;
+          actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
           actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
           progressValue = 1;
+          progressColor = Styles.white;
           startPassiveTimerTrainignsMode(exeIndex, doingSetIndex);
         } else {
           progressValue = 0.0;
+          progressColor = Styles.white;
           actualTimeorRep = 'sec';
-          actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].time ?? 0;
+          actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
           actualTimeOrRepNumber = 0;
           startActiveTimerTrainignsMode(exeIndex, doingSetIndex);
         }
@@ -430,18 +463,20 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         ///Pause Mode
       } else {
         progressValue = 0.0;
+        progressColor = Styles.white;
         modeColor = Styles.backgroundPause;
         actualTimeorRep = 'sec';
         actualTimeOrRepNumber = 0;
 
         if (!exepause) {
           prepareFor = 'pause';
-          actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].pause ?? 0;
+          actualTimeOrRepNumberToDo = doingExercise.setRestTimeScale['actualToDo'] ?? 0;
           startActiveTimerPauseMode(exeIndex, doingSetIndex);
         } else {
           prepareFor = 'pause - next';
           setExerciseVideo(doingExercise);
-          actualTimeOrRepNumberToDo = doingExercise.exePauseTime ?? 0;
+
+          actualTimeOrRepNumberToDo = selectedPlan.exercises[exeIndex ].setRestTimeScale['actualToDo'] ?? 0;
           startActiveTimerExePauseMode(exeIndex);
         }
       }
@@ -458,7 +493,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex].sets![setIndex].timeDone = newTick;
+        trainModeTimeDone = newTick;
+        // fillPlanList[exeIndex][setIndex]['setDoTimeScale'] = newTick;
       });
     });
   }
@@ -473,9 +509,15 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex].sets![setIndex].timeDone = newTick;
+        // fillPlanList[exeIndex][setIndex]['setDoTimeScale'] = newTick;
+        trainModeTimeDone = newTick;
         actualTimeOrRepNumber = newTick;
-        progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
+          progressValue = 1;
+          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+        } else {
+          progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        }
       });
     });
   }
@@ -490,9 +532,15 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex].sets![setIndex].pauseDone = newTick;
+        // fillPlanList[exeIndex][setIndex]['setRestTimeScale'] = newTick;
+
         actualTimeOrRepNumber = newTick;
-        progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
+          progressValue = 1;
+          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+        } else {
+          progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        }
       });
     });
   }
@@ -507,57 +555,64 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         dev.log('SmallTime: $newTick');
       }
       setState(() {
-        selectedPlan.exercises![exeIndex - 1].exePauseTimeDone = newTick;
+        // selectedPlan.exercises![exeIndex - 1].exePauseTimeDone = newTick;
+        // fillPlanList[exeIndex][0]['exerciseRestTime'] = newTick;
+
         actualTimeOrRepNumber = newTick;
-        progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1 ? 1 : actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
+          progressValue = 1;
+          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+        } else {
+          progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+        }
       });
     });
   }
 
   void screenExerciseDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode) {
-    Exercises doingExercise = selectedPlan.exercises![exeIndex];
+    Exercises doingExercise = selectedPlan.exercises[exeIndex];
     selectedExercise = doingExercise;
     if (smallTimeSubscription != null) {
       smallTimeSubscription!.cancel();
     }
     setState(() {
-      exeriseName = doingExercise.name!;
+      exeriseName = doingExercise.name;
       exeriseSubName = 'Exercise';
       actualSetNumber = doingSetIndex + 1;
-      actualWeight = doingExercise.sets![doingSetIndex].weight;
+      actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
       prepareFor = 'Next Exercise';
 
       modeColor = Styles.backgroundActivity;
-      if (doingExercise.sets![doingSetIndex].repetitions != null) {
+      if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
         actualTimeorRep = 'rep';
-        actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].repetitions ?? 0;
+        actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
         actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
+        trainModeTimeDone = 0;
         progressValue = 1;
+        progressColor = Styles.white;
       } else {
         actualTimeorRep = 'sec';
-        actualTimeOrRepNumberToDo = doingExercise.sets![doingSetIndex].time ?? 0;
+        actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
         actualTimeOrRepNumber = 0;
+        trainModeTimeDone = 0;
+         progressValue = 0.0;
+        progressColor = Styles.white;
       }
     });
   }
 
-  void changeRpeScale(int addNewValue, int exeIndex, bool userEdited) {
-    int rpeScalLength = selectedPlan.exercises![exeIndex].rpeScale!.length;
+  void changeRpeScale(int addNewValue, int exeIndex) {
+    selectedPlan.exercises[exeIndex].rpeScale[toDay] = addNewValue;
+    // fillPlanList[exeIndex][0]['rpeScale'] = addNewValue;
 
-    if (userEdited) {
-      selectedPlan.exercises![exeIndex].rpeScale![(rpeScalLength - 1)] = addNewValue;
-    } else {
-      selectedPlan.exercises![exeIndex].rpeScale!.add(addNewValue);
-    }
     nextExeButtonPressed();
   }
 
   void setExerciseVideo(Exercises? doingExercise) {
     _vpController?.dispose();
 
-    // _vpController = VideoPlayerController.asset('assets/videos/test7.mp4')
     if (doingExercise != null) {
-      _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.video}.mp4')
+      _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.media}.mp4')
         ..addListener(() => setState(() {}))
         ..setLooping(true)
         ..setVolume(0.0)
@@ -597,7 +652,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson()),
+        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: user!),
       ),
     );
   }

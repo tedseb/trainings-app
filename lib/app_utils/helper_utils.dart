@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-export 'dart:math' show min, max;
 
 DateTime get getCurrentTimestamp => DateTime.now();
 

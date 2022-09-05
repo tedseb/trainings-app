@@ -148,37 +148,7 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Sign out', style: Styles.profileItemText),
-                          Container(
-                            margin: const EdgeInsets.only(top: 4.0),
-                            width: 32.0,
-                            height: 4,
-                            decoration: BoxDecoration(
-                              color: Styles.grey,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ShadowIconButtonWidget(
-                        buttonIcon: Icons.chevron_right_rounded,
-                        onPressFunction: () async {
-                          dev.log('Open Logout Screen');
-
-                          await _auth.signOut();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                
               ],
             ),
           ),

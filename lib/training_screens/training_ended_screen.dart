@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/plans.dart';
+import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/services/database.dart';
+import 'package:higym/zzz_deleteable/databaseOld.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -14,32 +15,32 @@ class TrainingEndedScreen extends StatefulWidget {
   const TrainingEndedScreen({
     Key? key,
     required this.selectedPlan,
+    required this.user
   }) : super(key: key);
 
   final Map<String, dynamic> selectedPlan;
+   final AppUser user;
 
   @override
   State<TrainingEndedScreen> createState() => _TrainingEndedScreenState();
 }
 
 class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
-  AppUser? user;
+ 
   Color modeColor = Styles.white;
 
   late Plans selectedPlan;
-  late Plans donePlan;
 
   @override
   void initState() {
     selectedPlan = Plans.plansFromJson(widget.selectedPlan);
-
+    updatePlan(selectedPlan);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<AppUser?>(context);
-    updatePlanWeights();
+    
     return Scaffold(
       backgroundColor: modeColor,
       body: Padding(
@@ -137,15 +138,9 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
     );
   }
 
-    void updatePlanWeights() {
-    
-    if (user != null) {
-        DatabaseService(
-            uid: user!.uid,
-            selectedPlan: Plans.plansFromJson(widget.selectedPlan),
-            planNameOrDate: DateFormat('yyyy-MM-dd_kk:mm').format(DateTime.now()),
-            collectionPlansOrDonePlans: 'FinishedExercises')
-        .addToEndedPlans();
-    }
+    void updatePlan(Plans plan) {
+      DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(plan);
+      
+      dev.log('Update Plan');
   }
 }

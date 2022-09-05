@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/services/database.dart';
 
 import 'dart:developer' as dev;
 
-import 'package:higym/services/database.dart';
+import 'package:higym/zzz_deleteable/databaseOld.dart';
 
 
 
@@ -40,7 +41,7 @@ class AuthService {
       User? user = result.user;
 
       //create a new document for the user with the uid
-      await DatabaseService(uid: user!.uid).updateUserData(userName, 0, 'Mein Studio');
+      await DatabaseService(uid: user!.uid).updateUserData(userName,email);
       return _userFromFireBaseUser(user);
     } catch (e) {
       dev.log(e.toString());
