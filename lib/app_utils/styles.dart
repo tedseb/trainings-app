@@ -8,9 +8,11 @@ class Styles {
 
   static const Color tertiaryColor = Color.fromRGBO(26, 31, 36, 1);
   static const Color grey = Colors.grey;
+  static const Color error = Colors.red;
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color gymyGrey = Color(0xFF555453);
+  static const Color hiGymText = Color(0xFF333333);
   static const Color tertiaryDark = Color(0xFF131619);
   static const Color tertiaryTransparent = Color(0x801A1F24);
 
@@ -32,7 +34,7 @@ class Styles {
 
   ///Text Styles
   static TextStyle get title => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.normal,
         fontSize: 36,
       );
@@ -47,27 +49,27 @@ class Styles {
         fontSize: 20,
       );
   static TextStyle get trainingsplanTitle => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       );
   static TextStyle get trainingsplanSubTitle => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w500,
         fontSize: 20,
       );
   static TextStyle get trainingsplanIconTitle => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 11,
       );
   static TextStyle get trainingsplanCardExeTitle => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 16,
       );
   static TextStyle get trainingsplanCardExeSubTitle => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w500,
         fontSize: 16,
       );
@@ -82,27 +84,27 @@ class Styles {
         fontSize: 28,
       );
   static TextStyle get homeCardName => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w300,
         fontSize: 28,
       );
   static TextStyle get homeCardText => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 12,
       );
   static TextStyle get homeProgressText => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 18,
       );
   static TextStyle get navBarMenuText => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w600,
         fontSize: 10,
       );
   static TextStyle get profileItemText => const TextStyle(
-        color: gymyGrey,
+        color: hiGymText,
         fontWeight: FontWeight.w500,
         fontSize: 18,
       );
@@ -110,6 +112,32 @@ class Styles {
         color: white,
         fontWeight: FontWeight.w500,
         fontSize: 30,
+      );
+
+       static TextStyle get logInScreenWelcomeText => const TextStyle(
+        color: hiGymText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
+       static TextStyle get textFormFieldLabel => const TextStyle(
+        color: hiGymText,
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      );
+       static TextStyle get textFormFieldHintText => const TextStyle(
+        color: grey,
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+      );
+       static TextStyle get loginScreenPrivacyText => const TextStyle(
+        color: grey,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+      );
+       static TextStyle get loginWithAlternativText => const TextStyle(
+        color: hiGymText,
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
       );
 
   //   static TextStyle get subtitle1 => GoogleFonts.getFont(
@@ -130,27 +158,27 @@ class Styles {
       );
   // static Icon get talkToAiOnTrainingsprogramm => const Icon(
   //      Icons.surround_sound_outlined,
-  //       color: gymyGrey,
+  //       color: hiGymText,
   //       size: 32.0,
   //     );
   static Icon get fitnessIcon => const Icon(
         Icons.fitness_center_rounded,
-        color: gymyGrey,
+        color: hiGymText,
         size: 30.0,
       );
   static Icon get bodyIcon => const Icon(
         Icons.boy_rounded,
-        color: gymyGrey,
+        color: hiGymText,
         size: 30.0,
       );
   static Icon get levelIcon => const Icon(
         Icons.signal_cellular_alt_2_bar,
-        color: gymyGrey,
+        color: hiGymText,
         size: 30.0,
       );
   static Icon get timerIcon => const Icon(
         Icons.timer_rounded,
-        color: gymyGrey,
+        color: hiGymText,
         size: 30.0,
       );
 
@@ -166,6 +194,7 @@ class Styles {
     }
     return returnIcon;
   }
+
   static String getFitnessLevelText(int lvl) {
     String returnText;
     switch (lvl) {
@@ -184,7 +213,6 @@ class Styles {
     }
     return returnText;
   }
-  
 
   //       double width = MediaQuery.of(context).size.width;
   // double height = MediaQuery.of(context).size.height;

@@ -22,6 +22,18 @@ class DatabaseService {
     });
   }
 
+  Future updateActivityPoints({required double activityPoints}) {
+    return usersCollection.doc(uid).update({
+      'activityPoints': activityPoints,
+    });
+  }
+
+  Future updateActivityLevel({required int activityLevel}) {
+    return usersCollection.doc(uid).update({
+      'activityLevel': activityLevel,
+    });
+  }
+
   /// Get User-Data
   Stream<AppUser> get getUserData {
     final docUser = usersCollection.doc(uid);
@@ -29,7 +41,9 @@ class DatabaseService {
           (event) => AppUser(
             name: event.get('userName'),
             uid: uid,
-            // email: event.get('userMail'),
+            email: event.data().toString().contains('userMail') ? event.get('userMail') : 'no_user_mail',
+            activityPoints: event.data().toString().contains('activityPoints') ? event.get('activityPoints') : 0.0,
+            activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),
         );
   }
@@ -53,6 +67,7 @@ class DatabaseService {
         'difficultyLevel': trainingsProgramm.difficultyLevel,
         'durationWeeks': trainingsProgramm.durationWeeks,
         'actualPhase': trainingsProgramm.actualPhase,
+        'phases': trainingsProgramm.phases,
         'actualPlan': trainingsProgramm.actualPlan,
         'plans': addPlanAsMap(trainingsProgramm.plans),
         // 'plans': trainingsProgramm.plans.map((plan) => mapPlan(plan)),
@@ -104,7 +119,6 @@ class DatabaseService {
   // -----------------------------------------START - Update My Goal--------------------------------
 
   Future updateTrainingsProgramm(Plans updatePlan) {
-    
     return usersCollection.doc(uid).collection('Goal').doc('TrainingsProgramm').update({
       'plans.${updatePlan.name}': mapPlan(updatePlan),
       // 'plans': FieldValue.arrayUnion([mapPlan(updatePlan)]),
@@ -139,25 +153,14 @@ class DatabaseService {
                   difficultyLevel: doc.get('difficultyLevel'),
                   durationWeeks: doc.get('durationWeeks'),
                   actualPhase: doc.get('actualPhase'),
+                  phases: _fillStringStringMaps(doc.get('phases')),
                   actualPlan: doc.get('actualPlan'),
                   plans: _fillPlans(doc.get("plans")),
                 ))
             .toList());
   }
 
-  // // Convert all Plans
-  // List<Plans> _fillPlans(List plans) {
-  //   return plans
-  //       .map((plan) => Plans(
-  //             name: plan['name'],
-  //             planIndex: plan['planIndex'],
-  //             time: plan['time'],
-  //             exercises: _fillExercises(plan['exercises']),
-  //           ))
-  //       .toList();
-  // }
-
-    // Convert all Plans
+  // Convert all Phases
   List<Plans> _fillPlans(Map plans) {
     return plans.entries
         .map((plan) => Plans(
@@ -212,6 +215,17 @@ class DatabaseService {
   // Convert Map<dynamic, dynamic> to Map<String, double>
   Map<String, double> _fillStringDoubleMaps(Map<dynamic, dynamic> map) {
     Map<String, double> returnMap = {};
+
+    map.forEach((key, value) {
+      returnMap[key] = value;
+    });
+
+    return returnMap;
+  }
+
+  // Convert Map<dynamic, dynamic> to Map<String, String>
+  Map<String, String> _fillStringStringMaps(Map<dynamic, dynamic> map) {
+    Map<String, String> returnMap = {};
 
     map.forEach((key, value) {
       returnMap[key] = value;

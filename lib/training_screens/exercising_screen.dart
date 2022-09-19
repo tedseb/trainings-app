@@ -20,9 +20,11 @@ class ExercisingScreen extends StatefulWidget {
   const ExercisingScreen({
     Key? key,
     required this.selectedPlan,
+    required this.appUser,
   }) : super(key: key);
 
   final Map<String, dynamic> selectedPlan;
+  final AppUser appUser;
 
   @override
   State<ExercisingScreen> createState() => _ExercisingScreenState();
@@ -44,6 +46,16 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   Color progressColor = Styles.white;
 
+  late int selectedExerciseIndex;
+  late List<int> doingExeIndexList;
+  List<int> occupiedExeIndexList = [];
+  int doingExeIndexListLength = 0;
+  int doingExeIndex = 0;
+  bool doLater = false;
+  bool skipExe = false;
+  bool lastExe = false;
+  bool exerciseStarted = false;
+
   late Plans selectedPlan;
   late Exercises selectedExercise;
   Completer<void>? buttonCompleter;
@@ -57,7 +69,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   IconData playDoneButton = Icons.play_circle_fill_rounded;
 
   String toDay = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  AppUser? user;
 
   // late List<List<Map<String,num>>> fillPlanList;
 
@@ -74,8 +85,24 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     //   ),
     //   growable: false,
     // );
+
+    for (Exercises exe in selectedPlan.exercises) {
+      exe.rpeScale[toDay] = -1;
+      // selectedPlan.exercises[exeIndex].rpeScale[toDay] = addNewValue;
+    }
+
+    /// Set toDo ExerciseList
+    doingExeIndexList = List.generate(
+      selectedPlan.exercises.length,
+      (exeIndex) => exeIndex,
+      growable: true,
+    );
+    doingExeIndexListLength = selectedPlan.exercises.length - 1;
+
     setExerciseVideo(selectedPlan.exercises[0]);
     screenExerciseDataUpdater(0, 0, true);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => startPlan());
 
     super.initState();
   }
@@ -89,7 +116,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<AppUser?>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -97,313 +123,374 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       },
       child: Scaffold(
         backgroundColor: modeColor,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            /// TopBar Close - Skip - Buttons
-            Container(
-              height: 100,
-              padding: const EdgeInsets.only(left: 16.0, top: 26.0, right: 16.0, bottom: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    iconSize: 32,
-                    icon: Styles.closeIcon,
-                    onPressed: () async {
-                      await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 32,
-                    icon: Styles.skipIcon,
-                    onPressed: () async {
-                      await helper_utils.myBottomSheet(
-                        context,
-                        LeaveExerciseScreen(leaveTraining: false, nextExercise: nextExeButtonPressed, endTraining: endTraining),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            /// Exercise Informations
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 40.0,
-                    child: ElevatedButton(
-                      onPressed: () => openExerciseInfo(),
-                      style: ElevatedButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(8.0),
-                            bottomRight: Radius.circular(8.0),
-                          ),
-                          side: BorderSide.none,
-                        ),
-                        primary: Styles.white,
-                        onPrimary: Styles.white,
-                        elevation: 0.0,
-                        minimumSize: Size.zero,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          'i',
-                          style: TextStyle(
-                            color: modeColor,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 38,
-                          ),
-                        ),
-                      ),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 18.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /// TopBar Close - Skip - Buttons
+              Container(
+                height: 100,
+                padding: const EdgeInsets.only(left: 16.0, top: 26.0, right: 16.0, bottom: 30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      iconSize: 32,
+                      icon: Styles.closeIcon,
+                      onPressed: () async {
+                        await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
+                      },
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(prepareFor, style: Styles.exercisingSubTitle),
-                        Text(
-                          helper_utils.truncateExerciseName(exeriseName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
-                          style: Styles.exercisingTitle,
-                        ),
-                        Text(
-                          exeriseSubName,
-                          style: Styles.exercisingTitle,
-                        ),
-                      ],
+                    IconButton(
+                      iconSize: 32,
+                      icon: Styles.skipIcon,
+                      onPressed: () async {
+                        await helper_utils.myBottomSheet(
+                          context,
+                          LeaveExerciseScreen(
+                              leaveTraining: false,
+                              nextExercise: () {
+                                setState(() {
+                                  skipExe = true;
+                                });
+                                nextExeButtonPressed();
+                              },
+                              exerciseOccupied: doExerciseLater,
+                              endTraining: endTraining),
+                        );
+                      },
                     ),
-                  ),
-                  const Expanded(
-                    child: SizedBox(),
-                  ),
-                  const SizedBox(
-                    height: 125,
-                    child: VerticalDivider(
-                      color: Styles.white,
-                      thickness: 1.5,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 90.0,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '$actualSetNumber.',
-                                style: Styles.exercisingTitle,
-                              ),
-                              Text(
-                                'set',
-                                style: Styles.exercisingTitle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                actualWeight.toString(),
-                                style: Styles.exercisingTitle,
-                              ),
-                              Text(
-                                'kg',
-                                style: Styles.exercisingTitle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                actualTimeOrRepNumberToDo.toString(),
-                                style: Styles.exercisingTitle,
-                              ),
-                              Text(
-                                actualTimeorRep,
-                                style: Styles.exercisingTitle,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// Progress Indicator
-            Expanded(
-              child: !_vpController!.value.isInitialized
-                  ? const LoadingWidget()
-                  : Stack(
-                      children: [
-                        /// Video
-                        Center(
-                          child: ColorFiltered(
-                            colorFilter: ColorFilter.mode(modeColor, BlendMode.modulate),
-                            child: AspectRatio(
-                              aspectRatio: _vpController!.value.aspectRatio,
-                              child: VideoPlayer(_vpController!),
-                            ),
-                          ),
-                        ),
-
-                        /// Circle
-                        Center(
-                          child: SizedBox(
-                            height: (MediaQuery.of(context).size.height / 10) * 3,
-                            width: (MediaQuery.of(context).size.height / 10) * 3,
-                            child: CircularProgressIndicator(
-                              value: progressValue,
-                              color: progressColor,
-                              strokeWidth: 8.0,
-                            ),
-                          ),
-                        ),
-
-                        /// Counter
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                actualTimeOrRepNumber.toString(),
-                                style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
-                              ),
-                              Text(
-                                actualTimeorRep,
-                                style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-
-            ///Play Button
-            Container(
-              height: 105,
-              padding: const EdgeInsets.only(bottom: 18.0),
-              child: IconButton(
-                onPressed: () {
-                  if (globalTimeStream == null) {
-                    startPlan();
-                  } else {
-                    nextExeButtonPressed();
-                  }
-                },
-                iconSize: 72,
-                icon: Icon(
-                  playDoneButton,
-                  color: Styles.white,
+                  ],
                 ),
               ),
-            ),
-          ],
+
+              /// Exercise Informations
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 40.0,
+                      child: ElevatedButton(
+                        onPressed: () => openExerciseInfo(),
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
+                            ),
+                            side: BorderSide.none,
+                          ),
+                          primary: Styles.white,
+                          onPrimary: Styles.white,
+                          elevation: 0.0,
+                          minimumSize: Size.zero,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            'i',
+                            style: TextStyle(
+                              color: modeColor,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 38,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(prepareFor, style: Styles.exercisingSubTitle),
+                          Text(
+                            helper_utils.truncateExerciseName(exeriseName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
+                            style: Styles.exercisingTitle,
+                          ),
+                          Text(
+                            exeriseSubName,
+                            style: Styles.exercisingTitle,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Expanded(
+                      child: SizedBox(),
+                    ),
+                    const SizedBox(
+                      height: 125,
+                      child: VerticalDivider(
+                        color: Styles.white,
+                        thickness: 1.5,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 90.0,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '$actualSetNumber.',
+                                  style: Styles.exercisingTitle,
+                                ),
+                                Text(
+                                  'set',
+                                  style: Styles.exercisingTitle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  actualWeight.toString(),
+                                  style: Styles.exercisingTitle,
+                                ),
+                                Text(
+                                  'kg',
+                                  style: Styles.exercisingTitle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  actualTimeOrRepNumberToDo.toString(),
+                                  style: Styles.exercisingTitle,
+                                ),
+                                Text(
+                                  actualTimeorRep,
+                                  style: Styles.exercisingTitle,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              /// Progress Indicator
+              Expanded(
+                child: !_vpController!.value.isInitialized
+                    ? const LoadingWidget()
+                    : Stack(
+                        children: [
+                          /// Video
+                          Center(
+                            child: ColorFiltered(
+                              colorFilter: ColorFilter.mode(modeColor, BlendMode.modulate),
+                              child: AspectRatio(
+                                aspectRatio: _vpController!.value.aspectRatio,
+                                child: VideoPlayer(_vpController!),
+                              ),
+                            ),
+                          ),
+
+                          /// Circle
+                          Center(
+                            child: SizedBox(
+                              height: (MediaQuery.of(context).size.height / 10) * 3,
+                              width: (MediaQuery.of(context).size.height / 10) * 3,
+                              child: CircularProgressIndicator(
+                                value: progressValue,
+                                color: progressColor,
+                                strokeWidth: 8.0,
+                              ),
+                            ),
+                          ),
+
+                          /// Counter
+                          Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  actualTimeOrRepNumber.toString(),
+                                  style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
+                                ),
+                                Text(
+                                  actualTimeorRep,
+                                  style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+
+              ///Play Button
+              SizedBox(
+                height: 105,
+                // padding: const EdgeInsets.only(bottom: 18.0),
+                child: IconButton(
+                  onPressed: () {
+                    nextExeButtonPressed();
+                    // if (globalTimeStream == null) {
+                    //   startPlan();
+                    // } else {
+                    //   nextExeButtonPressed();
+                    // }
+                  },
+                  iconSize: 72,
+                  icon: Icon(
+                    playDoneButton,
+                    color: Styles.white,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 18,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
+                      child: ElevatedButton(
+                        onPressed: () => doExerciseLater(),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            side: BorderSide.none,
+                          ),
+                          primary: Colors.transparent,
+                          onPrimary: Styles.white,
+                          elevation: 0.0,
+                        ),
+                        child: const Text(
+                          'Occupied - Do Later',
+                          style: TextStyle(
+                            color: Styles.white,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Future<void> startPlan() async {
-    int exercisesLength = selectedPlan.exercises.length - 1;
-    bool lastExe = false;
+    // int exercisesLength = selectedPlan.exercises.length - 1;
 
     ///Start only the Global Time for Training duration
     startGlobalTimer();
 
-    for (int exe = 0; exe <= exercisesLength; exe++) {
-      if (exe == exercisesLength) {
+    for (int doingExe = 0; doingExe <= doingExeIndexListLength; doingExe++) {
+      doingExeIndex = doingExe;
+      if (doingExe == doingExeIndexListLength) {
         setState(() {
           lastExe = true;
         });
       }
-      setState(() {
-        playDoneButton = Icons.check_circle_rounded;
-      });
-      await startExercise(exe, lastExe);
-      setState(() {
-        playDoneButton = Icons.play_circle_fill_rounded;
-      });
-      if (!lastExe) {
-        await waitUserForNextSet();
+      await waitUserForUserButtonPress();
+      if (!doLater) {
+        addOccupiedExeToList();
+        setState(() {
+          playDoneButton = Icons.check_circle_rounded;
+        });
+        await startExercise(doingExeIndexList[doingExe]);
+        setState(() {
+          playDoneButton = Icons.play_circle_fill_rounded;
+        });
+        // if (!lastExe) {
+        //   await waitUserForUserButtonPress();
+        // }
+      } else {
+        setState(() {
+          doLater = false;
+        });
       }
     }
     endTraining();
   }
 
-  Future<void> startExercise(int exeIndex, bool lastExe) async {
+  Future<void> startExercise(int exeIndex) async {
     Exercises exercise = selectedPlan.exercises[exeIndex];
     int setsLength = exercise.sets.length - 1;
     for (int setIndex = 0; setIndex <= setsLength; setIndex++) {
       /// Trainings Screen
-      screenTrainingsDataUpdater(exeIndex, setIndex, true, false);
-      await waitUserForNextSet();
-      // Fill Repetitions and Trainings TimeDone after done Button Pressed
-      selectedPlan.exercises[exeIndex].sets[setIndex].repetitions[toDay] = selectedPlan.exercises[exeIndex].repetitionsScale['actualToDo']!;
-      selectedPlan.exercises[exeIndex].sets[setIndex].setTime[toDay] = trainModeTimeDone;
+      if (!skipExe) {
+        screenTrainingsDataUpdater(exeIndex, setIndex, true, false);
+        await waitUserForUserButtonPress();
+        // Fill Repetitions and Trainings TimeDone after done Button Pressed
+        selectedPlan.exercises[exeIndex].sets[setIndex].repetitions[toDay] = selectedPlan.exercises[exeIndex].repetitionsScale['actualToDo']!;
+        selectedPlan.exercises[exeIndex].sets[setIndex].setTime[toDay] = trainModeTimeDone;
+      }
 
       /// Pause Screen
-      if (setIndex < setsLength) {
-        screenTrainingsDataUpdater(exeIndex, setIndex, false, false);
-        await waitUserForNextSet();
-        // Fill Rest Time after done Button Pressed
-        selectedPlan.exercises[exeIndex].sets[setIndex].setRestTime[toDay] = actualTimeOrRepNumber;
+      if (!skipExe) {
+        if (setIndex < setsLength) {
+          screenTrainingsDataUpdater(exeIndex, setIndex, false, false);
+          await waitUserForUserButtonPress();
+          // Fill Rest Time after done Button Pressed
+          selectedPlan.exercises[exeIndex].sets[setIndex].setRestTime[toDay] = actualTimeOrRepNumber;
+        }
       }
     }
 
     /// Exercise Pause Screen
-    if (!lastExe) {
-      screenTrainingsDataUpdater(exeIndex + 1, 0, false, true);
+    if (!skipExe) {
+      if (!lastExe) {
+        screenTrainingsDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false, true);
+      }
+      showModalBottomSheet(
+        isScrollControlled: true,
+        enableDrag: false,
+        isDismissible: false,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: RPEScale(rpeScaleUpdater: changeRpeScale, exeScore: 100, exerciseIndex: exeIndex),
+          );
+        },
+      );
+
+      /// Wait for RPE Scale Pressed
+      await waitUserForUserButtonPress();
     }
-    showModalBottomSheet(
-      isScrollControlled: true,
-      enableDrag: false,
-      isDismissible: false,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: MediaQuery.of(context).viewInsets,
-          child: RPEScale(rpeScaleUpdater: changeRpeScale, exeScore: 100, exerciseIndex: exeIndex),
-        );
-      },
-    );
-
-    /// Wait for RPE Scale Pressed
-    await waitUserForNextSet();
-
     if (!lastExe) {
-      await waitUserForNextSet();
+      if (!skipExe) {
+        await waitUserForUserButtonPress();
+      }
       // Fill Exercise Rest Time after done Button Pressed
       selectedPlan.exercises[exeIndex].exerciseRestTime[toDay] = actualTimeOrRepNumber;
-      screenExerciseDataUpdater(exeIndex + 1, 0, false);
+      screenExerciseDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false);
     }
+
+    skipExe = false;
   }
 
-  Future<void> waitUserForNextSet() async {
+  Future<void> waitUserForUserButtonPress() async {
     final completer = Completer<void>();
     buttonCompleter = completer;
 
@@ -415,6 +502,34 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       buttonCompleter?.complete();
       buttonCompleter = null;
     });
+  }
+
+  void addOccupiedExeToList() {
+    if (occupiedExeIndexList.isNotEmpty) {
+      for (int occupiedExe = 0; occupiedExe < occupiedExeIndexList.length; occupiedExe++) {
+        doingExeIndexList.insert(doingExeIndex + occupiedExe + 1, occupiedExeIndexList[occupiedExe]);
+      }
+
+      occupiedExeIndexList.clear();
+    }
+  }
+
+  void doExerciseLater() {
+    dev.log('do Later');
+
+    setState(() {
+      doLater = true;
+      doingExeIndexListLength++;
+      // doingExeIndexList.add(selectedExerciseIndex);
+      // doingExeIndexList.insert(doingExeIndex+2, selectedExerciseIndex);
+      occupiedExeIndexList.add(selectedExerciseIndex);
+      if (doingExeIndexList.length - 1 <= doingExeIndex) {
+        addOccupiedExeToList();
+      }
+      setExerciseVideo(selectedPlan.exercises[doingExeIndexList[doingExeIndex + 1]]);
+      screenExerciseDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, true);
+    });
+    nextExeButtonPressed();
   }
 
   void startGlobalTimer() {
@@ -476,7 +591,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           prepareFor = 'pause - next';
           setExerciseVideo(doingExercise);
 
-          actualTimeOrRepNumberToDo = selectedPlan.exercises[exeIndex ].setRestTimeScale['actualToDo'] ?? 0;
+          actualTimeOrRepNumberToDo = selectedPlan.exercises[exeIndex].setRestTimeScale['actualToDo'] ?? 0;
           startActiveTimerExePauseMode(exeIndex);
         }
       }
@@ -577,6 +692,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     }
     setState(() {
       exeriseName = doingExercise.name;
+      selectedExerciseIndex = exeIndex;
       exeriseSubName = 'Exercise';
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
@@ -595,7 +711,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
         actualTimeOrRepNumber = 0;
         trainModeTimeDone = 0;
-         progressValue = 0.0;
+        progressValue = 0.0;
         progressColor = Styles.white;
       }
     });
@@ -652,8 +768,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: user!),
+        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: widget.appUser),
       ),
     );
   }
-}
+}//353

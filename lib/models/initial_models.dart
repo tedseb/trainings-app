@@ -10,8 +10,13 @@ class InitialModels {
         info: 'Training Programm Info is Loading...',
         fitnesstype: 'Fitness Type is Loading...',
         difficultyLevel: 1,
-        durationWeeks: 12,
+        durationWeeks: 24,
         actualPhase: 1,
+        phases: {
+          '1':'2022-09-20',
+          '2':'2022-12-20',
+          '3':'2023-03-20',
+        },
         actualPlan: 'Plan name is Loading...',
         plans: [
           Plans(

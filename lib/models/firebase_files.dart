@@ -1,7 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 
-class FirebaseFiles{
-
+class FirebaseFiles {
   final Reference ref;
   final String category;
   final String name;
@@ -13,5 +12,4 @@ class FirebaseFiles{
     required this.name,
     required this.url,
   });
-
 }

@@ -35,25 +35,23 @@ class _GoalsScreenState extends State<GoalsScreen> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: expandedIndex == 0
-                    ?  SizedBox(
-                      height: 550,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(8.0,128.0,8.0,8.0),
-                        child: Column(
-                          children:  [
-                            const Text(
-                              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                ElevatedButton(onPressed: (){}, child: Text('Activate'))
-                              ],
-                            )
-                          ],
+                    ? SizedBox(
+                        height: 550,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 128.0, 8.0, 8.0),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Row(
+                                children: [ElevatedButton(onPressed: () {}, child: const Text('Activate'))],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )
+                      )
                     : const SizedBox(),
               ),
               InkWell(

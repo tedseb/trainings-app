@@ -37,8 +37,6 @@ dependencies:
   flutter_gen: ^4.3.0
   flutter_lints: ^2.0.0
   video_player: ^2.4.5
-  cloud_firestore: ^3.4.3
-  firebase_auth: ^3.6.2
   provider: ^6.0.3
   intl: ^0.17.0
   flutter_spinkit: ^5.1.0
@@ -46,8 +44,11 @@ dependencies:
   path_provider: ^2.0.11
   http: ^0.13.5
   archive: ^3.3.1
+  cloud_firestore: ^3.4.3
+  firebase_auth: ^3.6.2
   firebase_core: ^1.20.1
   firebase_storage: ^10.3.5
+  google_sign_in: ^5.4.1
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,7 @@ flutter:
     - assets/exercises/
     - assets/badges/
     - assets/card_background/
+    - assets/logo/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:higym/achievements/achievements.dart';
 import 'package:higym/home/home_screen.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/plans.dart';
+import 'package:higym/zzz_deleteable/plans.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/profile/profile_screen.dart';
 import 'package:higym/screen_widgets/expanded_example.dart';
@@ -51,6 +52,7 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     Goal goal = Provider.of<Goal>(context);
+    AppUser appUser = Provider.of<AppUser>(context);
     return Scaffold(
       backgroundColor: Styles.white,
       extendBody: true,
@@ -94,7 +96,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ExercisingScreen(selectedPlan: selectedPlan.plansToJson()),
+                      builder: (context) => ExercisingScreen(selectedPlan: selectedPlan.plansToJson(), appUser: appUser),
                     ),
                   );
                 },

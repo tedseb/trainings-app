@@ -121,12 +121,12 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                         children: [
                           Text(
                             selectedExercise.name,
-                            style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
+                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
                           ),
                           Text(
                             //  selectedExercise!.name!,
                             'Exercise',
-                            style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
+                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
                           ),
                         ],
                       ),
@@ -179,16 +179,16 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                       children: [
                         const Icon(
                           Icons.keyboard_arrow_up_rounded,
-                          color: Styles.gymyGrey,
+                          color: Styles.hiGymText,
                           size: 32.0,
                         ),
                         Text(
                           swipeText,
-                          style: const TextStyle(color: Styles.gymyGrey, fontSize: 26.0, fontWeight: FontWeight.w300),
+                          style: const TextStyle(color: Styles.hiGymText, fontSize: 26.0, fontWeight: FontWeight.w300),
                         ),
                         Text(
                           swipeSupText,
-                          style: const TextStyle(color: Styles.gymyGrey, fontSize: 22.0, fontWeight: FontWeight.w400),
+                          style: const TextStyle(color: Styles.hiGymText, fontSize: 22.0, fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),

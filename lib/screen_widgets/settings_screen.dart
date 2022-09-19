@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
                   iconSize: 38.0,
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Styles.gymyGrey,
+                    color: Styles.hiGymText,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
                     Text('Settings', style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(Icons.settings_outlined, color: Styles.gymyGrey),
+                      child: Icon(Icons.settings_outlined, color: Styles.hiGymText),
                     ),
                   ],
                 ),
@@ -105,7 +105,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Terms & Conditions', style: Styles.profileItemText),
@@ -129,7 +129,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                     Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Delete Account', style: Styles.profileItemText),
@@ -148,7 +148,6 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                
               ],
             ),
           ),

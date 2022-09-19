@@ -62,21 +62,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    cursorColor: Styles.gymyGrey,
+                    cursorColor: Styles.hiGymText,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(labelText: 'Email'),
                   ),
                   TextField(
                     controller: nameController,
                     keyboardType: TextInputType.name,
-                    cursorColor: Styles.gymyGrey,
+                    cursorColor: Styles.hiGymText,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(labelText: 'Name'),
                   ),
                   const SizedBox(height: 4),
                   TextField(
                     controller: passwordController,
-                    cursorColor: Styles.gymyGrey,
+                    cursorColor: Styles.hiGymText,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(labelText: 'Password'),
                     obscureText: true,
@@ -105,6 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   _registerWithEmail() async {
     setState(() => loading = true);
     dynamic result = await _auth.registerWithEmailAndPassword(emailController.text, passwordController.text, nameController.text);
+    widget.toggleView();
     if (result == null) {
       setState(() {
         error = 'This email is not valid or taken by an another User';

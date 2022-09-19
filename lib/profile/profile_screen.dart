@@ -29,6 +29,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         difficultyLevel: 1,
         durationWeeks: 12,
         actualPhase: 2,
+        phases: {
+          '1': '2022-09-20',
+          '2': '2022-12-20',
+          '3': '2023-03-20',
+        },
         actualPlan: 'Full Body Plan',
         plans: [
           Plans(
@@ -252,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            SizedBox(height: screenSize.height/10),
+            SizedBox(height: screenSize.height / 10),
 
             /// Goals Button it will go
             Padding(
@@ -264,7 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.gymyGrey,
+                        backgroundColor: Styles.hiGymText,
                         child: Icon(Icons.flag_outlined, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),
@@ -290,7 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.gymyGrey,
+                        backgroundColor: Styles.hiGymText,
                         child: Icon(Icons.accessibility_new_rounded, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),
@@ -312,7 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.gymyGrey,
+                        backgroundColor: Styles.hiGymText,
                         child: Icon(Icons.surround_sound_outlined, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),
@@ -334,7 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.gymyGrey,
+                        backgroundColor: Styles.hiGymText,
                         child: Icon(Icons.settings_outlined, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),
@@ -342,15 +347,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                   ShadowIconButtonWidget(
-                      buttonIcon: Icons.chevron_right_rounded,
-                      onPressFunction: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SettingsScreen(),
-                          ),
-                        );
-                      }),
+                    buttonIcon: Icons.chevron_right_rounded,
+                    onPressFunction: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingsScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -365,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.gymyGrey,
+                        backgroundColor: Styles.hiGymText,
                         child: Icon(Icons.logout_rounded, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),

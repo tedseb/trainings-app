@@ -2,31 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/services/database.dart';
-import 'package:higym/zzz_deleteable/databaseOld.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as dev;
 
-
-
 class TrainingEndedScreen extends StatefulWidget {
-  const TrainingEndedScreen({
-    Key? key,
-    required this.selectedPlan,
-    required this.user
-  }) : super(key: key);
+  const TrainingEndedScreen({Key? key, required this.selectedPlan, required this.user}) : super(key: key);
 
   final Map<String, dynamic> selectedPlan;
-   final AppUser user;
+  final AppUser user;
 
   @override
   State<TrainingEndedScreen> createState() => _TrainingEndedScreenState();
 }
 
 class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
- 
   Color modeColor = Styles.white;
 
   late Plans selectedPlan;
@@ -40,7 +33,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+    dev.log('Mein Name ist ${widget.user.name} und meine Punktzahl: ${widget.user.activityPoints}');
     return Scaffold(
       backgroundColor: modeColor,
       body: Padding(
@@ -53,13 +46,13 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
                 Text(
                   'Great Workout !',
                   style: TextStyle(
-                    color: Styles.gymyGrey,
+                    color: Styles.hiGymText,
                     fontSize: 40,
                   ),
                 ),
                 Text(
                   'nicely done.',
-                  style: TextStyle(color: Styles.gymyGrey, fontSize: 32),
+                  style: TextStyle(color: Styles.hiGymText, fontSize: 32),
                 ),
               ],
             ),
@@ -73,7 +66,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
             //         width: 200.0,
             //         child: CircularProgressIndicator(
             //           value: 0.75,
-            //           color: Styles.gymyGrey,
+            //           color: Styles.hiGymText,
             //           strokeWidth: 6.0,
             //         ),
             //       ),
@@ -87,7 +80,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
             //           children: const [
             //             Text(
             //               '100%',
-            //               style: TextStyle(color: Styles.gymyGrey, fontSize: 62.0),
+            //               style: TextStyle(color: Styles.hiGymText, fontSize: 62.0),
             //             ),
             //           ],
             //         ),
@@ -105,7 +98,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
             //       borderRadius: BorderRadius.circular(16.0),
             //       side: BorderSide.none,
             //     ),
-            //     primary: Styles.gymyGrey,
+            //     primary: Styles.hiGymText,
             //     onPrimary: Styles.white,
             //     elevation: 0.0,
             //   ),
@@ -129,7 +122,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
                   iconSize: 72,
                   icon: const Icon(
                     Icons.check_circle_rounded,
-                    color: Styles.gymyGrey,
+                    color: Styles.hiGymText,
                   )),
             ),
           ],
@@ -138,9 +131,11 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
     );
   }
 
-    void updatePlan(Plans plan) {
-      DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(plan);
-      
-      dev.log('Update Plan');
+  void updatePlan(Plans plan) {
+    double UpdatedActivityPoints = ActivityCalculator(activityPoints: widget.user.activityPoints!,trainingTime: plan.time).getActivityPoints();
+    DatabaseService(uid: widget.user.uid).updateActivityPoints(activityPoints: UpdatedActivityPoints);
+    DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(plan);
+
+    dev.log('Update Plan');
   }
 }

@@ -39,7 +39,7 @@ Container(
               const Expanded(child: SizedBox()),
               Container(
                 child: IconButton(
-                  color: Styles.gymyGrey,
+                  color: Styles.hiGymText,
                   icon: const Icon(
                     Icons.home_outlined,
                   ),
@@ -47,7 +47,7 @@ Container(
                 ),
               ),
               IconButton(
-                color: Styles.gymyGrey,
+                color: Styles.hiGymText,
                 icon: const Icon(Icons.person_outline_rounded),
                 onPressed: () {},
               ),
@@ -58,12 +58,12 @@ Container(
                 onPressed: () {},
               ),
               IconButton(
-                color: Styles.gymyGrey,
+                color: Styles.hiGymText,
                 icon: const Icon(Icons.phone_iphone_rounded),
                 onPressed: () {},
               ),
               IconButton(
-                color: Styles.gymyGrey,
+                color: Styles.hiGymText,
                 icon: const Icon(Icons.outlined_flag_rounded),
                 onPressed: () {},
               ),
@@ -118,7 +118,7 @@ Container(
 //                   ),
 //                   Icon(_icons[index],
 //                   size: size.width*0.076,
-//                   color: index == _selectedItem ? Styles.primaryColor : Styles.gymyGrey,
+//                   color: index == _selectedItem ? Styles.primaryColor : Styles.hiGymText,
 //                   ),
 //                   SizedBox(height: size.width*0.03,)
 //                 ],
@@ -139,7 +139,7 @@ Container(
 //                 child: IconButton(
 
 //                   padding: EdgeInsets.zero,
-//                   color: Styles.gymyGrey,
+//                   color: Styles.hiGymText,
 //                   icon: const Icon(
 //                     Icons.home_outlined,
 //                   ),
@@ -147,7 +147,7 @@ Container(
 //                 ),
 //               ),
 //               IconButton(
-//                 color: Styles.gymyGrey,
+//                 color: Styles.hiGymText,
 //                 icon: const Icon(Icons.person_outline_rounded),
 //                 onPressed: () {},
 //               ),
@@ -158,12 +158,12 @@ Container(
 //                 onPressed: () {},
 //               ),
 //               IconButton(
-//                 color: Styles.gymyGrey,
+//                 color: Styles.hiGymText,
 //                 icon: const Icon(Icons.phone_iphone_rounded),
 //                 onPressed: () {},
 //               ),
 //               IconButton(
-//                 color: Styles.gymyGrey,
+//                 color: Styles.hiGymText,
 //                 icon: const Icon(Icons.outlined_flag_rounded),
 //                 onPressed: () {},
 //               ),
@@ -182,28 +182,28 @@ Container(
         //     BottomNavigationBarItem(
         //       icon: Icon(
         //         Icons.home_outlined,
-        //         color: Styles.gymyGrey,
+        //         color: Styles.hiGymText,
         //       ),
         //       label: 'Home',
         //     ),
         //     BottomNavigationBarItem(
         //       icon: Icon(
         //         Icons.person_outline_rounded,
-        //         color: Styles.gymyGrey,
+        //         color: Styles.hiGymText,
         //       ),
         //       label: 'Business',
         //     ),
         //     BottomNavigationBarItem(
         //       icon: Icon(
         //         Icons.phone_iphone_rounded,
-        //         color: Styles.gymyGrey,
+        //         color: Styles.hiGymText,
         //       ),
         //       label: 'School',
         //     ),
         //     BottomNavigationBarItem(
         //       icon: Icon(
         //         Icons.outlined_flag_rounded,
-        //         color: Styles.gymyGrey,
+        //         color: Styles.hiGymText,
         //       ),
         //       label: 'School',
         //     ),
@@ -228,14 +228,14 @@ Container(
         //       IconButton(
         //         icon: const Icon(
         //           Icons.home_outlined,
-        //           color: Styles.gymyGrey,
+        //           color: Styles.hiGymText,
         //         ),
         //         onPressed: () {},
         //       ),
         //       IconButton(
         //         icon: const Icon(
         //           Icons.person_outline_rounded,
-        //           color: Styles.gymyGrey,
+        //           color: Styles.hiGymText,
         //         ),
         //         onPressed: () {},
         //       ),
@@ -254,14 +254,14 @@ Container(
         //       IconButton(
         //         icon: const Icon(
         //           Icons.phone_iphone_rounded,
-        //           color: Styles.gymyGrey,
+        //           color: Styles.hiGymText,
         //         ),
         //         onPressed: () {},
         //       ),
         //       IconButton(
         //         icon: const Icon(
         //           Icons.outlined_flag_rounded,
-        //           color: Styles.gymyGrey,
+        //           color: Styles.hiGymText,
         //         ),
         //         onPressed: () {},
         //       ),

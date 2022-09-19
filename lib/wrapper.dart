@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/authenticate/authenticate.dart';
 import 'package:higym/initial_screen.dart';
@@ -12,7 +13,8 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppUser? user = Provider.of<AppUser?>(context);
+    // AppUser? user = Provider.of<AppUser?>(context);
+    User? user = Provider.of<User?>(context);
 
     return MultiProvider(
       providers: [
@@ -25,7 +27,7 @@ class Wrapper extends StatelessWidget {
           initialData: InitialModels.initialGoal,
         ),
       ],
-      child: user == null ? const Authenticate() : const InitialScreen(),
+      child: !_userAuthAndVerified(user) ? const Authenticate() : const InitialScreen(),
     );
     //return either Home or Authenticate widget
     // if (user == null) {
@@ -34,4 +36,18 @@ class Wrapper extends StatelessWidget {
     //   return const InitialScreen();
     // }
   }
+
+  _userAuthAndVerified(User? user){
+    if(user != null){
+      if(user.emailVerified){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+
+
 }

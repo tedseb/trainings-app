@@ -114,7 +114,6 @@ class _ExpandExampleState extends State<ExpandExample> {
                           const Expanded(child: SizedBox()),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               /// Kraft
                               Row(
@@ -128,16 +127,17 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.fitness_center_rounded, color: Styles.gymyGrey), 
+                                  const Icon(Icons.fitness_center_rounded, color: Styles.hiGymText),
                                   const SizedBox(width: 8.0),
                                   Text('Kraft', style: Styles.homeCardText)
                                 ],
                               ),
+
                               /// Koordination
                               Row(
                                 children: [
                                   Container(
-                                     width: 6,
+                                    width: 6,
                                     height: 6,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
@@ -145,17 +145,17 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.self_improvement_rounded, color: Styles.gymyGrey), 
-                                  
+                                  const Icon(Icons.self_improvement_rounded, color: Styles.hiGymText),
                                   const SizedBox(width: 8.0),
                                   Text('Koordination', style: Styles.homeCardText)
                                 ],
                               ),
+
                               /// Cardio
                               Row(
                                 children: [
                                   Container(
-                                     width: 6,
+                                    width: 6,
                                     height: 6,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
@@ -163,16 +163,17 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.directions_run_rounded, color: Styles.gymyGrey),
+                                  const Icon(Icons.directions_run_rounded, color: Styles.hiGymText),
                                   const SizedBox(width: 8.0),
                                   Text('Cardio', style: Styles.homeCardText)
                                 ],
                               ),
+
                               /// Beweglichkeit
                               Row(
                                 children: [
                                   Container(
-                                     width: 6,
+                                    width: 6,
                                     height: 6,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
@@ -180,7 +181,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.sports_gymnastics_rounded, color: Styles.gymyGrey), 
+                                  const Icon(Icons.sports_gymnastics_rounded, color: Styles.hiGymText),
                                   const SizedBox(width: 8.0),
                                   Text('Beweglichkeit', style: Styles.homeCardText)
                                 ],
@@ -203,14 +204,14 @@ class _ExpandExampleState extends State<ExpandExample> {
                             onPressed: () {},
                             options: const ButtonOptions(
                               color: Styles.primaryColor,
-                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Styles.gymyGrey),
+                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Styles.hiGymText),
                             ),
                           ),
                           ButtonWidget(
                             text: 'Details',
                             onPressed: () {},
                             options: const ButtonOptions(
-                              color: Styles.gymyGrey,
+                              color: Styles.hiGymText,
                               textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                             ),
                           ),

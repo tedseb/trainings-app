@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "340024325309",
-    "project_id": "higym-b2f87",
-    "storage_bucket": "higym-b2f87.appspot.com"
+    "project_number": "898194498293",
+    "project_id": "higym-ecafb",
+    "storage_bucket": "higym-ecafb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340024325309:android:8ab8c89e40c663fb7ff3d4",
+        "mobilesdk_app_id": "1:898194498293:android:766ba9190b2c476ff79bbc",
         "android_client_info": {
           "package_name": "com.example.higym"
         }
       },
       "oauth_client": [
         {
-          "client_id": "340024325309-gnueirt7dgnbesn62kgav4h3dj54a4bm.apps.googleusercontent.com",
+          "client_id": "898194498293-gcqkr04kekaa83un6fg73dr7b7saqomd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.higym",
+            "certificate_hash": "bf8e5ee5fdba6e01dcb542450a4608a3ade22e08"
+          }
+        },
+        {
+          "client_id": "898194498293-3rthe17i71bbdj0lqvdrkks2dot8svto.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhmFBbysZhGz1I5f1aSDtCZpmtSYyfBAs"
+          "current_key": "AIzaSyBpv-6wPGA9lKQTU4Z1rDllh0Q9loLk3ao"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "340024325309-gnueirt7dgnbesn62kgav4h3dj54a4bm.apps.googleusercontent.com",
+              "client_id": "898194498293-3rthe17i71bbdj0lqvdrkks2dot8svto.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

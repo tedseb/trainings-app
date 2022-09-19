@@ -1,12 +1,11 @@
-
 class Goal {
   String name;
   String info;
   List<TrainingsProgramms> trainingsProgramms;
 
   Goal({
-    required this.name ,
-    required this.info ,
+    required this.name,
+    required this.info,
     required this.trainingsProgramms,
   });
 
@@ -21,9 +20,8 @@ class Goal {
       name: json['name'],
       info: json['info'],
       trainingsProgramms: json['trainingsProgramms']
-              .map<TrainingsProgramms>((trainingsProgramms) => TrainingsProgramms.trainingsProgrammsFromJson(trainingsProgramms))
-              .toList()
-         ,
+          .map<TrainingsProgramms>((trainingsProgramms) => TrainingsProgramms.trainingsProgrammsFromJson(trainingsProgramms))
+          .toList(),
     );
   }
 }
@@ -35,6 +33,7 @@ class TrainingsProgramms {
   int difficultyLevel;
   int durationWeeks;
   int actualPhase;
+   Map<String, String> phases;
   String actualPlan;
   List<Plans> plans;
 
@@ -45,6 +44,7 @@ class TrainingsProgramms {
     required this.difficultyLevel,
     required this.durationWeeks,
     required this.actualPhase,
+    required this.phases,
     required this.actualPlan,
     required this.plans,
   });
@@ -56,6 +56,7 @@ class TrainingsProgramms {
         'difficultyLevel': difficultyLevel,
         'durationWeeks': durationWeeks,
         'actualPhase': actualPhase,
+        'phases': phases,
         'actualPlan': actualPlan,
         'plans': plans.map((plan) => plan.plansToJson()).toList(),
       };
@@ -68,13 +69,12 @@ class TrainingsProgramms {
       difficultyLevel: json['difficultyLevel'],
       durationWeeks: json['durationWeeks'],
       actualPhase: json['actualPhase'],
+      phases: json['phases'],
       actualPlan: json['actualPlan'],
       plans: json['plans'].map<Plans>((plan) => Plans.plansFromJson(plan)).toList(),
     );
   }
 }
-
-
 
 class Plans {
   String name;
@@ -97,7 +97,7 @@ class Plans {
     return Plans(
       name: json['name'],
       time: json['time'],
-      exercises: json['exercises'].map<Exercises>((exe) => Exercises.exercisesFromJson(exe)).toList() ,
+      exercises: json['exercises'].map<Exercises>((exe) => Exercises.exercisesFromJson(exe)).toList(),
     );
   }
 }
@@ -125,7 +125,7 @@ class Exercises {
     required this.setRestTimeScale,
     required this.weigthScale,
     this.exerciseRestTime = const {},
-    this.rpeScale  = const {},
+    this.rpeScale = const {},
     required this.sets,
   });
 

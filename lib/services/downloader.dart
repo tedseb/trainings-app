@@ -64,18 +64,15 @@ class Downloader {
     if (imagesDir.existsSync()) {
       // imagesDir.deleteSync(recursive: true);
       // allImages = Directory('${dir.path}/images').listSync();
-    } 
-     
-    
+    }
 
     /// Check Videos Path and get all Videos in it
     if (videosDir.existsSync()) {
       // videosDir.deleteSync(recursive: true);
       // allVideos = Directory('${dir.path}/videos').listSync();
-    } 
-     await imagesDir.create();
-      await videosDir.create();
-    
+    }
+    await imagesDir.create();
+    await videosDir.create();
 
     for (Exercises exe in myPlan.exercises) {
       _downloadAndSave('images/${exe.media}.png', videosDir);
@@ -87,7 +84,7 @@ class Downloader {
     Reference ref = FirebaseStorage.instance.ref(refDir);
 
     final file = File('${dir.path}/${ref.name}');
-  dev.log(file.path);
+    dev.log(file.path);
     await ref.writeToFile(file);
   }
 }

@@ -54,9 +54,8 @@ class _AchievementState extends State<Achievement> {
   }
 
   Widget buildFile(BuildContext context, FirebaseFiles file) {
-
     // Downloader.checkAndDownload( Plans());
-     
+
     return Container(
       child: Row(
         children: [
@@ -84,15 +83,13 @@ class _AchievementState extends State<Achievement> {
     );
   }
 
-
   Future<void> getDir() async {
     dir = (await getApplicationDocumentsDirectory()).path;
   }
 
-  Future<void> deleteFile (String myPath) async {
-  if(File(myPath).existsSync() ){
-    File(myPath).delete();
-  }
-
+  Future<void> deleteFile(String myPath) async {
+    if (File(myPath).existsSync()) {
+      File(myPath).delete();
+    }
   }
 }

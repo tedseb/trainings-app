@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return StreamProvider<AppUser?>.value(
+    return StreamProvider<User?>.value(
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(

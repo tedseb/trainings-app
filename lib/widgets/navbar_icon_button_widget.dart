@@ -37,7 +37,7 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
               Icon(
                 widget.menuAndIcon.values.elementAt(widget.index),
                 size: 26,
-                color: Styles.gymyGrey,
+                color: Styles.hiGymText,
               ),
               Text(widget.menuAndIcon.keys.elementAt(widget.index), style: Styles.navBarMenuText,),
             ],

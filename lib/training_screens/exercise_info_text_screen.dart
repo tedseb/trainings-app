@@ -49,7 +49,7 @@ class _ExerciseInfoTextScreenState extends State<ExerciseInfoTextScreen> {
                     children: [
                       Text(
                        widget.exeInfo,
-                        style: Styles.exercisingTitle.copyWith(color: Styles.gymyGrey),
+                        style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
                       ),
                      
                     ],
