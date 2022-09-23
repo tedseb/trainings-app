@@ -33,7 +33,7 @@ class TrainingsProgramms {
   int difficultyLevel;
   int durationWeeks;
   int actualPhase;
-   Map<String, String> phases;
+  Map<String, String> phases;
   String actualPlan;
   List<Plans> plans;
 

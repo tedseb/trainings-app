@@ -132,8 +132,8 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
   }
 
   void updatePlan(Plans plan) {
-    double UpdatedActivityPoints = ActivityCalculator(activityPoints: widget.user.activityPoints!,trainingTime: plan.time).getActivityPoints();
-    DatabaseService(uid: widget.user.uid).updateActivityPoints(activityPoints: UpdatedActivityPoints);
+    Map<String, double> updatedActivityPoints = ActivityCalculator(activityPoints: widget.user.activityPoints!,trainingTime: plan.time).getActivityPoints();
+    DatabaseService(uid: widget.user.uid).updateActivityPoints(activityPoints: updatedActivityPoints);
     DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(plan);
 
     dev.log('Update Plan');

@@ -22,7 +22,7 @@ class DatabaseService {
     });
   }
 
-  Future updateActivityPoints({required double activityPoints}) {
+  Future updateActivityPoints({required Map<String, double> activityPoints}) {
     return usersCollection.doc(uid).update({
       'activityPoints': activityPoints,
     });
@@ -42,7 +42,7 @@ class DatabaseService {
             name: event.get('userName'),
             uid: uid,
             email: event.data().toString().contains('userMail') ? event.get('userMail') : 'no_user_mail',
-            activityPoints: event.data().toString().contains('activityPoints') ? event.get('activityPoints') : 0.0,
+            activityPoints: event.data().toString().contains('activityPoints') ? _fillStringDoubleMaps(event.get('activityPoints')) : {},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),
         );

@@ -6,7 +6,7 @@ class AppUser {
   double? size;
   int? age;
   bool? man;
-  double? activityPoints;
+  Map<String, double>? activityPoints;
   int? activityLevel;
 
   AppUser({
