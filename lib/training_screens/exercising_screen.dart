@@ -729,10 +729,14 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     _vpController?.dispose();
 
     if (doingExercise != null) {
-      _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.media}.mp4')
+      _vpController = VideoPlayerController.asset(
+        'assets/videos/${doingExercise.media}.mp4',
+        videoPlayerOptions: VideoPlayerOptions(
+          mixWithOthers: true,
+        ),
+      )
         ..addListener(() => setState(() {}))
         ..setLooping(true)
-        // ..videoPlayerOptions: VideoPlayerOptions()
         ..setVolume(0.0)
         ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
     }
