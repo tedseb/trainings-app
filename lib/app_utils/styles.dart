@@ -56,7 +56,7 @@ class Styles {
   static TextStyle get trainingsplanSubTitle => const TextStyle(
         color: hiGymText,
         fontWeight: FontWeight.w500,
-        fontSize: 20,
+        fontSize: 18,
       );
   static TextStyle get trainingsplanIconTitle => const TextStyle(
         color: hiGymText,
@@ -95,8 +95,8 @@ class Styles {
       );
   static TextStyle get homeProgressText => const TextStyle(
         color: hiGymText,
-        fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
       );
   static TextStyle get navBarMenuText => const TextStyle(
         color: hiGymText,

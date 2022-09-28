@@ -21,11 +21,11 @@ class BackgroundCirclePainter extends CustomPainter {
     final screenMid = size.width / 2;
 
     double radiusBig = size.width * (1 / 3);
-    double radiusSmall = size.width * (15 / 64);
+    double radiusSmall = size.width * (16 / 64);
 
     final paint = Paint()
       ..color = Styles.progressCircleBackground
-      ..strokeWidth = 25
+      ..strokeWidth = 23
       ..style = PaintingStyle.stroke;
 
     canvas.drawCircle(
@@ -43,7 +43,7 @@ class BackgroundCirclePainter extends CustomPainter {
 
     final paintBig = Paint()
       ..color = Styles.progressCircleBig
-      ..strokeWidth = 10
+      ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
@@ -53,7 +53,7 @@ class BackgroundCirclePainter extends CustomPainter {
 
     final paintReachBig = Paint()
       ..color = Styles.grey
-      ..strokeWidth = 10
+      ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
@@ -68,7 +68,7 @@ class BackgroundCirclePainter extends CustomPainter {
 
     final paintSmall = Paint()
       ..color = Styles.progressCircleSmall
-      ..strokeWidth = 10
+      ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
@@ -78,7 +78,7 @@ class BackgroundCirclePainter extends CustomPainter {
 
     final paintReachSmall = Paint()
       ..color = Styles.grey
-      ..strokeWidth = 10
+      ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 

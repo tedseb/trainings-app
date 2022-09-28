@@ -125,7 +125,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                           ),
                           Text(
                             //  selectedExercise!.name!,
-                            'Exercise',
+                           selectedExercise.subName,
                             style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
                           ),
                         ],

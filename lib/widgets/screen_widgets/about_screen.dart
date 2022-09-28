@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
-import 'package:higym/models/app_user.dart';
-import 'package:higym/services/auth.dart';
-import 'package:higym/widgets/shadow_icon_button_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
-import 'dart:developer' as dev;
 
-class SettingsScreen extends StatelessWidget {
-  SettingsScreen({Key? key}) : super(key: key);
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({Key? key}) : super(key: key);
 
-  final AuthService _auth = AuthService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
                 IconButton(
@@ -43,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text('Settings', style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
+                    Text('About', style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Icon(Icons.settings_outlined, color: Styles.hiGymText),
@@ -52,30 +48,30 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 100),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Reminder', style: Styles.profileItemText),
-                          Container(
-                            margin: const EdgeInsets.only(top: 4.0),
-                            width: 32.0,
-                            height: 4,
-                            decoration: BoxDecoration(
-                              color: Styles.primaryColor,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text('Reminder', style: Styles.profileItemText),
+                //           Container(
+                //             margin: const EdgeInsets.only(top: 4.0),
+                //             width: 32.0,
+                //             height: 4,
+                //             decoration: BoxDecoration(
+                //               color: Styles.primaryColor,
+                //               borderRadius: BorderRadius.circular(50),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                   child: Row(
@@ -90,7 +86,7 @@ class SettingsScreen extends StatelessWidget {
                             width: 32.0,
                             height: 4,
                             decoration: BoxDecoration(
-                              color: Styles.grey,
+                              color: Styles.primaryColor,
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),

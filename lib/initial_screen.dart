@@ -6,13 +6,13 @@ import 'package:higym/models/goal.dart';
 import 'package:higym/zzz_deleteable/plans.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/profile/profile_screen.dart';
-import 'package:higym/screen_widgets/expanded_example.dart';
-import 'package:higym/screen_widgets/goals_screen.dart';
+import 'package:higym/widgets/screen_widgets/expanded_example.dart';
+import 'package:higym/widgets/screen_widgets/goals_screen.dart';
 import 'package:higym/services/downloader.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_programm_screen.dart';
-import 'package:higym/widgets/loading_widget.dart';
-import 'package:higym/widgets/navbar_icon_button_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
 
 import 'package:provider/provider.dart';
 
@@ -91,12 +91,13 @@ class _InitialScreenState extends State<InitialScreen> {
                 color: Styles.primaryColor,
                 icon: const Icon(Icons.play_circle_rounded),
                 onPressed: () async {
-                  selectedPlan = goal.trainingsProgramms[0].plans[0];
+                  // selectedPlan = goal.trainingsProgramms[0].plans[0];
 
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ExercisingScreen(selectedPlan: selectedPlan.plansToJson(), appUser: appUser),
+                      builder: (context) =>
+                          ExercisingScreen(trainingsProgramm: goal.trainingsProgramms[0].trainingsProgrammsToJson(), appUser: appUser),
                     ),
                   );
                 },

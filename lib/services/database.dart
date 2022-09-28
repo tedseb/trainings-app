@@ -34,6 +34,12 @@ class DatabaseService {
     });
   }
 
+  Future updateNextPlanName(String nextPlanName) {
+    return usersCollection.doc(uid).collection('Goal').doc('TrainingsProgramm').update({
+      'actualPlan': nextPlanName,
+    });
+  }
+
   /// Get User-Data
   Stream<AppUser> get getUserData {
     final docUser = usersCollection.doc(uid);
@@ -92,6 +98,7 @@ class DatabaseService {
       'exercises': planObject.exercises
           .map((exercise) => {
                 'name': exercise.name,
+                'subName': exercise.subName,
                 'info': exercise.info,
                 'media': exercise.media,
                 'pk': exercise.pk,
@@ -176,6 +183,7 @@ class DatabaseService {
     return exercises
         .map((exercise) => Exercises(
             name: exercise['name'],
+            subName: exercise['subName'],
             info: exercise['info'],
             media: exercise['media'],
             pk: exercise['pk'],

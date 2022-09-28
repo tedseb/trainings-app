@@ -1,16 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/helper_utils.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/authenticate/forgot_password_screen.dart';
 import 'package:higym/services/auth.dart';
-import 'package:higym/widgets/button_widget.dart';
+import 'package:higym/widgets/general_widgets/button_widget.dart';
 
 import 'dart:developer' as dev;
 
-import 'package:higym/widgets/loading_widget.dart';
-import 'package:higym/widgets/login_register_alternatives.dart';
-import 'package:higym/widgets/shadow_button_widget.dart';
-import 'package:higym/widgets/shadow_icon_button_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/login_register_alternatives.dart';
+import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
+import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -206,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState!.validate()) {
       dynamic result = await _auth.signInWithEmailAndPassword(emailController.text, passwordController.text);
+      
       setState(() {
         loading = true;
         if (result == null) {
@@ -214,6 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
           loginResponse = true;
           loading = false;
         } else if (result == false) {
+          FirebaseAuth.instance.signOut();
           responseText = 'Pleas Verify your Email at first!';
           loginResponseColor = Styles.error;
           loginResponse = true;
@@ -221,8 +224,8 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           loginResponse = false;
           loading = false;
-
-          dev.log(result.toString());
+          
+          dev.log('${result.uid}    Hallo');
         }
       });
     }

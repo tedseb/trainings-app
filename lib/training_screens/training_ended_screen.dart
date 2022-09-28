@@ -4,15 +4,17 @@ import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/services/database.dart';
+import 'package:higym/services/trainingsplan_updater.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as dev;
 
 class TrainingEndedScreen extends StatefulWidget {
-  const TrainingEndedScreen({Key? key, required this.selectedPlan, required this.user}) : super(key: key);
+  const TrainingEndedScreen({Key? key, required this.trainingsProgramm, required this.user}) : super(key: key);
 
-  final Map<String, dynamic> selectedPlan;
+  // final Map<String, dynamic> selectedPlan;
+  final Map<String, dynamic> trainingsProgramm;
   final AppUser user;
 
   @override
@@ -23,10 +25,13 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
   Color modeColor = Styles.white;
 
   late Plans selectedPlan;
+  late TrainingsProgramms trainingsProgramm;
 
   @override
   void initState() {
-    selectedPlan = Plans.plansFromJson(widget.selectedPlan);
+    trainingsProgramm = TrainingsProgramms.trainingsProgrammsFromJson(widget.trainingsProgramm);
+    selectedPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
+
     updatePlan(selectedPlan);
     super.initState();
   }
@@ -132,9 +137,12 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
   }
 
   void updatePlan(Plans plan) {
-    Map<String, double> updatedActivityPoints = ActivityCalculator(activityPoints: widget.user.activityPoints!,trainingTime: plan.time).getActivityPoints();
+    Map<String, double> updatedActivityPoints =
+        ActivityCalculator(activityPoints: widget.user.activityPoints!, trainingTime: plan.time).getActivityPoints();
     DatabaseService(uid: widget.user.uid).updateActivityPoints(activityPoints: updatedActivityPoints);
-    DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(plan);
+    String nextPlanName = TrainingsplanUpdater().getNextPlanName(trainingsProgramm);
+    DatabaseService(uid: widget.user.uid).updateNextPlanName(nextPlanName);
+    DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(TrainingsplanUpdater().getAndUpdateSelectedPlan(plan));
 
     dev.log('Update Plan');
   }

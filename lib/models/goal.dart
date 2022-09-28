@@ -104,6 +104,7 @@ class Plans {
 
 class Exercises {
   String name;
+  String subName;
   String info;
   String media;
   int pk;
@@ -117,6 +118,7 @@ class Exercises {
 
   Exercises({
     required this.name,
+    required this.subName,
     required this.info,
     required this.media,
     required this.pk,
@@ -131,6 +133,7 @@ class Exercises {
 
   Map<String, dynamic> exercisesToJson() => {
         'name': name,
+        'subName': subName,
         'info': info,
         'media': media,
         'pk': pk,
@@ -146,6 +149,7 @@ class Exercises {
   static Exercises exercisesFromJson(Map<String, dynamic> json) {
     return Exercises(
       name: json['name'],
+      subName: json['subName'],
       info: json['info'],
       media: json['media'],
       pk: json['pk'],

@@ -14,8 +14,8 @@ class InitialModels {
         actualPhase: 1,
         phases: {
           '1':'2022-09-20',
-          '2':'2022-12-20',
-          '3':'2023-03-20',
+          '2':'2022-10-20',
+          '3':'2022-11-20',
         },
         actualPlan: 'Plan name is Loading...',
         plans: [
@@ -25,6 +25,7 @@ class InitialModels {
             exercises: [
               Exercises(
                 name: 'Exercise Name is Loading...',
+                subName: 'Exercise Sub Name is Loading...',
                 info: 'Exercise Info is Loading...',
                 media: 'noMedia',
                 pk: 0,

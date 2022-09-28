@@ -11,7 +11,7 @@ import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
-import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -589,11 +589,11 @@ class _TrainingsModeState extends State<TrainingsMode> {
       globalTimeSubscription!.cancel();
     }
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: user!),
-      ),
-    );
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: user!),
+    //   ),
+    // );
   }
 }//257

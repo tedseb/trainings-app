@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/services/auth.dart';
 
 import 'dart:developer' as dev;
 
-import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -52,7 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: loading
-          ? const Center(child:  LoadingWidget())
+          ? const Center(child: LoadingWidget())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -105,12 +106,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   _registerWithEmail() async {
     setState(() => loading = true);
     dynamic result = await _auth.registerWithEmailAndPassword(emailController.text, passwordController.text, nameController.text);
-    widget.toggleView();
+
     if (result == null) {
       setState(() {
         error = 'This email is not valid or taken by an another User';
         loading = false;
       });
+    } else {
+      setState(() => loading = false);
+      widget.toggleView();
+      FirebaseAuth.instance.signOut();
     }
   }
 }

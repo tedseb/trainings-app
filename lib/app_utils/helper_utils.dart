@@ -75,4 +75,58 @@ String truncateExerciseName(String myString, TextStyle myTextStyle, double scree
 
   return newMyString;
 }
+String truncatePlanName(String myString, TextStyle myTextStyle, double screensize) {
+  double maxSize = screensize/1.55;
+  int stringCounter = 1;
+  int myStringLength = myString.length;
+  String newMyString = myString;
 
+  TextPainter textPainter = TextPainter(
+    text: TextSpan(text: myString, style: myTextStyle),
+    textDirection: TextDirection.ltr,
+    textScaleFactor: WidgetsBinding.instance.window.textScaleFactor,
+  )..layout();
+
+  while (textPainter.size.width > maxSize) {
+    newMyString = '${myString.substring(0, myStringLength - stringCounter)}...';
+    textPainter = TextPainter(
+      text: TextSpan(text: newMyString, style: myTextStyle),
+      textDirection: TextDirection.ltr,
+      textScaleFactor: WidgetsBinding.instance.window.textScaleFactor,
+    )..layout();
+    stringCounter++;
+  }
+
+  return newMyString;
+}
+
+  String truncateWithEllipsis(String myString) {
+    int cutoff = 13;
+    return (myString.length <= cutoff) ? myString : '${myString.substring(0, cutoff)}...';
+  }
+
+
+String truncateTrainingsProgrammExeCardName(String myString, TextStyle myTextStyle, double screensize) {
+  double maxSize = (screensize-190)/1.26;
+  int stringCounter = 1;
+  int myStringLength = myString.length;
+  String newMyString = myString;
+
+  TextPainter textPainter = TextPainter(
+    text: TextSpan(text: myString, style: myTextStyle),
+    textDirection: TextDirection.ltr,
+    textScaleFactor: WidgetsBinding.instance.window.textScaleFactor,
+  )..layout();
+
+  while (textPainter.size.width > maxSize) {
+    newMyString = '${myString.substring(0, myStringLength - stringCounter)}...';
+    textPainter = TextPainter(
+      text: TextSpan(text: newMyString, style: myTextStyle),
+      textDirection: TextDirection.ltr,
+      textScaleFactor: WidgetsBinding.instance.window.textScaleFactor,
+    )..layout();
+    stringCounter++;
+  }
+
+  return newMyString;
+}

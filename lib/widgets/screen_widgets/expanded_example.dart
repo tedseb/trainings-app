@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/pie_painter.dart';
 import 'package:higym/app_utils/styles.dart';
-import 'package:higym/widgets/button_widget.dart';
+import 'package:higym/widgets/general_widgets/button_widget.dart';
 
 class ExpandExample extends StatefulWidget {
   const ExpandExample({Key? key}) : super(key: key);

@@ -5,7 +5,7 @@ import 'dart:developer' as dev;
 
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/services/auth.dart';
-import 'package:higym/widgets/shadow_button_widget.dart';
+import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

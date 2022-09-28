@@ -62,9 +62,12 @@ class AuthService {
       User? user = result.user;
       bool userverified = user!.emailVerified;
       if (userverified) {
+       
         return _userFromFireBaseUser(user);
       } else {
-        user.sendEmailVerification();
+         dev.log('Send Email Verification again!!!!');
+         /// This causes "too many request if tried directly"
+        // user.sendEmailVerification();
         return false;
       }
     } catch (e) {

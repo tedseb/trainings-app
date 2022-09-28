@@ -8,7 +8,7 @@ import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
-import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:higym/models/goal.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +19,11 @@ import 'dart:developer' as dev;
 class ExercisingScreen extends StatefulWidget {
   const ExercisingScreen({
     Key? key,
-    required this.selectedPlan,
+    required this.trainingsProgramm,
     required this.appUser,
   }) : super(key: key);
 
-  final Map<String, dynamic> selectedPlan;
+  final Map<String, dynamic> trainingsProgramm;
   final AppUser appUser;
 
   @override
@@ -57,6 +57,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   bool exerciseStarted = false;
 
   late Plans selectedPlan;
+  late TrainingsProgramms trainingsProgramm;
   late Exercises selectedExercise;
   Completer<void>? buttonCompleter;
   VideoPlayerController? _vpController;
@@ -74,7 +75,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   void initState() {
-    selectedPlan = Plans.plansFromJson(widget.selectedPlan);
+    trainingsProgramm = TrainingsProgramms.trainingsProgrammsFromJson(widget.trainingsProgramm);
+    selectedPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
     selectedPlan.time = 0;
     // fillPlanList = List.generate(
     //   selectedPlan.exercises.length,
@@ -116,7 +118,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         return await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
@@ -157,7 +158,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                                 });
                                 nextExeButtonPressed();
                               },
-                              exerciseOccupied: doExerciseLater,
+                              exerciseOccupied: (!lastExe && playDoneButton != Icons.check_circle_rounded) ? doExerciseLater : null,
                               endTraining: endTraining),
                         );
                       },
@@ -213,7 +214,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                             style: Styles.exercisingTitle,
                           ),
                           Text(
-                            exeriseSubName,
+                            helper_utils.truncateExerciseName(exeriseSubName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
                             style: Styles.exercisingTitle,
                           ),
                         ],
@@ -551,7 +552,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     ///Initialize Screen Info
     setState(() {
       exeriseName = doingExercise.name;
-      exeriseSubName = 'Exercise';
+      exeriseSubName = doingExercise.subName;
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
 
@@ -693,7 +694,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     setState(() {
       exeriseName = doingExercise.name;
       selectedExerciseIndex = exeIndex;
-      exeriseSubName = 'Exercise';
+      exeriseSubName = doingExercise.subName;
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
       prepareFor = 'Next Exercise';
@@ -731,6 +732,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       _vpController = VideoPlayerController.asset('assets/videos/${doingExercise.media}.mp4')
         ..addListener(() => setState(() {}))
         ..setLooping(true)
+        // ..videoPlayerOptions: VideoPlayerOptions()
         ..setVolume(0.0)
         ..initialize().then((_) => _vpController!.play() /*_vpController.play()*/);
     }
@@ -768,7 +770,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => TrainingEndedScreen(selectedPlan: selectedPlan.plansToJson(), user: widget.appUser),
+        builder: (context) => TrainingEndedScreen(trainingsProgramm: trainingsProgramm.trainingsProgrammsToJson(), user: widget.appUser),
       ),
     );
   }

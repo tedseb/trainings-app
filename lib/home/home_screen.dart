@@ -5,9 +5,10 @@ import 'package:higym/app_utils/styles.dart';
 import 'dart:developer' as dev;
 
 import 'package:higym/models/app_user.dart';
+import 'package:higym/models/goal.dart';
 import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/services/database.dart';
-import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,15 +20,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double? activityPercentage;
+  int doneWeeks = 0;
+  int allWeeks = 0;
+  double weekPercentage = 0.0;
+  double weekNextPhasePercentage = 0.0;
   AppUser? user;
+  Goal? goal;
+  double totalActivityPoints = 0.0;
+  int timesTrainedThisWeek = 0;
+  int toTrainThisWeek = 0;
+  String welcomeCardText = ' ';
 
   @override
   Widget build(BuildContext context) {
-    
     user = Provider.of<AppUser?>(context);
+    goal = Provider.of<Goal?>(context);
     Size screenSize = MediaQuery.of(context).size;
     calculateActivity();
-
+    calculateManyTimesTrainedThisWeek();
+    calculateWeeksOverAndWeekMark();
+    dev.log('Width:  ${screenSize.width}');
+    dev.log('Heigth:  ${screenSize.height}');
     return Scaffold(
         backgroundColor: Styles.white,
         body: userTester()
@@ -85,24 +98,43 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const SizedBox(height: 24.0),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
+                          Row(
                             children: [
-                              Text('Du musst diese Woche noch einmal trainieren.', style: Styles.homeCardText),
+                              Flexible(
+                                child: Text(welcomeCardText, style: Styles.homeCardText),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 24.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Parameter',
-                                style: Styles.homeCardText,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
+                                    child: Text(
+                                      'TE $timesTrainedThisWeek/$toTrainThisWeek',
+                                      style: Styles.homeCardText,
+                                    ),
+                                  ),
+                                  timesTrainedThisWeek < toTrainThisWeek
+                                      ? Container(
+                                          width: 7.0,
+                                          height: 7.0,
+                                          decoration: const BoxDecoration(
+                                            color: Styles.primaryColor,
+                                            shape: BoxShape.circle,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
                               ),
-                              Text(
-                                'Parameter',
-                                style: Styles.homeCardText,
-                              ),
+                              // Text(
+                              //   'Parameter',
+                              //   style: Styles.homeCardText,
+                              // ),
                             ],
                           )
                         ],
@@ -118,41 +150,65 @@ class _HomeScreenState extends State<HomeScreen> {
                         foregroundPainter: BackgroundCirclePainter(
                           progressBigPercent: activityPercentage!,
                           progressBigReachPercent: 16 / 16,
-                          progressSmallPercet: 6 / 16,
-                          progressSmallReachPercet: 9 / 16,
+                          progressSmallPercet: weekPercentage,
+                          progressSmallReachPercet: weekNextPhasePercentage,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 20.0,
-                                  height: 20.0,
+                                  margin: const EdgeInsets.only(top: 2.0),
+                                  width: 15.0,
+                                  height: 15.0,
                                   decoration: const BoxDecoration(
                                     color: Styles.progressCircleBig,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                                Text('50', style: Styles.homeProgressText),
+                                const SizedBox(width: 4),
+                                SizedBox(
+                                  width: 56.0,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Points', style: Styles.homeProgressText),
+                                      Text(totalActivityPoints.round().toString(), style: Styles.homeProgressText),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 20.0,
-                                  height: 20.0,
+                                  margin: const EdgeInsets.only(top: 2.0),
+                                  width: 15.0,
+                                  height: 15.0,
                                   decoration: const BoxDecoration(
                                     color: Styles.progressCircleSmall,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                                Text('32', style: Styles.homeProgressText),
+                                const SizedBox(width: 4),
+                                SizedBox(
+                                  width: 56.0,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Weeks', style: Styles.homeProgressText),
+                                      Text('$doneWeeks/$allWeeks', style: Styles.homeProgressText),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -180,19 +236,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   void calculateActivity() {
-    
     int lvlBronzeLimit = 1000;
     int lvlSilverLimit = 1699;
     int lvlGoldLimit = 2899;
     int lvlPlatinLimit = 4799;
-    double totalActivityPoints = 0.0;
+
+    totalActivityPoints = 0.0;
 
     if (user!.activityPoints != null) {
-      ActivityCalculator.updateActivityMap(user!.activityPoints!,user!.uid!);
+      ActivityCalculator.updateActivityMap(user!.activityPoints!, user!.uid!);
       user!.activityPoints!.forEach((key, value) {
-        totalActivityPoints += value;
+        setState(() {
+          totalActivityPoints += value;
+        });
       });
     }
 
@@ -231,5 +288,77 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     dev.log('Activity Points and Level Updated');
+  }
+
+  void calculateManyTimesTrainedThisWeek() {
+    if (goal != null) {
+      if (goal!.trainingsProgramms.isNotEmpty) {
+  toTrainThisWeek = goal!.trainingsProgramms[0].plans.length;
+  timesTrainedThisWeek = 0;
+  if (user!.activityPoints != null) {
+    timesTrainedThisWeek = ActivityCalculator.manyTimesThisWeek(user!.activityPoints!);
+  }
+  
+  if (timesTrainedThisWeek < toTrainThisWeek) {
+    String zahlText = '';
+    switch (toTrainThisWeek - timesTrainedThisWeek) {
+      case 1:
+        zahlText = 'ein';
+        break;
+      case 2:
+        zahlText = 'zwei';
+        break;
+      case 3:
+        zahlText = 'drei';
+        break;
+      case 4:
+        zahlText = 'vier';
+        break;
+      case 5:
+        zahlText = 'fünf';
+        break;
+      case 6:
+        zahlText = 'sechs';
+        break;
+      case 7:
+        zahlText = 'sieben';
+        break;
+      default:
+        zahlText = 'ein';
+        break;
+    }
+    welcomeCardText = 'Du solltest diese Woche noch $zahlText trainieren.';
+  } else if (timesTrainedThisWeek == toTrainThisWeek) {
+    welcomeCardText = 'Gratulation! Du hast dies Woche dein Trainingsziel erreicht!';
+  } else {
+    welcomeCardText = 'Zu viel trainieren ist nicht immer gut =)';
+  }
+}
+    }
+  }
+
+  void calculateWeeksOverAndWeekMark() {
+    if (goal != null) {
+      if (goal!.trainingsProgramms.isNotEmpty) {
+      Map<String, int> weekCalculates = ActivityCalculator.calculateWeeksOver(goal!.trainingsProgramms[0].phases);
+      doneWeeks = weekCalculates['passedWeeks']!;
+      allWeeks = weekCalculates['allWeeks']!;
+
+      double actualWeekFromAllWeeks = weekCalculates['passedWeeks']! / weekCalculates['allWeeks']!;
+      double nextMileStoneWeekFromAllWeeks = weekCalculates['nextMileStone']! / weekCalculates['allWeeks']!;
+
+      if (actualWeekFromAllWeeks <= 1) {
+        weekPercentage = actualWeekFromAllWeeks;
+      } else {
+        weekNextPhasePercentage = 0.9999;
+      }
+
+      if (nextMileStoneWeekFromAllWeeks <= 1) {
+        weekNextPhasePercentage = nextMileStoneWeekFromAllWeeks;
+      } else {
+        weekNextPhasePercentage = 0.9999;
+      }
+    }
+    }
   }
 }

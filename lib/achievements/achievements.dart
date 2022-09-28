@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/models/firebase_files.dart';
 import 'package:higym/services/downloader.dart';
-import 'package:higym/widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'dart:developer' as dev;
