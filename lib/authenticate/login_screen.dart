@@ -179,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: 'Sign in',
                             buttonWidth: double.infinity,
                             onPressFunction: _signInWithEmail,
+                            loggerText: 'Home #SignIn#',
                           ),
                           const SizedBox(height: 20),
                           Text(

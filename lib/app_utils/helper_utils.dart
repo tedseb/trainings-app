@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-DateTime get getCurrentTimestamp => DateTime.now();
+
 
 void showSnackbar(
   BuildContext context,
@@ -107,7 +107,7 @@ String truncatePlanName(String myString, TextStyle myTextStyle, double screensiz
 
 
 String truncateTrainingsProgrammExeCardName(String myString, TextStyle myTextStyle, double screensize) {
-  double maxSize = (screensize-190)/1.26;
+  double maxSize = (screensize-190)/1.28;
   int stringCounter = 1;
   int myStringLength = myString.length;
   String newMyString = myString;

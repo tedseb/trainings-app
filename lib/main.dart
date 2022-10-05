@@ -9,7 +9,6 @@ import 'package:higym/services/auth.dart';
 import 'package:higym/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'initial_screen.dart';
-// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 
 import 'dart:developer' as dev;
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: Styles.white, fontFamily: 'Montserrat', dividerColor: Colors.transparent, splashColor: Styles.primaryColor),
+        theme: ThemeData(scaffoldBackgroundColor: Styles.white, fontFamily: 'GreycliffCF', dividerColor: Colors.transparent, splashColor: Styles.primaryColor),
         home: const Wrapper(),
       ),
     );

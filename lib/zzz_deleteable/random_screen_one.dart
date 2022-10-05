@@ -36,7 +36,7 @@ Container(
 
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Expanded(child: SizedBox()),
+              const Spacer(),
               Container(
                 child: IconButton(
                   color: Styles.hiGymText,
@@ -67,7 +67,7 @@ Container(
                 icon: const Icon(Icons.outlined_flag_rounded),
                 onPressed: () {},
               ),
-              const Expanded(child: SizedBox()),
+              const Spacer(),
             ],
           ),
         ),
@@ -132,7 +132,7 @@ Container(
 
 //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //             children: <Widget>[
-//               const Expanded(child: SizedBox()),
+//               const Spacer(),
 //               Container(
 //                 padding: EdgeInsets.zero,
 //                 decoration: bottomBorder(),
@@ -167,7 +167,7 @@ Container(
 //                 icon: const Icon(Icons.outlined_flag_rounded),
 //                 onPressed: () {},
 //               ),
-//               const Expanded(child: SizedBox()),
+//               const Spacer(),
 //             ],
 //           ),
 

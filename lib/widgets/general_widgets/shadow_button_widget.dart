@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 
+import 'dart:developer' as dev;
+
 class ShadowButtonWidget extends StatelessWidget {
   const ShadowButtonWidget({
     Key? key,
     required this.buttonText,
     required this.buttonWidth,
     required this.onPressFunction,
+     required this.loggerText,
   }) : super(key: key);
 
   final String buttonText;
   final double buttonWidth;
   final Function onPressFunction;
+    final String loggerText;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,10 @@ class ShadowButtonWidget extends StatelessWidget {
         ],
       ),
       child: ElevatedButton(
-        onPressed: () => onPressFunction(),
+        onPressed: () {
+        dev.log('Open $loggerText Screen');
+        onPressFunction();
+      },
         style: ElevatedButton.styleFrom(
           minimumSize: Size.zero,
           shape: RoundedRectangleBorder(

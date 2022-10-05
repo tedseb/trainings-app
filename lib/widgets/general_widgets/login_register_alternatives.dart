@@ -24,8 +24,8 @@ class LoginRegisterAlternatives extends StatelessWidget {
         Image.asset('assets/logo/${platform}_login.png', height: 32),
         const SizedBox(width: 16.0),
         Text('$registerSignIn $platform', style: Styles.loginWithAlternativText),
-        const Expanded(child: SizedBox()),
-        ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: onPressFunction),
+        const Spacer(),
+        ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: onPressFunction, loggerText: '${platform}_login'),
       ],
     );
   }

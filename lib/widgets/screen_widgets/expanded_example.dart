@@ -111,7 +111,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                               ),
                             ),
                           ),
-                          const Expanded(child: SizedBox()),
+                          const Spacer(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

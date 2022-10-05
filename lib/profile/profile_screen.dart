@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
+import 'package:higym/widgets/general_widgets/row_item_with_select_widget.dart';
 import 'package:higym/widgets/screen_widgets/about_screen.dart';
 import 'package:higym/widgets/screen_widgets/talk_to_ai_screen.dart';
 import 'package:higym/services/auth.dart';
@@ -959,140 +960,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
             /// Goals Button it will go
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Styles.hiGymText,
-                        child: Icon(Icons.flag_outlined, color: Styles.white),
-                      ),
-                      const SizedBox(width: 32.0),
-                      Text('My Goals', style: Styles.profileItemText),
-                    ],
-                  ),
-                  ShadowIconButtonWidget(
-                      buttonIcon: Icons.chevron_right_rounded,
-                      onPressFunction: () {
-                        DatabaseService(uid: user.uid!).addGoal(shawanGoal);
-                      }),
-                ],
+              child: RowItemWithSelectWidget(
+                leadingIcon: Icons.flag_outlined,
+                widgetText: 'My Goals',
+                onPressFunction: () {
+                  DatabaseService(uid: user.uid!).addGoal(shawanGoal);
+                },
               ),
             ),
 
             /// My Body Button
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Styles.hiGymText,
-                        child: Icon(Icons.accessibility_new_rounded, color: Styles.white),
-                      ),
-                      const SizedBox(width: 32.0),
-                      Text('My Body', style: Styles.profileItemText),
-                    ],
-                  ),
-                  ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
-                ],
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                child: RowItemWithSelectWidget(
+                  leadingIcon: Icons.accessibility_new_rounded,
+                  widgetText: 'My Body',
+                  onPressFunction: () {},
+                )),
 
             /// Talk to AI Button
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Styles.hiGymText,
-                        child: Icon(Icons.surround_sound_outlined, color: Styles.white),
-                      ),
-                      const SizedBox(width: 32.0),
-                      Text('Talk AI', style: Styles.profileItemText),
-                    ],
-                  ),
-                  ShadowIconButtonWidget(
-                    buttonIcon: Icons.chevron_right_rounded,
-                    onPressFunction: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TalkToAiScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+              child: RowItemWithSelectWidget(
+                leadingIcon: Icons.surround_sound_outlined,
+                widgetText: 'Talk AI',
+                onPressFunction: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TalkToAiScreen(appUser: user),
+                    ),
+                  );
+                },
               ),
             ),
 
             /// Settings Button
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Styles.hiGymText,
-                        child: Icon(Icons.settings_outlined, color: Styles.white),
-                      ),
-                      const SizedBox(width: 32.0),
-                      Text('About', style: Styles.profileItemText),
-                    ],
-                  ),
-                  ShadowIconButtonWidget(
-                    buttonIcon: Icons.chevron_right_rounded,
-                    onPressFunction: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AboutScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+              child: RowItemWithSelectWidget(
+                leadingIcon: Icons.settings_outlined,
+                widgetText: 'About',
+                onPressFunction: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutScreen(),
+                    ),
+                  );
+                },
               ),
             ),
 
             /// Logout Button
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Styles.hiGymText,
-                        child: Icon(Icons.logout_rounded, color: Styles.white),
-                      ),
-                      const SizedBox(width: 32.0),
-                      Text('Log Out', style: Styles.profileItemText),
-                    ],
-                  ),
-                  ShadowIconButtonWidget(
-                      buttonIcon: Icons.chevron_right_rounded,
-                      onPressFunction: () async {
-                        dev.log('Open Logout Screen');
-
-                        await _auth.signOut();
-                      }),
-                ],
+              child: RowItemWithSelectWidget(
+                leadingIcon: Icons.logout_rounded,
+                widgetText: 'Log Out',
+                onPressFunction: () async {
+                  await _auth.signOut();
+                },
               ),
             ),
             const SizedBox(height: 30.0)

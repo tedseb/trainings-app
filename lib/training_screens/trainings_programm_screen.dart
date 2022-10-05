@@ -43,7 +43,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                   padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 28.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [ShadowIconButtonWidget(buttonIcon: Icons.surround_sound_outlined, onPressFunction: () {})],
+                    children: [ShadowIconButtonWidget(buttonIcon: Icons.surround_sound_outlined, onPressFunction: () {},loggerText: 'Talk to AI',)],
                   ),
                 ),
 
@@ -163,13 +163,11 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                         physics: const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                                        itemCount: selectedPlan.exercises.length,
+                                        itemCount: myGoal!.trainingsProgramms[0].plans[index].exercises.length,
                                         itemBuilder: (context, exeIndex) {
                                           //Exercise Name is Loading...
-                                          return selectedPlan.exercises[exeIndex].name == 'Exercise Name is Loading...'
-                                              ? const LoadingWidget()
-                                              : ExerciseCardWidget(
-                                                  selectedExercise: selectedPlan.exercises[exeIndex],
+                                          return ExerciseCardWidget(
+                                                  selectedExercise: myGoal!.trainingsProgramms[0].plans[index].exercises[exeIndex],
                                                   showInfoScreen: openExerciseInfo,
                                                   active: activeExerciseCheck(index),
                                                 );

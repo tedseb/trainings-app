@@ -44,9 +44,18 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInWithCredential(credential);
       User? user = result.user;
-
+      
+      DateTime? creationDate = user?.metadata.creationTime;
+      DateTime now = DateTime.now();
       //create a new document for the user with the uid
-      await DatabaseService(uid: user!.uid).updateUserData('testGoogleName', 'testGoogleMail');
+      if(creationDate != null) {
+        if(creationDate.year == now.year && creationDate.month == now.month && creationDate.day == now.day ){
+          String name = user?.displayName ?? 'User';
+          String email = user?.email ?? 'user mail';
+          await DatabaseService(uid: user!.uid).updateUserNameandMail(name, email);
+        }
+      }
+      
       return _userFromFireBaseUser(user);
     } catch (e) {
       dev.log(e.toString());
@@ -83,7 +92,7 @@ class AuthService {
       User? user = result.user;
       user!.sendEmailVerification();
       //create a new document for the user with the uid
-      await DatabaseService(uid: user.uid).updateUserData(userName, email);
+      await DatabaseService(uid: user.uid).updateUserNameandMail(userName, email);
       return _userFromFireBaseUser(user);
     } catch (e) {
       dev.log(e.toString());

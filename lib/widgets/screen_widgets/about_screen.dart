@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
-
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,7 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(child: SizedBox()),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: Column(
@@ -92,7 +89,11 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                      ShadowIconButtonWidget(
+                        buttonIcon: Icons.chevron_right_rounded,
+                        onPressFunction: () {},
+                        loggerText: 'Rate us on App Store',
+                      ),
                     ],
                   ),
                 ),
@@ -116,7 +117,11 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                      ShadowIconButtonWidget(
+                        buttonIcon: Icons.chevron_right_rounded,
+                        onPressFunction: () {},
+                        loggerText: 'Terms & Conditions',
+                      ),
                     ],
                   ),
                 ),
@@ -140,14 +145,18 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                      ShadowIconButtonWidget(
+                        buttonIcon: Icons.chevron_right_rounded,
+                        onPressFunction: () {},
+                        loggerText: 'Delete Account',
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          const Expanded(child: SizedBox()),
+          const Spacer(),
         ],
       ),
     );

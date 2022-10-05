@@ -6,16 +6,17 @@ class NavbarIconButtonWidget extends StatefulWidget {
     Key? key,
     required this.onPressedFunction,
     required this.iconData,
-    required this.index,
+    this.iconText,
     required this.selectedItem,
-    required this.menuAndIcon,
+    required this.index,
+
   }) : super(key: key);
 
   final Function onPressedFunction;
-  final List<IconData> iconData;
-  final Map<String,IconData> menuAndIcon;
-  final int index;
+  final IconData iconData;
+  final String? iconText;
   final int selectedItem;
+  final int index;
 
   @override
   State<NavbarIconButtonWidget> createState() => _NavbarIconButtonWidgetState();
@@ -26,7 +27,7 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => widget.onPressedFunction(widget.index),
+      onTap: () => widget.onPressedFunction(),
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: Column(
@@ -35,11 +36,11 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
           Column(
             children: [
               Icon(
-                widget.menuAndIcon.values.elementAt(widget.index),
+                widget.iconData,
                 size: 26,
                 color: Styles.hiGymText,
               ),
-              Text(widget.menuAndIcon.keys.elementAt(widget.index), style: Styles.navBarMenuText,),
+              widget.iconText != null ? Text(widget.iconText! , style: Styles.navBarMenuText,) : const SizedBox(),
             ],
           ),
           AnimatedContainer(

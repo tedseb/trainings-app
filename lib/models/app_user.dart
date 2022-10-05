@@ -5,7 +5,10 @@ class AppUser {
   double? weigth;
   double? size;
   int? age;
-  bool? man;
+  String? gender;
+  String? goalName;
+  int? dayFrequenz;
+  int? minutesFrequenz;
   Map<String, double>? activityPoints;
   int? activityLevel;
 
@@ -16,7 +19,10 @@ class AppUser {
     this.weigth,
     this.size,
     this.age,
-    this.man,
+    this.gender,
+    this.goalName,
+    this.dayFrequenz,
+    this.minutesFrequenz,
     this.activityPoints,
     this.activityLevel,
   });

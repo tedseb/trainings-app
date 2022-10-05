@@ -18,12 +18,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   /// Form Key
   final formKey = GlobalKey<FormState>();
 
-    /// Authentification Service
+  /// Authentification Service
   final AuthService _auth = AuthService();
 
   /// Error Text
   bool resetResponse = false;
-  Color resetResponseColor = Styles.error; 
+  Color resetResponseColor = Styles.error;
   String responseText = 'Something went wrong...';
 
   /// Text Editing Controller
@@ -102,6 +102,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 buttonText: 'reset',
                 buttonWidth: double.infinity,
                 onPressFunction: _resetPassword,
+                loggerText: '#reset#',
               ),
             ],
           ),
@@ -113,33 +114,31 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ShadowButtonWidget(
-                    buttonText: 'zurück',
-                    buttonWidth: 120.0,
-                    onPressFunction: () => Navigator.pop(context),
-                  ),
+              buttonText: 'zurück',
+              buttonWidth: 120.0,
+              onPressFunction: () => Navigator.pop(context),
+              loggerText: 'Login',
+            ),
           ],
         ),
       ),
     );
   }
 
-
-   _resetPassword() async {
+  _resetPassword() async {
     // setState(() => loading = true);
-      if (formKey.currentState!.validate()) {
-  dynamic result = await _auth.resetPassword(context, emailController.text);
-    setState(() {
-  if (result == null) {
-     
-      responseText = 'The email adress doesn\'t exist!';
-      resetResponseColor = Styles.error;
-      
-  }else{
-    responseText = 'Password resettet!';
-      resetResponseColor = Styles.primaryColor;
-  }
-  resetResponse = true;
-    });
-}
+    if (formKey.currentState!.validate()) {
+      dynamic result = await _auth.resetPassword(context, emailController.text);
+      setState(() {
+        if (result == null) {
+          responseText = 'The email adress doesn\'t exist!';
+          resetResponseColor = Styles.error;
+        } else {
+          responseText = 'Password resettet!';
+          resetResponseColor = Styles.primaryColor;
+        }
+        resetResponse = true;
+      });
+    }
   }
 }

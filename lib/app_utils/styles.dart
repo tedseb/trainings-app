@@ -8,6 +8,7 @@ class Styles {
 
   static const Color tertiaryColor = Color.fromRGBO(26, 31, 36, 1);
   static const Color grey = Colors.grey;
+  static Color? lightGrey = Colors.grey[400];
   static const Color error = Colors.red;
 
   static const Color white = Color(0xFFFFFFFF);
@@ -33,6 +34,20 @@ class Styles {
   // static const Color backgroundActivity = Color(0xFF52751B);
 
   ///Text Styles
+  
+   static TextStyle get headLine => const TextStyle(
+        color: hiGymText,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+      );
+
+       static TextStyle get pickerInput => const TextStyle(
+        color: hiGymText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36,
+      );
+
+
   static TextStyle get title => const TextStyle(
         color: hiGymText,
         fontWeight: FontWeight.normal,
@@ -138,6 +153,13 @@ class Styles {
         color: hiGymText,
         fontWeight: FontWeight.w500,
         fontSize: 16,
+      );
+
+      static TextStyle get rpeText => const TextStyle(
+        color: gymyGrey,
+        // color: Colors.grey.shade100,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
       );
 
   //   static TextStyle get subtitle1 => GoogleFonts.getFont(

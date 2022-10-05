@@ -106,40 +106,40 @@ class LeaveExerciseScreen extends StatelessWidget {
               ],
             ),
           ),
-          Visibility(
-            visible: exerciseOccupied != null ? true : false,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      exerciseOccupied!();
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide.none,
-                      ),
-                      primary: Colors.transparent,
-                      onPrimary: Styles.white,
-                      elevation: 0.0,
-                    ),
-                    child: const Text(
-                      'Occupied - Do Later',
-                      style: TextStyle(
-                        color: Styles.hiGymText,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Visibility(
+          //   visible: exerciseOccupied != null ? true : false,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(16.0),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         ElevatedButton(
+          //           onPressed: () {
+          //             exerciseOccupied!();
+          //             Navigator.pop(context);
+          //           },
+          //           style: ElevatedButton.styleFrom(
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(16.0),
+          //               side: BorderSide.none,
+          //             ),
+          //             primary: Colors.transparent,
+          //             onPrimary: Styles.white,
+          //             elevation: 0.0,
+          //           ),
+          //           child: const Text(
+          //             'Occupied - Do Later',
+          //             style: TextStyle(
+          //               color: Styles.hiGymText,
+          //               fontWeight: FontWeight.bold,
+          //               fontSize: 18,
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -35,7 +35,7 @@ class ExerciseCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                     SizedBox(
+                    SizedBox(
                       width: 25.0,
                       child: Divider(
                         height: 10.0,
@@ -43,7 +43,7 @@ class ExerciseCardWidget extends StatelessWidget {
                         color: active ? Styles.primaryColor : Styles.grey,
                       ),
                     ),
-                    const Expanded(child: SizedBox()),
+                    const Spacer(),
                     // Text(selectedExercise.name, style: Styles.trainingsplanCardExeTitle),
                     Text(
                       helper_utils.truncateTrainingsProgrammExeCardName(
@@ -72,7 +72,11 @@ class ExerciseCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            ShadowIconButtonWidget(buttonIcon: Icons.info_outline_rounded, onPressFunction: () => showInfoScreen(selectedExercise)),
+            ShadowIconButtonWidget(
+              buttonIcon: Icons.info_outline_rounded,
+              onPressFunction: () => showInfoScreen(selectedExercise),
+              loggerText: '${selectedExercise.name}_info',
+            ),
           ],
         ),
       ),

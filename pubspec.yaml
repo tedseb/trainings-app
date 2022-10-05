@@ -104,18 +104,28 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Montserrat
+    - family: GreycliffCF
       fonts:
-        - asset: fonts/Montserrat-Regular.ttf
-        - asset: fonts/Montserrat-Black.ttf
-        - asset: fonts/Montserrat-Bold.ttf
-        - asset: fonts/Montserrat-ExtraBold.ttf
-        - asset: fonts/Montserrat-ExtraLight.ttf
-        - asset: fonts/Montserrat-Light.ttf
-        - asset: fonts/Montserrat-Medium.ttf
-        - asset: fonts/Montserrat-Regular.ttf
-        - asset: fonts/Montserrat-SemiBold.ttf
-        - asset: fonts/Montserrat-Thin.ttf
+        - asset: fonts/GreycliffCF-Thin.otf
+          weight: 100
+        - asset: fonts/GreycliffCF-ExtraLight.otf
+          weight: 200
+        - asset: fonts/GreycliffCF-Light.otf
+          weight: 300
+        - asset: fonts/GreycliffCF-Regular.otf
+          weight: 400
+        - asset: fonts/GreycliffCF-Medium.otf
+          weight: 500
+        - asset: fonts/GreycliffCF-DemiBold.otf
+          weight: 600
+        - asset: fonts/GreycliffCF-Bold.otf
+          weight: 700
+        - asset: fonts/GreycliffCF-ExtraBold.otf
+          weight: 800
+        - asset: fonts/GreycliffCF-Heavy.otf
+          weight: 900
+        
+
 
   #   - family: Trajan Pro
   #     fonts:

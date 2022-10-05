@@ -15,10 +15,38 @@ class DatabaseService {
 
   // START - User Related Data------------------------------------------------------------------------------------------------
   /// Update User
-  Future updateUserData(String userName, String userMail) {
+  Future updateUserNameandMail(String userName, String userMail) {
     return usersCollection.doc(uid).set({
       'userName': userName,
       'userMail': userMail,
+    });
+  }
+
+  Future updateUserName(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userName': appUser.name,
+    });
+  }
+
+  Future updateUserData(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userAge': appUser.age,
+      'userWeigth': appUser.weigth,
+      'userSize': appUser.size,
+      'userGender': appUser.gender,
+    });
+  }
+
+  Future updateUserGoal(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userGoal': appUser.goalName,
+    });
+  }
+
+    Future updateUserFrequenz(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userDayFrequenz': appUser.dayFrequenz,
+      'userMinutesFrequenz': appUser.minutesFrequenz,
     });
   }
 
@@ -48,6 +76,10 @@ class DatabaseService {
             name: event.get('userName'),
             uid: uid,
             email: event.data().toString().contains('userMail') ? event.get('userMail') : 'no_user_mail',
+            age: event.data().toString().contains('userAge') ? event.get('userAge') : 0,
+            weigth: event.data().toString().contains('userWeigth') ? event.get('userWeigth') : 0,
+            size: event.data().toString().contains('userSize') ? event.get('userSize') : 0,
+            gender: event.data().toString().contains('userGender') ? event.get('userGender') : 'diverse',
             activityPoints: event.data().toString().contains('activityPoints') ? _fillStringDoubleMaps(event.get('activityPoints')) : {},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),

@@ -55,6 +55,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   bool skipExe = false;
   bool lastExe = false;
   bool exerciseStarted = false;
+  bool trainingStarted = false;
+  int exeCounter = 0;
 
   late Plans selectedPlan;
   late TrainingsProgramms trainingsProgramm;
@@ -155,6 +157,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               nextExercise: () {
                                 setState(() {
                                   skipExe = true;
+                                  exeCounter++;
                                 });
                                 nextExeButtonPressed();
                               },
@@ -325,11 +328,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  actualTimeOrRepNumber.toString(),
+                                  trainingStarted ? actualTimeOrRepNumber.toString() : '',
                                   style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
                                 ),
                                 Text(
-                                  actualTimeorRep,
+                                  trainingStarted ? actualTimeorRep : 'Get Ready',
                                   style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
                                 ),
                               ],
@@ -343,53 +346,77 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
               SizedBox(
                 height: 105,
                 // padding: const EdgeInsets.only(bottom: 18.0),
-                child: IconButton(
-                  onPressed: () {
-                    nextExeButtonPressed();
-                    // if (globalTimeStream == null) {
-                    //   startPlan();
-                    // } else {
-                    //   nextExeButtonPressed();
-                    // }
-                  },
-                  iconSize: 72,
-                  icon: Icon(
-                    playDoneButton,
-                    color: Styles.white,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 18,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Visibility(
-                      visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
-                      child: ElevatedButton(
-                        onPressed: () => doExerciseLater(),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                            side: BorderSide.none,
-                          ),
-                          primary: Colors.transparent,
-                          onPrimary: Styles.white,
-                          elevation: 0.0,
-                        ),
-                        child: const Text(
-                          'Occupied - Do Later',
-                          style: TextStyle(
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        nextExeButtonPressed();
+                        // if (globalTimeStream == null) {
+                        //   startPlan();
+                        // } else {
+                        //   nextExeButtonPressed();
+                        // }
+                      },
+                      iconSize: 72,
+                      icon: Icon(
+                        playDoneButton,
+                        color: Styles.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: Visibility(
+                        visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
+                        child: IconButton(
+                          onPressed: () => doExerciseLater(),
+                          icon: const Icon(
+                            Icons.skip_next_rounded,
                             color: Styles.white,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12,
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
-              )
+              ),
+              LinearProgressIndicator(
+                value: exeCounter / (selectedPlan.exercises.length-1),
+                color: Styles.white,
+                backgroundColor: Colors.transparent,
+              ),
+              // SizedBox(
+              //   height: 18,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: [
+              //       Visibility(
+              //         visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
+              //         child: ElevatedButton(
+              //           onPressed: () => doExerciseLater(),
+              //           style: ElevatedButton.styleFrom(
+              //             shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(16.0),
+              //               side: BorderSide.none,
+              //             ),
+              //             primary: Colors.transparent,
+              //             onPrimary: Styles.white,
+              //             elevation: 0.0,
+              //           ),
+              //           child: const Text(
+              //             'Occupied - Do Later',
+              //             style: TextStyle(
+              //               color: Styles.white,
+              //               fontWeight: FontWeight.normal,
+              //               fontSize: 12,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),
@@ -410,7 +437,13 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           lastExe = true;
         });
       }
+
       await waitUserForUserButtonPress();
+      if (!skipExe && !doLater) {
+        setState(() {
+          trainingStarted = true;
+        });
+      }
       if (!doLater) {
         addOccupiedExeToList();
         setState(() {
@@ -458,9 +491,9 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
     /// Exercise Pause Screen
     if (!skipExe) {
-      if (!lastExe) {
-        screenTrainingsDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false, true);
-      }
+      // if (!lastExe) {
+      //   screenTrainingsDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false, true);
+      // }
       showModalBottomSheet(
         isScrollControlled: true,
         enableDrag: false,
@@ -475,14 +508,15 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           );
         },
       );
+      exeCounter++;
 
       /// Wait for RPE Scale Pressed
-      await waitUserForUserButtonPress();
-    }
-    if (!lastExe) {
+      // await waitUserForUserButtonPress();
       if (!skipExe) {
         await waitUserForUserButtonPress();
       }
+    }
+    if (!lastExe) {
       // Fill Exercise Rest Time after done Button Pressed
       selectedPlan.exercises[exeIndex].exerciseRestTime[toDay] = actualTimeOrRepNumber;
       screenExerciseDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false);
@@ -542,60 +576,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       setState(() {
         selectedPlan.time = newTick;
       });
-    });
-  }
-
-  void screenTrainingsDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode, bool exepause) {
-    Exercises doingExercise = selectedPlan.exercises[exeIndex];
-    selectedExercise = doingExercise;
-
-    ///Initialize Screen Info
-    setState(() {
-      exeriseName = doingExercise.name;
-      exeriseSubName = doingExercise.subName;
-      actualSetNumber = doingSetIndex + 1;
-      actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
-
-      ///Trainings Mode
-      if (trainingsMode) {
-        prepareFor = 'train';
-        modeColor = Styles.backgroundActivity;
-        if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
-          actualTimeorRep = 'rep';
-          actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
-          actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
-          progressValue = 1;
-          progressColor = Styles.white;
-          startPassiveTimerTrainignsMode(exeIndex, doingSetIndex);
-        } else {
-          progressValue = 0.0;
-          progressColor = Styles.white;
-          actualTimeorRep = 'sec';
-          actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
-          actualTimeOrRepNumber = 0;
-          startActiveTimerTrainignsMode(exeIndex, doingSetIndex);
-        }
-
-        ///Pause Mode
-      } else {
-        progressValue = 0.0;
-        progressColor = Styles.white;
-        modeColor = Styles.backgroundPause;
-        actualTimeorRep = 'sec';
-        actualTimeOrRepNumber = 0;
-
-        if (!exepause) {
-          prepareFor = 'pause';
-          actualTimeOrRepNumberToDo = doingExercise.setRestTimeScale['actualToDo'] ?? 0;
-          startActiveTimerPauseMode(exeIndex, doingSetIndex);
-        } else {
-          prepareFor = 'pause - next';
-          setExerciseVideo(doingExercise);
-
-          actualTimeOrRepNumberToDo = selectedPlan.exercises[exeIndex].setRestTimeScale['actualToDo'] ?? 0;
-          startActiveTimerExePauseMode(exeIndex);
-        }
-      }
     });
   }
 
@@ -662,35 +642,94 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   void startActiveTimerExePauseMode(int exeIndex) {
-    if (smallTimeSubscription != null) {
-      smallTimeSubscription!.cancel();
-    }
-    smallTimeStream = StartTimer().stopWatchStream();
-    smallTimeSubscription = smallTimeStream!.listen((int newTick) {
-      if (newTick % 5 == 0) {
-        dev.log('SmallTime: $newTick');
+    if (trainingStarted) {
+      if (smallTimeSubscription != null) {
+        smallTimeSubscription!.cancel();
       }
-      setState(() {
-        // selectedPlan.exercises![exeIndex - 1].exePauseTimeDone = newTick;
-        // fillPlanList[exeIndex][0]['exerciseRestTime'] = newTick;
-
-        actualTimeOrRepNumber = newTick;
-        if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
-          progressValue = 1;
-          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
-        } else {
-          progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+      smallTimeStream = StartTimer().stopWatchStream();
+      smallTimeSubscription = smallTimeStream!.listen((int newTick) {
+        if (newTick % 5 == 0) {
+          dev.log('ExePause[$exeIndex] Time going: $newTick');
         }
+        setState(() {
+          // selectedPlan.exercises![exeIndex - 1].exePauseTimeDone = newTick;
+          // fillPlanList[exeIndex][0]['exerciseRestTime'] = newTick;
+
+          actualTimeOrRepNumber = newTick;
+          if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
+            progressValue = 1;
+            progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+          } else {
+            progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
+          }
+        });
       });
+    }
+  }
+
+  void screenTrainingsDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode, bool exepause) {
+    Exercises doingExercise = selectedPlan.exercises[exeIndex];
+    selectedExercise = doingExercise;
+
+    ///Initialize Screen Info
+    setState(() {
+      exeriseName = doingExercise.name;
+      exeriseSubName = doingExercise.subName;
+      actualSetNumber = doingSetIndex + 1;
+      actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
+
+      ///Trainings Mode
+      if (trainingsMode) {
+        prepareFor = 'train';
+        modeColor = Styles.backgroundActivity;
+        if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
+          actualTimeorRep = 'rep';
+          actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
+          actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
+          progressValue = 1;
+          progressColor = Styles.white;
+          startPassiveTimerTrainignsMode(exeIndex, doingSetIndex);
+        } else {
+          progressValue = 0.0;
+          progressColor = Styles.white;
+          actualTimeorRep = 'sec';
+          actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
+          actualTimeOrRepNumber = 0;
+          startActiveTimerTrainignsMode(exeIndex, doingSetIndex);
+        }
+
+        ///Pause Mode
+      } else {
+        progressValue = 0.0;
+        progressColor = Styles.white;
+        modeColor = Styles.backgroundPause;
+        actualTimeorRep = 'sec';
+        actualTimeOrRepNumber = 0;
+
+        if (!exepause) {
+          prepareFor = 'pause';
+          actualTimeOrRepNumberToDo = doingExercise.setRestTimeScale['actualToDo'] ?? 0;
+          startActiveTimerPauseMode(exeIndex, doingSetIndex);
+        } else {
+          /// After deleting Exercise Pause Screen, this after
+          /// else Part is not used anymore!!!!!
+          prepareFor = 'pause - next';
+          setExerciseVideo(doingExercise);
+
+          actualTimeOrRepNumberToDo = selectedPlan.exercises[exeIndex].setRestTimeScale['actualToDo'] ?? 0;
+          startActiveTimerExePauseMode(exeIndex);
+        }
+      }
     });
   }
 
-  void screenExerciseDataUpdater(int exeIndex, int doingSetIndex, bool trainingsMode) {
+  void screenExerciseDataUpdater(int exeIndex, int doingSetIndex, bool initial) {
     Exercises doingExercise = selectedPlan.exercises[exeIndex];
     selectedExercise = doingExercise;
-    if (smallTimeSubscription != null) {
-      smallTimeSubscription!.cancel();
-    }
+
+    // if (smallTimeSubscription != null) {
+    //   smallTimeSubscription!.cancel();
+    // }
     setState(() {
       exeriseName = doingExercise.name;
       selectedExerciseIndex = exeIndex;
@@ -699,22 +738,33 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
       prepareFor = 'Next Exercise';
 
-      modeColor = Styles.backgroundActivity;
-      if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
-        actualTimeorRep = 'rep';
-        actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
-        actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
-        trainModeTimeDone = 0;
-        progressValue = 1;
-        progressColor = Styles.white;
-      } else {
-        actualTimeorRep = 'sec';
-        actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
-        actualTimeOrRepNumber = 0;
-        trainModeTimeDone = 0;
-        progressValue = 0.0;
-        progressColor = Styles.white;
+      modeColor = Styles.pastelYellow;
+
+      progressValue = 0.0;
+      progressColor = Styles.white;
+      actualTimeorRep = 'sec';
+      actualTimeOrRepNumberToDo = doingExercise.setRestTimeScale['actualToDo'] ?? 0;
+      actualTimeOrRepNumber = 0;
+      trainModeTimeDone = 0;
+      if (!initial) {
+        startActiveTimerExePauseMode(exeIndex);
       }
+
+      // if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
+      //   actualTimeorRep = 'rep';
+      //   actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
+      //   actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
+      //   trainModeTimeDone = 0;
+      //   progressValue = 1;
+      //   progressColor = Styles.white;
+      // } else {
+      //   actualTimeorRep = 'sec';
+      //   actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
+      //   actualTimeOrRepNumber = 0;
+      //   trainModeTimeDone = 0;
+      //   progressValue = 0.0;
+      //   progressColor = Styles.white;
+      // }
     });
   }
 
@@ -778,4 +828,4 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       ),
     );
   }
-}//353
+}
