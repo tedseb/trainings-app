@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:higym/ai_on_boarding_screen.dart';
 import 'package:higym/authenticate/authenticate.dart';
 import 'package:higym/initial_screen.dart';
 import 'package:higym/models/app_user.dart';
@@ -20,7 +21,7 @@ class Wrapper extends StatelessWidget {
       providers: [
         StreamProvider<AppUser>.value(
           value: DatabaseService(uid: user?.uid).getUserData,
-          initialData: AppUser(),
+          initialData: InitialModels.initialAppUser,
         ),
         StreamProvider<Goal>.value(
           value: DatabaseService(uid: user?.uid).getGoal,
@@ -39,13 +40,13 @@ class Wrapper extends StatelessWidget {
 
   _userAuthAndVerified(User? user) {
     if (user == null) {
-      return const Authenticate();
+      return const AiOnBoardingScreen();
+      // return const Authenticate();
     }
 
     if (!user.emailVerified) {
-      
-
-      return const Authenticate();
+      return const AiOnBoardingScreen();
+      // return const Authenticate();
     }
     return const InitialScreen();
   }

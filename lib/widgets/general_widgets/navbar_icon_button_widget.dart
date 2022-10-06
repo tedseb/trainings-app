@@ -9,6 +9,8 @@ class NavbarIconButtonWidget extends StatefulWidget {
     this.iconText,
     required this.selectedItem,
     required this.index,
+    this.borderHeigth = 2.0,
+    this.borderWidth = 20.0,
 
   }) : super(key: key);
 
@@ -17,6 +19,8 @@ class NavbarIconButtonWidget extends StatefulWidget {
   final String? iconText;
   final int selectedItem;
   final int index;
+  final double borderHeigth;
+  final double borderWidth;
 
   @override
   State<NavbarIconButtonWidget> createState() => _NavbarIconButtonWidgetState();
@@ -51,8 +55,8 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
               right: 16,
               left: 16,
             ),
-            width: 20.0,
-            height: widget.index == widget.selectedItem ? 2 : 0,
+            width: widget.borderWidth,
+            height: widget.index == widget.selectedItem ? widget.borderHeigth : 0,
             decoration: BoxDecoration(
               color: Styles.primaryColor,
               borderRadius: BorderRadius.circular(50),

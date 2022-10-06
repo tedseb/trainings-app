@@ -382,7 +382,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                 ),
               ),
               LinearProgressIndicator(
-                value: exeCounter / (selectedPlan.exercises.length-1),
+                value: exeCounter / (selectedPlan.exercises.length),
                 color: Styles.white,
                 backgroundColor: Colors.transparent,
               ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
 
 enum PossibleAiScreens {
   talkToAiContent,
   aiNameContent,
   aiPersonalDataContent,
   aiGoalContent,
+  aiFrequenzyContent,
+  aiReminderContent,
+  aiGymEquipmentContent,
 }
 
 final List<Map<String, dynamic>> navBarIcons = [

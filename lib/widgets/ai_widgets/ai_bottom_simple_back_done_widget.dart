@@ -5,13 +5,18 @@ import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 
 class AiBottomSimpleBackDoneWidget extends StatelessWidget {
   const AiBottomSimpleBackDoneWidget({
-    required this.onPressedBack,
-    required this.onPressedConfirm,
+    required this.leftButtonText,
+    required this.rightButtonText,
+    required this.onPressedLeft,
+    required this.onPressedRight,
     Key? key,
   }) : super(key: key);
 
-  final Function onPressedBack;
-  final Function onPressedConfirm;
+  final String leftButtonText;
+  final String rightButtonText;
+
+  final Function onPressedLeft;
+  final Function onPressedRight;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +26,16 @@ class AiBottomSimpleBackDoneWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ShadowButtonWidget(
-            buttonText: 'back',
+            buttonText: leftButtonText,
             buttonWidth: 120.0,
-            onPressFunction: () => onPressedBack(),
-            loggerText: 'Settings',
+            onPressFunction: () => onPressedLeft(),
+            loggerText: leftButtonText,
           ),
           ShadowButtonWidget(
-            buttonText: 'confirm',
+            buttonText: rightButtonText,
             buttonWidth: 120.0,
-            onPressFunction: () => onPressedConfirm(),
-            loggerText: 'Settings #confirm#',
+            onPressFunction: () => onPressedRight(),
+            loggerText: rightButtonText,
           ),
         ],
       ),

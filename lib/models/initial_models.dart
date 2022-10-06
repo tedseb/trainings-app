@@ -1,4 +1,6 @@
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
+import 'package:intl/intl.dart';
 
 class InitialModels {
   static Goal initialGoal = Goal(
@@ -62,5 +64,20 @@ class InitialModels {
         ],
       )
     ],
+  );
+
+  static AppUser initialAppUser = AppUser(
+    uid: '',
+    name: '',
+    email: '',
+    age: -1,
+    size: -1,
+    weigth: -1,
+    gender: '',
+    goalName: '',
+    dayFrequenz: -1,
+    minutesFrequenz: '',
+    activityLevel: 0,
+    activityPoints: { DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0},
   );
 }

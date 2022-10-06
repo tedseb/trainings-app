@@ -48,21 +48,21 @@ class TalkToAiContent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
           child: RowItemWithSelectWidget(
             widgetText: 'Trainings Frequenz',
-            onPressFunction: () {},
+           onPressFunction: ()  => openContent(PossibleAiScreens.aiFrequenzyContent),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
           child: RowItemWithSelectWidget(
             widgetText: 'Set Reminder',
-            onPressFunction: () {},
+             onPressFunction: ()  => openContent(PossibleAiScreens.aiReminderContent),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
           child: RowItemWithSelectWidget(
             widgetText: 'Gym Equipment',
-            onPressFunction: () {},
+             onPressFunction: ()  => openContent(PossibleAiScreens.aiGymEquipmentContent),
           ),
         ),
       ],

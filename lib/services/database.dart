@@ -80,6 +80,8 @@ class DatabaseService {
             weigth: event.data().toString().contains('userWeigth') ? event.get('userWeigth') : 0,
             size: event.data().toString().contains('userSize') ? event.get('userSize') : 0,
             gender: event.data().toString().contains('userGender') ? event.get('userGender') : 'diverse',
+            goalName: event.data().toString().contains('userGoal') ? event.get('userGoal') : 'General Fitness',
+            reminder: event.data().toString().contains('userReminder') ? event.get('userReminder') : '08_00_Mon',//'08_00_Mon-Tue-Wed-Thu-Fri-Sat-Sun',
             activityPoints: event.data().toString().contains('activityPoints') ? _fillStringDoubleMaps(event.get('activityPoints')) : {},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),

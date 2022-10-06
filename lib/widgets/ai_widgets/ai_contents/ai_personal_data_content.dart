@@ -28,17 +28,17 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
   final sizeController = TextEditingController();
   final genderController = TextEditingController();
 
-  List<int> ageList = List<int>.generate(100, (i) => i);
+  List<int> ageList = List<int>.generate(90, (i) => i+10);
   List<double> weightList = List<double>.generate(320, (i) => ((i / 2) + 40));
   List<double> sizeList = List<double>.generate(180, (i) => ((i / 2) + 130));
   List<String> genderList = ['Male', 'Female', 'Diverse'];
 
   @override
   void initState() {
-    widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = 30.toString();
-    widget.appUser.weigth != null ? weightController.text = widget.appUser.weigth.toString() : weightController.text = 70.0.toString();
-    widget.appUser.size != null ? sizeController.text = widget.appUser.size.toString() : sizeController.text = 183.0.toString();
-    widget.appUser.gender != null ? genderController.text = widget.appUser.gender.toString() : genderController.text = 'Male';
+    widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = ageList[20].toString();
+    widget.appUser.weigth != null ? weightController.text = widget.appUser.weigth.toString() : weightController.text = weightList[60].toString();
+    widget.appUser.size != null ? sizeController.text = widget.appUser.size.toString() : sizeController.text = sizeList[90].toString();
+    widget.appUser.gender != null ? genderController.text = widget.appUser.gender! : genderController.text = genderList[0];
     super.initState();
   }
 

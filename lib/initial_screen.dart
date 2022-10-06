@@ -32,19 +32,9 @@ class _InitialScreenState extends State<InitialScreen> {
     // const GoalsScreen(),
     // const Achievement(),
   ];
-  // final List<IconData> _icons = [
-  //   Icons.home_outlined,
-  //   Icons.person_outline_rounded,
-  //   Icons.phone_iphone_rounded,
-  //   Icons.outlined_flag_rounded,
-  // ];
+ 
   final List<Map<String, dynamic>> _icons = UsedObjects.navBarIcons;
-  final Map<String, IconData> _iconTexts = {
-    'Home': Icons.home_outlined,
-    'Profile': Icons.person_outline_rounded,
-    'Plans': Icons.phone_iphone_rounded,
-    'Status': Icons.widgets_rounded,
-  };
+
   final _pageController = PageController();
 
   @override

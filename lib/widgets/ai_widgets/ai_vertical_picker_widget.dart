@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
-
-import 'dart:developer' as dev;
 
 class AiVerticalPickerWidget extends StatefulWidget {
   const AiVerticalPickerWidget({
@@ -30,15 +26,13 @@ class AiVerticalPickerWidget extends StatefulWidget {
 class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
   late int _index;
 
-  late PageController pageController;
+  late PageController valueController;
 
   @override
   void initState() {
     int initPage = widget.pickerList.indexWhere((element) => element.toString() == widget.initValue);
     _index = initPage;
-    pageController = PageController(viewportFraction: 0.3, initialPage: initPage);
-
-    dev.log('initial Page value : $initPage');
+    valueController = PageController(viewportFraction: 0.3, initialPage: initPage);
 
     super.initState();
   }
@@ -54,10 +48,15 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(32.0, 60.0, 32.0, 0.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(widget.dialogName, style: Styles.headLine),
+                  Text(
+                    widget.dialogName,
+                    style: Styles.headLine,
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 8.0),
                   Text(widget.valueUnit, style: Styles.textFormFieldHintText),
                 ],
@@ -83,7 +82,7 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
                     PageView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: widget.pickerList.length,
-                      controller: pageController,
+                      controller: valueController,
                       onPageChanged: (int index) => setState(() => _index = index),
                       itemBuilder: (_, i) {
                         return Center(
@@ -98,7 +97,12 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
                 ),
               ),
             ),
-            AiBottomSimpleBackDoneWidget(onPressedBack: () => Navigator.pop(context), onPressedConfirm: () => updateAndClose())
+            AiBottomSimpleBackDoneWidget(
+              leftButtonText: 'Back',
+              rightButtonText: 'Confirm',
+              onPressedLeft: () => Navigator.pop(context),
+              onPressedRight: () => updateAndClose(),
+            )
           ],
         ),
       ),

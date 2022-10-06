@@ -8,7 +8,8 @@ class AppUser {
   String? gender;
   String? goalName;
   int? dayFrequenz;
-  int? minutesFrequenz;
+  String? minutesFrequenz;
+  String? reminder;
   Map<String, double>? activityPoints;
   int? activityLevel;
 
@@ -23,6 +24,7 @@ class AppUser {
     this.goalName,
     this.dayFrequenz,
     this.minutesFrequenz,
+    this.reminder,
     this.activityPoints,
     this.activityLevel,
   });
