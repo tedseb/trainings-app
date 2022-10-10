@@ -46,4 +46,34 @@ final List<Map<String, dynamic>> goalObjects = [
     'titel': 'Abnehmen',
     'subTitel': 'Gewicht verlieren und Muskel erhalten',
   },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
+  {
+    'icon': Icons.monitor_weight_outlined,
+    'titel': 'Abnehmen',
+    'subTitel': 'Gewicht verlieren und Muskel erhalten',
+  },
 ];

@@ -33,8 +33,8 @@ class _AiFrequencyContentState extends State<AiFrequencyContent> {
 
   @override
   void initState() {
-    widget.appUser.dayFrequenz != null ? daysController.text = widget.appUser.dayFrequenz.toString() : daysController.text = daysList[0].toString();
-    widget.appUser.minutesFrequenz != null ? minutesController.text = widget.appUser.minutesFrequenz! : minutesController.text = minutesList[0];
+    widget.appUser.dayFrequenz != null ? daysController.text = widget.appUser.dayFrequenz.toString() : daysController.text = '';
+    widget.appUser.minutesFrequenz != null ? minutesController.text = widget.appUser.minutesFrequenz! : minutesController.text = '';
     
     super.initState();
   }

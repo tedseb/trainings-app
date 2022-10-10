@@ -31,6 +31,7 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
   @override
   void initState() {
     int initPage = widget.pickerList.indexWhere((element) => element.toString() == widget.initValue);
+    initPage = initPage != -1 ? initPage : (widget.pickerList.length~/2)~/2;
     _index = initPage;
     valueController = PageController(viewportFraction: 0.3, initialPage: initPage);
 

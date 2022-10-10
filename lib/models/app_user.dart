@@ -10,6 +10,7 @@ class AppUser {
   int? dayFrequenz;
   String? minutesFrequenz;
   String? reminder;
+  int? fitnessLevel;
   Map<String, double>? activityPoints;
   int? activityLevel;
 
@@ -25,6 +26,7 @@ class AppUser {
     this.dayFrequenz,
     this.minutesFrequenz,
     this.reminder,
+    this.fitnessLevel,
     this.activityPoints,
     this.activityLevel,
   });

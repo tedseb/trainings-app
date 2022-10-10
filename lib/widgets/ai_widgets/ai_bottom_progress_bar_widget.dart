@@ -21,11 +21,10 @@ class AiBottomProgressBarWidget extends StatefulWidget {
 }
 
 class _AiBottomProgressBarWidgetState extends State<AiBottomProgressBarWidget> {
-  int screenCounter = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -36,11 +35,11 @@ class _AiBottomProgressBarWidgetState extends State<AiBottomProgressBarWidget> {
           ),
           const SizedBox(width: 16.0),
           SizedBox(
-            width: 200,
+            width: 180,
             child: LinearProgressIndicator(
-              value: screenCounter / (widget.pagesLength),
+              value: widget.currentPage / (widget.pagesLength-1),
               color: Styles.primaryColor,
-              backgroundColor: Styles.grey,
+              backgroundColor: Styles.lightGrey,
             ),
           ),
           const SizedBox(width: 16.0),

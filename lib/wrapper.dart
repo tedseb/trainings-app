@@ -40,13 +40,13 @@ class Wrapper extends StatelessWidget {
 
   _userAuthAndVerified(User? user) {
     if (user == null) {
-      return const AiOnBoardingScreen();
-      // return const Authenticate();
+      // return const AiOnBoardingScreen();
+      return const Authenticate();
     }
 
     if (!user.emailVerified) {
-      return const AiOnBoardingScreen();
-      // return const Authenticate();
+      // return const AiOnBoardingScreen();
+      return const Authenticate();
     }
     return const InitialScreen();
   }

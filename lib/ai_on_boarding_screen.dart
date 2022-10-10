@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:higym/app_utils/styles.dart';
 import 'package:higym/authenticate/login_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/initial_models.dart';
 import 'package:higym/models/used_objects.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_progress_bar_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
+import 'package:higym/widgets/ai_widgets/ai_contents/ai_fitness_level_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_frequency_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_goal_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_name_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_personal_data_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_wave_widget.dart';
+
+import 'dart:developer' as dev;
 
 class AiOnBoardingScreen extends StatefulWidget {
   const AiOnBoardingScreen({Key? key}) : super(key: key);
@@ -29,7 +33,9 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
   bool onboardingScreen = true;
 
   PageController pageController = PageController();
-  int currentPage = 0;
+  int currentContent = 0;
+
+  String errorText = '';
 
   // AppUser appUser = InitialModels.initialAppUser;
 
@@ -46,13 +52,13 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
       'aiText': 'Was ist dein Ziel?',
       'aiContent': AiGoalContent(appUser: onBoardingAppUser),
     },
-    // {
-    //   'aiText': 'Wie fit bist du?',
-    //   'aiContent': AiNameContent(appUser: appUser),
-    // },
+    {
+      'aiText': 'Wie fit bist du?',
+      'aiContent': AiFitnessLevelContent(appUser: onBoardingAppUser),
+    },
     // {
     //   'aiText': 'Welche Fitnessmethoden bevorzugst du eher?',
-    //   'aiContent': AiNameContent(appUser: appUser),
+    //   'aiContent': AiNameContent(appUser: onBoardingAppUser),
     // },
     {
       'aiText': 'Wie viele Tage die Woche und wie lange möchtest du Trainieren?',
@@ -67,31 +73,47 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AiWaveWidget(),
-          onboardingScreen ? const Spacer() : const SizedBox(),
           onboardingScreen
-              ? const AiTextWidget(
-                  aiText: 'Hallo ich bin Higym, dein smarter Coach!',
-                  key: ValueKey('Hallo ich bin Higym, dein smarter Coach!'),
+              ? Flexible(
+                  child: Column(
+                    children: const [
+                      Spacer(),
+                      AiTextWidget(
+                        aiText: 'Hallo ich bin Higym, dein smarter Coach!',
+                        key: ValueKey('Hallo ich bin Higym, dein smarter Coach!'),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
                 )
-              : AiTextWidget(
-                  aiText: aiContentScreenChain[currentPage]['aiText'],
-                  key: ValueKey(aiContentScreenChain[currentPage]['aiText']),
-                ),
-          onboardingScreen ? const Spacer() : const SizedBox(),
-          onboardingScreen
-              ? const SizedBox()
-              : Expanded(
-                  child: PageView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: aiContentScreenChain.length,
-                    controller: pageController,
-                    // onPageChanged: (int index) => setState(() => selectedPage = index),
-                    itemBuilder: (_, index) {
-                      return aiContentScreenChain[index]['aiContent'];
-                    },
+              : Flexible(
+                  child: Column(
+                    children: [
+                      AiTextWidget(
+                        aiText: aiContentScreenChain[currentContent]['aiText'],
+                        key: ValueKey(aiContentScreenChain[currentContent]['aiText']),
+                      ),
+                      Expanded(
+                        child: PageView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: aiContentScreenChain.length,
+                          controller: pageController,
+                          onPageChanged: (int index) => setState(() => currentContent = index),
+                          itemBuilder: (_, index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // const Spacer(),
+                               Flexible(child: SingleChildScrollView(child: aiContentScreenChain[index]['aiContent'],)),
+                                // const Spacer(),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-          // const Spacer(),
         ],
       ),
       bottomNavigationBar: onboardingScreen
@@ -99,49 +121,109 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
               leftButtonText: 'Login',
               rightButtonText: 'Start',
               onPressedLeft: () => goToLogInScreen(),
-              onPressedRight: () => startOnBoarding(),
+              onPressedRight: () => startStopOnBoarding(),
             )
           // : const SizedBox(),
-          : AiBottomProgressBarWidget(
-              pagesLength: aiContentScreenChain.length,
-              currentPage: currentPage,
-              onPressedLeft: () => previousPage(),
-              onPressedRight: () => nextPage(),
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: errorText != '',
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text(errorText, style: const TextStyle(color: Styles.error))],
+                  ),
+                ),
+                AiBottomProgressBarWidget(
+                  // key: ValueKey(currentContent),
+                  pagesLength: aiContentScreenChain.length,
+                  currentPage: currentContent,
+                  onPressedLeft: () => previousPage(),
+                  onPressedRight: () => nextPage(),
+                ),
+              ],
             ),
     );
   }
 
   void nextPage() {
-    if (currentPage++ < aiContentScreenChain.length - 1) {
-      setState(() {
-        pageController.nextPage(
-          duration: const Duration(
-            milliseconds: 300,
-          ),
-          curve: Curves.linear,
-        );
-      });
+    if (true) {
+    // if (contentEditedChecker()) {
+      if (currentContent < aiContentScreenChain.length - 1) {
+        setState(() {
+          pageController.nextPage(
+            duration: const Duration(
+              milliseconds: 300,
+            ),
+            curve: Curves.linear,
+          );
+        });
+      }
     }
   }
 
   void previousPage() {
-    setState(() {
-      if (currentPage-- < 0) {
-        onboardingScreen = true;
-      } else {
+    if (currentContent <= 0) {
+      startStopOnBoarding();
+    } else {
+      setState(() {
         pageController.previousPage(
           duration: const Duration(
             milliseconds: 300,
           ),
           curve: Curves.linear,
         );
-      }
-    });
+          errorText = '';
+      });
+    }
   }
 
-  void startOnBoarding() {
+  bool contentEditedChecker() {
+    if (pageController.page == 0) {
+      if (onBoardingAppUser.name == null) {
+        setState(() {
+          errorText = 'Bitte Namen einfügen';
+        });
+
+        return false;
+      }
+    }
+    if (pageController.page == 1) {
+      if (onBoardingAppUser.age == null || onBoardingAppUser.size == null || onBoardingAppUser.weigth == null || onBoardingAppUser.gender == null) {
+        setState(() {
+          errorText = 'Bitte Alle Felder Befüllen';
+        });
+        return false;
+      } 
+    }
+    if (pageController.page == 2) {
+      if (onBoardingAppUser.goalName == null) {
+        setState(() {
+          errorText = 'Bitte Goal auswählen';
+        });
+        return false;
+      } 
+    }
+    if (pageController.page == 4) {
+      dev.log('Day fre = ${onBoardingAppUser.dayFrequenz}');
+      if (onBoardingAppUser.dayFrequenz == null || onBoardingAppUser.minutesFrequenz == null) {
+        setState(() {
+          errorText = 'Bitte Alle Felder Befüllen';
+        });
+        return false;
+      } 
+    }
+
     setState(() {
-      onboardingScreen = false;
+      errorText = '';
+    });
+
+    return true;
+  }
+
+  void startStopOnBoarding() {
+    setState(() {
+      onboardingScreen = !onboardingScreen;
     });
   }
 

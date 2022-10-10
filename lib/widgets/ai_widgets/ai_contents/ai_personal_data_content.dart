@@ -35,10 +35,10 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
 
   @override
   void initState() {
-    widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = ageList[20].toString();
-    widget.appUser.weigth != null ? weightController.text = widget.appUser.weigth.toString() : weightController.text = weightList[60].toString();
-    widget.appUser.size != null ? sizeController.text = widget.appUser.size.toString() : sizeController.text = sizeList[90].toString();
-    widget.appUser.gender != null ? genderController.text = widget.appUser.gender! : genderController.text = genderList[0];
+    widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = '';
+    widget.appUser.weigth != null ? weightController.text = widget.appUser.weigth.toString() : weightController.text = '';
+    widget.appUser.size != null ? sizeController.text = widget.appUser.size.toString() : sizeController.text = '';
+    widget.appUser.gender != null ? genderController.text = widget.appUser.gender! : genderController.text = '';
     super.initState();
   }
 
