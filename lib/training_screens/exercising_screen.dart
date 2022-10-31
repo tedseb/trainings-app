@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/timer_utils.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/training_screens/deload_input_dialog.dart';
+import 'package:higym/training_screens/deload_weigth_input.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
@@ -58,6 +60,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   bool trainingStarted = false;
   int exeCounter = 0;
 
+  bool deloadPhase = false;
+
   late Plans selectedPlan;
   late TrainingsProgramms trainingsProgramm;
   late Exercises selectedExercise;
@@ -71,7 +75,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   IconData playDoneButton = Icons.play_circle_fill_rounded;
 
-  String toDay = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String toDay = DateFormat('yyyy-MM-dd_hh:mm').format(DateTime.now());
 
   // late List<List<Map<String,num>>> fillPlanList;
 
@@ -269,20 +273,23 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  actualTimeOrRepNumberToDo.toString(),
-                                  style: Styles.exercisingTitle,
-                                ),
-                                Text(
-                                  actualTimeorRep,
-                                  style: Styles.exercisingTitle,
-                                ),
-                              ],
+                          Visibility(
+                            visible: trainingStarted && !deloadPhase,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    actualTimeOrRepNumberToDo.toString(),
+                                    style: Styles.exercisingTitle,
+                                  ),
+                                  Text(
+                                    actualTimeorRep,
+                                    style: Styles.exercisingTitle,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -315,7 +322,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               height: (MediaQuery.of(context).size.height / 10) * 3,
                               width: (MediaQuery.of(context).size.height / 10) * 3,
                               child: CircularProgressIndicator(
-                                value: progressValue,
+                                value: !deloadPhase ? progressValue : 0,
                                 color: progressColor,
                                 strokeWidth: 8.0,
                               ),
@@ -324,20 +331,25 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
                           /// Counter
                           Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  trainingStarted ? actualTimeOrRepNumber.toString() : '',
-                                  style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
-                                ),
-                                Text(
-                                  trainingStarted ? actualTimeorRep : 'Get Ready',
-                                  style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
-                                ),
-                              ],
-                            ),
-                          ),
+                            child: !deloadPhase
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        trainingStarted ? actualTimeOrRepNumber.toString() : '',
+                                        style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
+                                      ),
+                                      Text(
+                                        trainingStarted ? actualTimeorRep : 'Get Ready',
+                                        style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
+                                      ),
+                                    ],
+                                  )
+                                : Text(
+                                    'Do as much repetition as you can!',
+                                    style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
+                                  ),
+                          )
                         ],
                       ),
               ),
@@ -386,37 +398,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                 color: Styles.white,
                 backgroundColor: Colors.transparent,
               ),
-              // SizedBox(
-              //   height: 18,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              //       Visibility(
-              //         visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
-              //         child: ElevatedButton(
-              //           onPressed: () => doExerciseLater(),
-              //           style: ElevatedButton.styleFrom(
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(16.0),
-              //               side: BorderSide.none,
-              //             ),
-              //             primary: Colors.transparent,
-              //             onPrimary: Styles.white,
-              //             elevation: 0.0,
-              //           ),
-              //           child: const Text(
-              //             'Occupied - Do Later',
-              //             style: TextStyle(
-              //               color: Styles.white,
-              //               fontWeight: FontWeight.normal,
-              //               fontSize: 12,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // )
             ],
           ),
         ),
@@ -468,6 +449,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   Future<void> startExercise(int exeIndex) async {
     Exercises exercise = selectedPlan.exercises[exeIndex];
     int setsLength = exercise.sets.length - 1;
+    deloadPhase = !isDelooadPhaseDone(exeIndex);
     for (int setIndex = 0; setIndex <= setsLength; setIndex++) {
       /// Trainings Screen
       if (!skipExe) {
@@ -476,6 +458,19 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         // Fill Repetitions and Trainings TimeDone after done Button Pressed
         selectedPlan.exercises[exeIndex].sets[setIndex].repetitions[toDay] = selectedPlan.exercises[exeIndex].repetitionsScale['actualToDo']!;
         selectedPlan.exercises[exeIndex].sets[setIndex].setTime[toDay] = trainModeTimeDone;
+      }
+
+      /// Deload phase
+      if (!skipExe && deloadPhase) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => DeloadInputDialog(
+            weigthUpdater: weigthUpdater,
+            exeIndexUpdate: exeIndex,
+            weigth: selectedPlan.exercises[exeIndex].weigthScale['actualToDo']!,
+          ),
+        );
       }
 
       /// Pause Screen
@@ -487,9 +482,10 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           selectedPlan.exercises[exeIndex].sets[setIndex].setRestTime[toDay] = actualTimeOrRepNumber;
         }
       }
+      setState(() => deloadPhase = false);
     }
 
-    /// Exercise Pause Screen
+    /// Exercise Pause/ RPE Scale Screen
     if (!skipExe) {
       // if (!lastExe) {
       //   screenTrainingsDataUpdater(doingExeIndexList[doingExeIndex + 1], 0, false, true);
@@ -512,9 +508,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
       /// Wait for RPE Scale Pressed
       // await waitUserForUserButtonPress();
-      if (!skipExe) {
-        await waitUserForUserButtonPress();
-      }
+      await waitUserForUserButtonPress();
     }
     if (!lastExe) {
       // Fill Exercise Rest Time after done Button Pressed
@@ -766,6 +760,41 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       //   progressColor = Styles.white;
       // }
     });
+  }
+
+  bool isDelooadPhaseDone(int exeIndex) {
+    int fitnessLevel = widget.appUser.fitnessLevel ?? 0;
+    int deloadCounter = 0;
+    int plansQuantity = trainingsProgramm.plans.length;
+    int dailyFrequanz = widget.appUser.dayFrequenz ?? 1;
+
+    int deloadDuration = fitnessLevel > 0 ? 1 : 2;
+    int deloadShouldBeQuantity = (dailyFrequanz / plansQuantity).round() * deloadDuration;
+
+    selectedPlan.exercises[exeIndex].rpeScale.forEach((key, value) {
+      if (value > -1) {
+        deloadCounter++;
+      }
+    });
+
+    if (deloadShouldBeQuantity >= deloadCounter) {
+      return false;
+    }
+    return true;
+  }
+
+  void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
+    double newWeigth = weigth;
+    if (repetitions != 15) {
+      ///after 30kg u can tripple the weigth with ease
+      if (repetitions < 30) {
+        newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
+      } else {
+        newWeigth = weigth * 3;
+      }
+    }
+    newWeigth = newWeigth - (newWeigth % 2.5);
+    setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
   }
 
   void changeRpeScale(int addNewValue, int exeIndex) {

@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/models/used_objects.dart';
 
 class AiFitnessLevelContent extends StatefulWidget {
   const AiFitnessLevelContent({
@@ -17,18 +18,9 @@ class AiFitnessLevelContent extends StatefulWidget {
 }
 
 class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
-  
-  
-  List<String> fitnessLevelText = [
-    '',
-    '',
-    '',
-    '',
-    '',
-  ];
+  List<String> fitnessLevelText = UsedObjects.fitnessLevelText;
 
   double sliderValue = 0.0;
-
 
   @override
   void initState() {
@@ -43,26 +35,29 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(
         children: [
+          Text(fitnessLevelText[sliderValue.toInt()], style: Styles.headLine.copyWith(fontWeight: FontWeight.w500)),
+          const SizedBox(height: 16.0),
           Slider(
             thumbColor: Styles.primaryColor,
             activeColor: Styles.grey,
             inactiveColor: Styles.grey,
             value: widget.appUser.fitnessLevel!.toDouble(),
             min: 0,
-            max: 13,
-            divisions: 12,
-            // label: _currentSliderValue.toString(),
+            max: fitnessLevelText.length - 1,
+            divisions: fitnessLevelText.length - 1,
+            // label: widget.appUser.fitnessLevel.toString(),
             onChanged: (double value) {
               setState(() {
                 widget.appUser.fitnessLevel = value ~/ 1;
+                sliderValue = value;
               });
             },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Nicht Fit', textAlign: TextAlign.center,),
-              Text('Sehr Fit'),
+            children:  [
+              Text('Nicht Fit', style: Styles.headLine.copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
+              Text('Sehr Fit',style: Styles.headLine.copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
             ],
           )
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/models/goal.dart';
 import 'package:higym/models/used_objects.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/services/database.dart';
@@ -116,7 +117,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
           break;
         case PossibleAiScreens.aiGoalContent:
           aiText = 'Was ist dein Ziel?';
-          contentWidget = AiGoalContent(appUser: widget.appUser);
+          contentWidget = AiGoalContent(appUser: widget.appUser, goalUpdater: (){},);
           aiContent = PossibleAiScreens.aiGoalContent;
           break;
         case PossibleAiScreens.aiFrequenzyContent:
@@ -130,7 +131,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
           aiContent = PossibleAiScreens.aiReminderContent;
           break;
         case PossibleAiScreens.aiGymEquipmentContent:
-          aiText = 'Zu welchen Zeiten möchtest du an dein Training Erinnert werden?';
+          aiText = 'Welche Ausstattung bietet dein Fitnessstudio?';
           contentWidget = AiGymEquipmentContent(gymEquipment: gymEquipment);
           aiContent = PossibleAiScreens.aiGymEquipmentContent;
           break;
@@ -152,7 +153,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
         DatabaseService(uid: widget.appUser.uid).updateUserName(widget.appUser);
         break;
       case PossibleAiScreens.aiGoalContent:
-        DatabaseService(uid: widget.appUser.uid).updateUserGoal(widget.appUser);
+        DatabaseService(uid: widget.appUser.uid).updateUserGoalName(widget.appUser);
         break;
       case PossibleAiScreens.aiFrequenzyContent:
         DatabaseService(uid: widget.appUser.uid).updateUserFrequenz(widget.appUser);

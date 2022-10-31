@@ -31,11 +31,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         difficultyLevel: 1,
         durationWeeks: 12,
         actualPhase: 2,
-        phases: {
-          '1': '2022-09-20',
-          '2': '2022-10-20',
-          '3': '2022-11-20',
-        },
+        phases: [
+          '2022-09-20',
+          '2022-10-20',
+          '2022-11-20',
+          '2022-12-20',
+        ],
         actualPlan: 'Full Body Plan',
         plans: [
           Plans(
@@ -229,9 +230,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ],
   );
 
-  // Standard Exercises and Biceps
-  // Standard Exercises and Triceps
-  // Niche Exercises
 
   final Goal shawanGoal = Goal(
     name: 'General Fitness',
@@ -244,11 +242,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         difficultyLevel: 1,
         durationWeeks: 12,
         actualPhase: 2,
-        phases: {
-          '1': '2022-09-20',
-          '2': '2022-10-20',
-          '3': '2022-11-20',
-        },
+        phases: [
+          '2022-09-20',
+          '2022-10-20',
+          '2022-11-20',
+          '2022-12-20',
+        ],
         actualPlan: 'Standard Exercises and Biceps',
         plans: [
           Plans(
@@ -950,7 +949,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Image.asset('assets/badges/weight_nike_badge.png', height: 75),
+                    child: Image.asset('assets/badges/${user.activityLevel}.png', height: 75),
                   ),
                 ],
               ),
@@ -958,25 +957,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: screenSize.height / 10),
 
             /// Goals Button it will go
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              child: RowItemWithSelectWidget(
-                leadingIcon: Icons.flag_outlined,
-                widgetText: 'My Goals',
-                onPressFunction: () {
-                  DatabaseService(uid: user.uid!).addGoal(shawanGoal);
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            //   child: RowItemWithSelectWidget(
+            //     leadingIcon: Icons.flag_outlined,
+            //     widgetText: 'My Goals',
+            //     onPressFunction: () {
+            //       DatabaseService(uid: user.uid!).addGoal(shawanGoal);
+            //     },
+            //   ),
+            // ),
 
-            /// My Body Button
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                child: RowItemWithSelectWidget(
-                  leadingIcon: Icons.accessibility_new_rounded,
-                  widgetText: 'My Body',
-                  onPressFunction: () {},
-                )),
+            // /// My Body Button
+            // Padding(
+            //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            //     child: RowItemWithSelectWidget(
+            //       leadingIcon: Icons.accessibility_new_rounded,
+            //       widgetText: 'My Body',
+            //       onPressFunction: () {},
+            //     )),
 
             /// Talk to AI Button
             Padding(

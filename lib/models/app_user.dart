@@ -11,6 +11,8 @@ class AppUser {
   String? minutesFrequenz;
   String? reminder;
   int? fitnessLevel;
+  String? fitnessMethod;
+  String? additionalMusclegroup;
   Map<String, double>? activityPoints;
   int? activityLevel;
 
@@ -27,6 +29,8 @@ class AppUser {
     this.minutesFrequenz,
     this.reminder,
     this.fitnessLevel,
+    this.fitnessMethod,
+    this.additionalMusclegroup,
     this.activityPoints,
     this.activityLevel,
   });

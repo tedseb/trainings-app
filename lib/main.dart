@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:flutter/services.dart';
-import 'package:higym/authenticate/authenticate.dart';
 import 'package:higym/authenticate/login_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/services/auth.dart';

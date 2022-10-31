@@ -3,13 +3,12 @@ import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/models/used_objects.dart';
 import 'package:higym/profile/profile_screen.dart';
 import 'package:higym/widgets/screen_widgets/expanded_example.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_programm_screen.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
-
-import 'package:higym/models/used_objects.dart' as UsedObjects;
 
 import 'package:provider/provider.dart';
 
@@ -32,7 +31,7 @@ class _InitialScreenState extends State<InitialScreen> {
     // const GoalsScreen(),
     // const Achievement(),
   ];
- 
+
   final List<Map<String, dynamic>> _icons = UsedObjects.navBarIcons;
 
   final _pageController = PageController();
@@ -71,9 +70,18 @@ class _InitialScreenState extends State<InitialScreen> {
             children: [
               const Spacer(),
               NavbarIconButtonWidget(
-                  onPressedFunction: ()=> _onItemTapped(0), iconText:_icons[0]['text'], iconData:_icons[0]['icon'], selectedItem: _selectedItem, index: 0,),
+                onPressedFunction: () => _onItemTapped(0),
+                iconText: _icons[0]['text'],
+                iconData: _icons[0]['icon'],
+                selectedItem: _selectedItem,
+                index: 0,
+              ),
               NavbarIconButtonWidget(
-                  onPressedFunction: ()=> _onItemTapped(1), iconText:_icons[1]['text'], iconData:_icons[1]['icon'], selectedItem: _selectedItem, index: 1),
+                  onPressedFunction: () => _onItemTapped(1),
+                  iconText: _icons[1]['text'],
+                  iconData: _icons[1]['icon'],
+                  selectedItem: _selectedItem,
+                  index: 1),
               IconButton(
                 iconSize: 80,
                 color: Styles.primaryColor,
@@ -91,9 +99,18 @@ class _InitialScreenState extends State<InitialScreen> {
                 },
               ),
               NavbarIconButtonWidget(
-                  onPressedFunction: ()=> _onItemTapped(2), iconText:_icons[2]['text'], iconData:_icons[2]['icon'], selectedItem: _selectedItem, index: 2),
+                  onPressedFunction: () => _onItemTapped(2),
+                  iconText: _icons[2]['text'],
+                  iconData: _icons[2]['icon'],
+                  selectedItem: _selectedItem,
+                  index: 2),
               NavbarIconButtonWidget(
-                  onPressedFunction:()=> _onItemTapped(3),iconText:_icons[3]['text'], iconData:_icons[3]['icon'], selectedItem: _selectedItem, index: 3,),
+                onPressedFunction: () => _onItemTapped(3),
+                iconText: _icons[3]['text'],
+                iconData: _icons[3]['icon'],
+                selectedItem: _selectedItem,
+                index: 3,
+              ),
               const Spacer(),
             ],
           )),

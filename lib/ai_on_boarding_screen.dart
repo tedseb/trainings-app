@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/authenticate/login_screen.dart';
+import 'package:higym/authenticate/register_screen.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/models/goal.dart';
 import 'package:higym/models/initial_models.dart';
 import 'package:higym/models/used_objects.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_progress_bar_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
+import 'package:higym/widgets/ai_widgets/ai_contents/ai_additional_musclegroup_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_fitness_level_content.dart';
+import 'package:higym/widgets/ai_widgets/ai_contents/ai_fitness_methods_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_frequency_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_goal_content.dart';
+import 'package:higym/widgets/ai_widgets/ai_contents/ai_gym_equipment_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_name_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_personal_data_content.dart';
+import 'package:higym/widgets/ai_widgets/ai_contents/ai_present_trainigs_programm_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_wave_widget.dart';
 
@@ -25,12 +29,13 @@ class AiOnBoardingScreen extends StatefulWidget {
   State<AiOnBoardingScreen> createState() => _AiOnBoardingScreenState();
 }
 
-AppUser onBoardingAppUser = InitialModels.initialAppUser;
-
 class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
+  AppUser onBoardingAppUser = InitialModels.initialAppUser;
+  Goal onBoardingGoal = InitialModels.initialGoal;
+
   late Widget contentWidget;
   String aiText = 'Hallo ich bin Higym, dein smarter Coach!';
-  bool onboardingScreen = true;
+  int onboardingScreen = 0;
 
   PageController pageController = PageController();
   int currentContent = 0;
@@ -39,32 +44,65 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
 
   // AppUser appUser = InitialModels.initialAppUser;
 
-  List<Map<String, dynamic>> aiContentScreenChain = [
-    {
-      'aiText': 'Wie heißt du?',
-      'aiContent': AiNameContent(appUser: onBoardingAppUser),
-    },
-    {
-      'aiText': 'Kannst du mir etwas über dich erzählen?',
-      'aiContent': AiPersonalDataContent(appUser: onBoardingAppUser),
-    },
-    {
-      'aiText': 'Was ist dein Ziel?',
-      'aiContent': AiGoalContent(appUser: onBoardingAppUser),
-    },
-    {
-      'aiText': 'Wie fit bist du?',
-      'aiContent': AiFitnessLevelContent(appUser: onBoardingAppUser),
-    },
-    // {
-    //   'aiText': 'Welche Fitnessmethoden bevorzugst du eher?',
-    //   'aiContent': AiNameContent(appUser: onBoardingAppUser),
-    // },
-    {
-      'aiText': 'Wie viele Tage die Woche und wie lange möchtest du Trainieren?',
-      'aiContent': AiFrequencyContent(appUser: onBoardingAppUser),
-    },
-  ];
+  List<Map<String, dynamic>> aiContentScreenChain = [];
+
+  Map<PossibleAiScreens, int> aiContentScreenNumber = {
+    PossibleAiScreens.aiNameContent: 0,
+    PossibleAiScreens.aiPersonalDataContent: 1,
+    PossibleAiScreens.aiGoalContent: 2,
+    PossibleAiScreens.aiFitnessLevelContent: 3,
+    PossibleAiScreens.aiFitnessMethodsContent: -1,
+    PossibleAiScreens.aiFrequenzyContent: 4,
+    PossibleAiScreens.aiAdditionalMusclegroupContent: -1,
+    PossibleAiScreens.aiGymEquipmentContent: 5,
+    PossibleAiScreens.aiPresentTrainingsProgrammContent: 6,
+  };
+
+  @override
+  void initState() {
+    ///Screens
+
+    aiContentScreenChain = [
+      {
+        'aiText': 'Wie heißt du?',
+        'aiContent': AiNameContent(appUser: onBoardingAppUser),
+      },
+      {
+        'aiText': 'Kannst du mir etwas über dich erzählen?',
+        'aiContent': AiPersonalDataContent(appUser: onBoardingAppUser),
+      },
+      {
+        'aiText': 'Was ist dein Ziel?',
+        'aiContent': AiGoalContent(appUser: onBoardingAppUser, goalUpdater: goalUpdater),
+      },
+      {
+        'aiText': 'Wie fit bist du?',
+        'aiContent': AiFitnessLevelContent(appUser: onBoardingAppUser),
+      },
+      // {
+      //   'aiText': 'Welche Fitnessmethoden bevorzugst du eher?',
+      // 'aiContent': AiFitnessMethodsContent(appUser: onBoardingAppUser),
+      // },
+      {
+        'aiText': 'Wie viele Tage die Woche und wie lange möchtest du Trainieren?',
+        'aiContent': AiFrequencyContent(appUser: onBoardingAppUser),
+      },
+      // {
+      //   'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
+      // 'aiContent': AiAdditionalMusclegroupContent(appUser: onBoardingAppUser),
+      // },
+      {
+        'aiText': 'Welche Ausstattung bietet dein Fitnessstudio?',
+        'aiContent': AiGymEquipmentContent(gymEquipment: UsedObjects.gymEquipment),
+      },
+      {
+        'aiText': 'Hier ist dein neues Trainings Programm, viel Erfolg!',
+        'aiContent': AiPresentTrainingsProgrammContent(key: const ValueKey(9), goal: onBoardingGoal),
+      },
+    ];
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +111,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AiWaveWidget(),
-          onboardingScreen
+          onboardingScreen == 0
               ? Flexible(
                   child: Column(
                     children: const [
@@ -95,6 +133,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                       ),
                       Expanded(
                         child: PageView.builder(
+                          // key: ValueKey(currentContent),
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: aiContentScreenChain.length,
                           controller: pageController,
@@ -104,7 +143,13 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 // const Spacer(),
-                               Flexible(child: SingleChildScrollView(child: aiContentScreenChain[index]['aiContent'],)),
+                                Flexible(
+                                    child: SingleChildScrollView(
+                                  physics: currentContent == aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]
+                                      ? const NeverScrollableScrollPhysics()
+                                      : null,
+                                  child: aiContentScreenChain[index]['aiContent'],
+                                )),
                                 // const Spacer(),
                               ],
                             );
@@ -116,39 +161,19 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                 ),
         ],
       ),
-      bottomNavigationBar: onboardingScreen
-          ? AiBottomSimpleBackDoneWidget(
-              leftButtonText: 'Login',
-              rightButtonText: 'Start',
-              onPressedLeft: () => goToLogInScreen(),
-              onPressedRight: () => startStopOnBoarding(),
-            )
-          // : const SizedBox(),
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: errorText != '',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text(errorText, style: const TextStyle(color: Styles.error))],
-                  ),
-                ),
-                AiBottomProgressBarWidget(
-                  // key: ValueKey(currentContent),
-                  pagesLength: aiContentScreenChain.length,
-                  currentPage: currentContent,
-                  onPressedLeft: () => previousPage(),
-                  onPressedRight: () => nextPage(),
-                ),
-              ],
-            ),
+      bottomNavigationBar: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(opacity: animation, child: child);
+          // return ScaleTransition(scale: animation, child: child);
+        },
+        child: onBoardingBottomNavBar(),
+      ),
     );
   }
 
   void nextPage() {
-    if (true) {
-    // if (contentEditedChecker()) {
+    if (contentEditedChecker()) {
       if (currentContent < aiContentScreenChain.length - 1) {
         setState(() {
           pageController.nextPage(
@@ -163,8 +188,11 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
   }
 
   void previousPage() {
+    if (currentContent == aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]) {
+      setState(() => onboardingScreen = 1);
+    }
     if (currentContent <= 0) {
-      startStopOnBoarding();
+      setState(() => onboardingScreen = 0);
     } else {
       setState(() {
         pageController.previousPage(
@@ -173,13 +201,62 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
           ),
           curve: Curves.linear,
         );
-          errorText = '';
+        errorText = '';
       });
     }
   }
 
+  Widget onBoardingBottomNavBar() {
+    switch (onboardingScreen) {
+      case 0:
+        return AiBottomSimpleBackDoneWidget(
+          leftButtonText: 'Login',
+          rightButtonText: 'Start',
+          onPressedLeft: () => goToLogInScreen(),
+          onPressedRight: () => setState(() => onboardingScreen = 1),
+        );
+
+      case 1:
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Visibility(
+              visible: errorText != '',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text(errorText, style: const TextStyle(color: Styles.error))],
+              ),
+            ),
+            AiBottomProgressBarWidget(
+              // key: ValueKey(currentContent),
+              pagesLength: aiContentScreenChain.length,
+              currentPage: currentContent,
+              onPressedLeft: () => previousPage(),
+              onPressedRight: () => nextPage(),
+            ),
+          ],
+        );
+      case 2:
+        return AiBottomSimpleBackDoneWidget(
+          leftButtonText: 'Zurück',
+          rightButtonText: 'Speichern',
+          onPressedLeft: () => previousPage(),
+          onPressedRight: () => goToRegisterScreen(),
+        );
+
+      default:
+        return AiBottomSimpleBackDoneWidget(
+          leftButtonText: 'Login',
+          rightButtonText: 'Start',
+          onPressedLeft: () => goToLogInScreen(),
+          onPressedRight: () => setState(() => onboardingScreen = 1),
+        );
+    }
+  }
+
   bool contentEditedChecker() {
-    if (pageController.page == 0) {
+    /// User Name
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiNameContent]) {
       if (onBoardingAppUser.name == null) {
         setState(() {
           errorText = 'Bitte Namen einfügen';
@@ -188,31 +265,131 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
         return false;
       }
     }
-    if (pageController.page == 1) {
+
+    /// User Data
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiPersonalDataContent]) {
       if (onBoardingAppUser.age == null || onBoardingAppUser.size == null || onBoardingAppUser.weigth == null || onBoardingAppUser.gender == null) {
         setState(() {
           errorText = 'Bitte Alle Felder Befüllen';
         });
         return false;
-      } 
+      }
     }
-    if (pageController.page == 2) {
+
+    /// User Goal
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiGoalContent]) {
       if (onBoardingAppUser.goalName == null) {
         setState(() {
           errorText = 'Bitte Goal auswählen';
         });
         return false;
-      } 
+      }
     }
-    if (pageController.page == 4) {
-      dev.log('Day fre = ${onBoardingAppUser.dayFrequenz}');
+
+    /// User Fitness Level - Add or remove FitnessMethod Screen
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiFitnessLevelContent]) {
+      if (onBoardingAppUser.fitnessLevel! > 1 && aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent] == -1) {
+        setState(() {
+          aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent] = aiContentScreenNumber[PossibleAiScreens.aiFitnessLevelContent]! + 1;
+          aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent] = aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent]! + 1;
+          aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent] = aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent]! + 1;
+          aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent] =
+              aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]! + 1;
+          aiContentScreenChain.insert(
+            aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent]!,
+            {
+              'aiText': 'Welche Fitnessmethode bevorzugst du eher?',
+              'aiContent': AiFitnessMethodsContent(appUser: onBoardingAppUser),
+            },
+          );
+        });
+        setState(() {
+          errorText = '';
+        });
+        return true;
+      }
+      if (onBoardingAppUser.fitnessLevel! < 2 && aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent] != -1) {
+        setState(() {
+          aiContentScreenChain.removeAt(aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent]!);
+
+          aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent] = -1;
+          aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent] = aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent]! - 1;
+          aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent] = aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent]! - 1;
+          aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent] =
+              aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]! - 1;
+        });
+      }
+      return true;
+    }
+
+    /// User Fitness Methods
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent]) {
+      if (onBoardingAppUser.fitnessMethod == null) {
+        setState(() {
+          errorText = 'Bitte Fitnessmethode auswählen';
+        });
+        return false;
+      }
+    }
+
+    /// User Fitness Frequenzy - Add or remove Musclegroup Screen
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent]) {
       if (onBoardingAppUser.dayFrequenz == null || onBoardingAppUser.minutesFrequenz == null) {
         setState(() {
           errorText = 'Bitte Alle Felder Befüllen';
         });
         return false;
-      } 
+      }
+
+      if (((onBoardingAppUser.dayFrequenz != 1 && onBoardingAppUser.dayFrequenz != 2) ||
+              (onBoardingAppUser.dayFrequenz == 2 && onBoardingAppUser.minutesFrequenz == '50-60')) &&
+          aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent] == -1) {
+        setState(() {
+          aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent] = aiContentScreenNumber[PossibleAiScreens.aiFrequenzyContent]! + 1;
+          aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent] = aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent]! + 1;
+          aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent] =
+              aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]! + 1;
+          aiContentScreenChain.insert(
+            aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent]!,
+            {
+              'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
+              'aiContent': AiAdditionalMusclegroupContent(appUser: onBoardingAppUser),
+            },
+          );
+        });
+        setState(() {
+          errorText = '';
+        });
+        return true;
+      }
+      if ((onBoardingAppUser.dayFrequenz == 1 || (onBoardingAppUser.dayFrequenz == 2 && onBoardingAppUser.minutesFrequenz != '50-60')) &&
+          aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent] != -1) {
+        setState(() {
+          aiContentScreenChain.removeAt(aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent]!);
+
+          aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent] = -1;
+          aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent] = aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent]! - 1;
+          aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent] =
+              aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]! - 1;
+        });
+      }
+      setState(() {
+        errorText = '';
+      });
+      return true;
     }
+
+    /// User Musclegroup
+    // if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent]) {}
+
+    /// User Gym Equipment
+    if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiGymEquipmentContent]) {
+      setState(() => onboardingScreen = 2);
+      return true;
+    }
+
+    /// User Trainingsprogram
+    // if (pageController.page == aiContentScreenNumber[PossibleAiScreens.aiPresentTrainingsProgrammContent]) {}
 
     setState(() {
       errorText = '';
@@ -221,18 +398,30 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
     return true;
   }
 
-  void startStopOnBoarding() {
-    setState(() {
-      onboardingScreen = !onboardingScreen;
-    });
-  }
-
   void goToLogInScreen() async {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginScreen(toggleView: () {}),
+        builder: (context) => const LoginScreen(),
       ),
     );
+  }
+
+  void goToRegisterScreen() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RegisterScreen(appUser: onBoardingAppUser, onBoardingGoal: onBoardingGoal, backToOnBoarding: backToOnBoarding),
+      ),
+    );
+  }
+
+  void backToOnBoarding() {
+    setState(() => onboardingScreen = 0);
+  }
+
+  void goalUpdater(final Map<String, dynamic> newGoal) {
+    setState(() => onBoardingGoal = Goal.goalFromJson(newGoal));
+    // onBoardingGoal = Goal.goalFromJson(newGoal);
   }
 }

@@ -16,13 +16,13 @@ class TalkToAiContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          child: RowItemWithSelectWidget(
-            widgetText: 'Pain Report',
-            onPressFunction: () {},
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+        //   child: RowItemWithSelectWidget(
+        //     widgetText: 'Pain Report',
+        //     onPressFunction: () {},
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
           child: RowItemWithSelectWidget(
@@ -51,13 +51,13 @@ class TalkToAiContent extends StatelessWidget {
            onPressFunction: ()  => openContent(PossibleAiScreens.aiFrequenzyContent),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-          child: RowItemWithSelectWidget(
-            widgetText: 'Set Reminder',
-             onPressFunction: ()  => openContent(PossibleAiScreens.aiReminderContent),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+        //   child: RowItemWithSelectWidget(
+        //     widgetText: 'Set Reminder',
+        //      onPressFunction: ()  => openContent(PossibleAiScreens.aiReminderContent),
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
           child: RowItemWithSelectWidget(

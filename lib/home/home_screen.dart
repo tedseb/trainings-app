@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double? activityPercentage;
+  double activityPercentage = 0.0;
   int doneWeeks = 0;
   int allWeeks = 0;
   double weekPercentage = 0.0;
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Size screenSize = MediaQuery.of(context).size;
     calculateActivity();
     calculateManyTimesTrainedThisWeek();
-    calculateWeeksOverAndWeekMark();
+    calculateActualWeekAndPhase();
     dev.log('Width:  ${screenSize.width}');
     dev.log('Heigth:  ${screenSize.height}');
     return Scaffold(
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: screenSize.width,
                       child: CustomPaint(
                         foregroundPainter: BackgroundCirclePainter(
-                          progressBigPercent: activityPercentage!,
+                          progressBigPercent: activityPercentage,
                           progressBigReachPercent: 16 / 16,
                           progressSmallPercet: weekPercentage,
                           progressSmallReachPercet: weekNextPhasePercentage,
@@ -237,128 +237,132 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void calculateActivity() {
-    int lvlBronzeLimit = 1000;
-    int lvlSilverLimit = 1699;
-    int lvlGoldLimit = 2899;
-    int lvlPlatinLimit = 4799;
+    if (user!.uid != '') {
+      int lvlBronzeLimit = 1000;
+      int lvlSilverLimit = 1699;
+      int lvlGoldLimit = 2899;
+      int lvlPlatinLimit = 4799;
 
-    totalActivityPoints = 0.0;
+      totalActivityPoints = 0.0;
 
-    if (user!.activityPoints != null) {
-      ActivityCalculator.updateActivityMap(user!.activityPoints!, user!.uid!);
-      user!.activityPoints!.forEach((key, value) {
-        setState(() {
-          totalActivityPoints += value;
+      if (user!.activityPoints != null) {
+        ActivityCalculator.updateActivityMap(user!.activityPoints!, user!.uid!);
+        user!.activityPoints!.forEach((key, value) {
+          setState(() {
+            totalActivityPoints += value;
+          });
         });
-      });
-    }
+      }
 
-    if (user != null) {
-      setState(() {
-        if (user!.activityLevel != null) {
-          if (totalActivityPoints < lvlBronzeLimit) {
-            setState(() {
-              activityPercentage = totalActivityPoints / lvlBronzeLimit;
-            });
-            if (user!.activityLevel != 0) {
-              DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 0);
-            }
-          } else if (totalActivityPoints < lvlSilverLimit) {
-            activityPercentage = (totalActivityPoints - lvlBronzeLimit) / (lvlSilverLimit - lvlBronzeLimit);
-            if (user!.activityLevel != 1) {
-              DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 1);
-            }
-          } else if (totalActivityPoints < lvlGoldLimit) {
-            activityPercentage = (totalActivityPoints - lvlSilverLimit) / (lvlGoldLimit - lvlSilverLimit);
-            if (user!.activityLevel != 2) {
-              DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 2);
-            }
-          } else if (totalActivityPoints < lvlPlatinLimit) {
-            activityPercentage = (totalActivityPoints - lvlGoldLimit) / (lvlPlatinLimit - lvlGoldLimit);
-            if (user!.activityLevel != 3) {
-              DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 3);
-            }
-          } else {
-            activityPercentage = 0.9999;
-            if (user!.activityLevel != 4) {
-              DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 4);
+      if (user != null) {
+        setState(() {
+          if (user!.activityLevel != null) {
+            if (totalActivityPoints < lvlBronzeLimit) {
+              setState(() {
+                activityPercentage = totalActivityPoints / lvlBronzeLimit;
+              });
+              if (user!.activityLevel != 0) {
+                DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 0);
+              }
+            } else if (totalActivityPoints < lvlSilverLimit) {
+              activityPercentage = (totalActivityPoints - lvlBronzeLimit) / (lvlSilverLimit - lvlBronzeLimit);
+              if (user!.activityLevel != 1) {
+                DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 1);
+              }
+            } else if (totalActivityPoints < lvlGoldLimit) {
+              activityPercentage = (totalActivityPoints - lvlSilverLimit) / (lvlGoldLimit - lvlSilverLimit);
+              if (user!.activityLevel != 2) {
+                DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 2);
+              }
+            } else if (totalActivityPoints < lvlPlatinLimit) {
+              activityPercentage = (totalActivityPoints - lvlGoldLimit) / (lvlPlatinLimit - lvlGoldLimit);
+              if (user!.activityLevel != 3) {
+                DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 3);
+              }
+            } else {
+              activityPercentage = 0.9999;
+              if (user!.activityLevel != 4) {
+                DatabaseService(uid: user!.uid).updateActivityLevel(activityLevel: 4);
+              }
             }
           }
-        }
-      });
+        });
+      }
+      dev.log('Activity Points and Level Updated');
     }
-    dev.log('Activity Points and Level Updated');
   }
 
   void calculateManyTimesTrainedThisWeek() {
     if (goal != null) {
       if (goal!.trainingsProgramms.isNotEmpty) {
-  toTrainThisWeek = goal!.trainingsProgramms[0].plans.length;
-  timesTrainedThisWeek = 0;
-  if (user!.activityPoints != null) {
-    timesTrainedThisWeek = ActivityCalculator.manyTimesThisWeek(user!.activityPoints!);
-  }
-  
-  if (timesTrainedThisWeek < toTrainThisWeek) {
-    String zahlText = '';
-    switch (toTrainThisWeek - timesTrainedThisWeek) {
-      case 1:
-        zahlText = 'ein';
-        break;
-      case 2:
-        zahlText = 'zwei';
-        break;
-      case 3:
-        zahlText = 'drei';
-        break;
-      case 4:
-        zahlText = 'vier';
-        break;
-      case 5:
-        zahlText = 'fünf';
-        break;
-      case 6:
-        zahlText = 'sechs';
-        break;
-      case 7:
-        zahlText = 'sieben';
-        break;
-      default:
-        zahlText = 'ein';
-        break;
-    }
-    welcomeCardText = 'Du solltest diese Woche noch $zahlText trainieren.';
-  } else if (timesTrainedThisWeek == toTrainThisWeek) {
-    welcomeCardText = 'Gratulation! Du hast dies Woche dein Trainingsziel erreicht!';
-  } else {
-    welcomeCardText = 'Zu viel trainieren ist nicht immer gut =)';
-  }
-}
+        toTrainThisWeek = goal!.trainingsProgramms[0].plans.length;
+        timesTrainedThisWeek = 0;
+        if (user!.activityPoints != null) {
+          timesTrainedThisWeek = ActivityCalculator.manyTimesThisWeek(user!.activityPoints!);
+        }
+
+        if (timesTrainedThisWeek < toTrainThisWeek) {
+          String zahlText = '';
+          switch (toTrainThisWeek - timesTrainedThisWeek) {
+            case 1:
+              zahlText = 'ein';
+              break;
+            case 2:
+              zahlText = 'zwei';
+              break;
+            case 3:
+              zahlText = 'drei';
+              break;
+            case 4:
+              zahlText = 'vier';
+              break;
+            case 5:
+              zahlText = 'fünf';
+              break;
+            case 6:
+              zahlText = 'sechs';
+              break;
+            case 7:
+              zahlText = 'sieben';
+              break;
+            default:
+              zahlText = 'ein';
+              break;
+          }
+          welcomeCardText = 'Du solltest diese Woche noch $zahlText trainieren.';
+        } else if (timesTrainedThisWeek == toTrainThisWeek) {
+          welcomeCardText = 'Gratulation! Du hast dies Woche dein Trainingsziel erreicht!';
+        } else {
+          welcomeCardText = 'Zu viel trainieren ist nicht immer gut =)';
+        }
+      }
     }
   }
 
-  void calculateWeeksOverAndWeekMark() {
-    if (goal != null) {
+  /// Calculate actual Week->BluePercentageHomeScreen and actual Phase->DarkgreyPercentageHomeScreen
+  /// Also Update Phase, if the Week is over!
+  void calculateActualWeekAndPhase() {
+    if (goal != null && user!.uid != '') {
       if (goal!.trainingsProgramms.isNotEmpty) {
-      Map<String, int> weekCalculates = ActivityCalculator.calculateWeeksOver(goal!.trainingsProgramms[0].phases);
-      doneWeeks = weekCalculates['passedWeeks']!;
-      allWeeks = weekCalculates['allWeeks']!;
+        Map<String, int> weekCalculates = ActivityCalculator.calculateActualWeekAndPhase(goal!.trainingsProgramms[0], user!.uid!);
+        doneWeeks = weekCalculates['passedWeeks']!;
+        allWeeks = weekCalculates['allWeeks']!;
 
-      double actualWeekFromAllWeeks = weekCalculates['passedWeeks']! / weekCalculates['allWeeks']!;
-      double nextMileStoneWeekFromAllWeeks = weekCalculates['nextMileStone']! / weekCalculates['allWeeks']!;
+        double actualWeekFromAllWeeks = weekCalculates['passedWeeks']! / weekCalculates['allWeeks']!;
+        double nextMileStoneWeekFromAllWeeks = weekCalculates['nextMileStone']! / weekCalculates['allWeeks']!;
 
-      if (actualWeekFromAllWeeks <= 1) {
-        weekPercentage = actualWeekFromAllWeeks;
-      } else {
-        weekNextPhasePercentage = 0.9999;
+        if (actualWeekFromAllWeeks <= 1) {
+          weekPercentage = actualWeekFromAllWeeks;
+        } else {
+          weekNextPhasePercentage = 0.9999;
+        }
+
+        if (nextMileStoneWeekFromAllWeeks <= 1) {
+          weekNextPhasePercentage = nextMileStoneWeekFromAllWeeks;
+        } else {
+          weekNextPhasePercentage = 0.9999;
+        }
       }
-
-      if (nextMileStoneWeekFromAllWeeks <= 1) {
-        weekNextPhasePercentage = nextMileStoneWeekFromAllWeeks;
-      } else {
-        weekNextPhasePercentage = 0.9999;
-      }
-    }
     }
   }
 }

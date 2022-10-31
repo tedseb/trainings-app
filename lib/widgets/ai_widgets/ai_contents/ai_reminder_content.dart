@@ -55,8 +55,15 @@ class _AiReminderContentState extends State<AiReminderContent> {
 
   @override
   void initState() {
-    int initHourPage = hourList.indexWhere((element) => element.toString() == widget.appUser.reminder!.split('_')[0]);
-    int initMinutePage = minutesList.indexWhere((element) => element.toString() == widget.appUser.reminder!.split('_')[1]);
+     int initHourPage;
+      int initMinutePage;
+    if (widget.appUser.reminder != null) {
+      initHourPage = hourList.indexWhere((element) => element.toString() == widget.appUser.reminder!.split('_')[0]);
+      initMinutePage = minutesList.indexWhere((element) => element.toString() == widget.appUser.reminder!.split('_')[1]);
+    }else{
+      initHourPage = 9;
+      initMinutePage = 0;
+    }
     hourIndexSelected = initHourPage == -1 ? 0 : initHourPage;
     minuteIndexSelected = initMinutePage == -1 ? 0 : initMinutePage;
     hourController = PageController(viewportFraction: 0.35, initialPage: hourIndexSelected);
@@ -139,19 +146,18 @@ class _AiReminderContentState extends State<AiReminderContent> {
           height: 200,
           child: Row(
             children: [
-              Expanded(
+              Flexible(
                 child: ListView.builder(
-              
                     scrollDirection: Axis.horizontal,
                     itemCount: cycleList.length,
                     itemBuilder: (context, index) {
-                      return ShadowButtonWidget(buttonText: cycleList[index], buttonWidth: 80.0, onPressFunction: () {}, loggerText: '${cycleList[index]} Selected');
+                      return ShadowButtonWidget(
+                          buttonText: cycleList[index], buttonWidth: 80.0, onPressFunction: () {}, loggerText: '${cycleList[index]} Selected');
                     }),
               ),
             ],
           ),
         ),
-        
         const SizedBox(height: 16.0),
         Row()
       ],

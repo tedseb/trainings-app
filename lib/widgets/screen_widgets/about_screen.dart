@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/services/auth.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -147,7 +149,10 @@ class AboutScreen extends StatelessWidget {
                       ),
                       ShadowIconButtonWidget(
                         buttonIcon: Icons.chevron_right_rounded,
-                        onPressFunction: () {},
+                        onPressFunction: () {
+                          // AuthService().deleteUser(context);
+                          FirebaseAuth.instance.currentUser!.delete();
+                        },
                         loggerText: 'Delete Account',
                       ),
                     ],

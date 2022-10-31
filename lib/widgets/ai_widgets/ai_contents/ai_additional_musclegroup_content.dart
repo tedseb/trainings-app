@@ -4,37 +4,27 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/goal.dart';
 import 'package:higym/models/used_objects.dart';
-import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
-import 'package:intl/intl.dart';
 
-class AiGoalContent extends StatefulWidget {
-  const AiGoalContent({
+class AiAdditionalMusclegroupContent extends StatefulWidget {
+  const AiAdditionalMusclegroupContent({
     required this.appUser,
-    required this.goalUpdater,
     Key? key,
   }) : super(key: key);
 
   final AppUser appUser;
-  final Function goalUpdater;
 
   @override
-  State<AiGoalContent> createState() => _AiGoalContentState();
+  State<AiAdditionalMusclegroupContent> createState() => _AiAdditionalMusclegroupContentState();
 }
 
-class _AiGoalContentState extends State<AiGoalContent> {
+class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroupContent> {
   int _selectedItem = 0;
-
-  final DateTime phase1Start = ActivityCalculator.thisWeekStart(addWeeks: 0);
-  final DateTime phase2Start = ActivityCalculator.thisWeekStart(addWeeks: 2);
-  final DateTime phase3Start = ActivityCalculator.thisWeekStart(addWeeks: 6);
-  final DateTime goalEnding = ActivityCalculator.thisWeekStart(addWeeks: 10);
 
   @override
   void initState() {
-    _selectedItem = UsedObjects.goalObjects.indexWhere((element) => element['titel'] == widget.appUser.goalName);
+    _selectedItem = UsedObjects.additionalMusclegroupObject.indexWhere((element) => element['titel'] == widget.appUser.additionalMusclegroup);
 
     super.initState();
   }
@@ -44,7 +34,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: UsedObjects.goalObjects.length,
+        itemCount: UsedObjects.additionalMusclegroupObject.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
@@ -75,7 +65,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
                   children: [
                     NavbarIconButtonWidget(
                       onPressedFunction: () => _onItemTapped(index),
-                      iconData: UsedObjects.goalObjects[index]['icon'],
+                      iconData: UsedObjects.additionalMusclegroupObject[index]['icon'],
                       selectedItem: _selectedItem,
                       index: index,
                       borderHeigth: 4.0,
@@ -85,8 +75,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.goalObjects[index]['titel'], style: Styles.headLine),
-                          Text(UsedObjects.goalObjects[index]['subTitel'], style: Styles.loginScreenPrivacyText),
+                          Text(UsedObjects.additionalMusclegroupObject[index]['titel'], style: Styles.headLine),
                         ],
                       ),
                     )
@@ -101,13 +90,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
-      widget.appUser.goalName = UsedObjects.goalObjects[index]['titel'];
-      Goal goalWithNewPhase = UsedObjects.shawanGoal;
-      goalWithNewPhase.trainingsProgramms[0].phases[0] = DateFormat('yyyy-MM-dd').format(phase1Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[1] = DateFormat('yyyy-MM-dd').format(phase2Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[2] = DateFormat('yyyy-MM-dd').format(phase3Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[3] = DateFormat('yyyy-MM-dd').format(goalEnding);
-      widget.goalUpdater(UsedObjects.shawanGoal.goalToJson());
+      widget.appUser.additionalMusclegroup = UsedObjects.additionalMusclegroupObject[index]['titel'];
     });
   }
 }

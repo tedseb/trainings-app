@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/models/initial_models.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
+import 'package:higym/widgets/screen_widgets/talk_to_ai_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 import 'dart:developer' as dev;
@@ -21,7 +23,7 @@ class TrainingsProgrammScreen extends StatefulWidget {
 class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
   Plans selectedPlan = InitialModels.initialGoal.trainingsProgramms[0].plans[0];
   Goal? myGoal;
-  late Goal goal;
+  // late Goal goal;
 
   @override
   void initState() {
@@ -30,10 +32,9 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // selectedPlan = Provider.of<List<Plans>>(context).firstWhere((element) => element.name == 'ShowRoomTestPlan', orElse: () => Plans());
+    final user = Provider.of<AppUser?>(context);
     myGoal = Provider.of<Goal>(context);
-    // selectedPlan = myGoal.trainingsProgramms[0].plans[0];
-    getAndUpdateSelectedPlan();
+
     return Scaffold(
       body: goalNotNullTester()
           ? Column(
@@ -43,29 +44,63 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                   padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 28.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [ShadowIconButtonWidget(buttonIcon: Icons.surround_sound_outlined, onPressFunction: () {},loggerText: 'Talk to AI',)],
+                    children: [
+                      ShadowIconButtonWidget(
+                        buttonIcon: Icons.surround_sound_outlined,
+                        onPressFunction: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TalkToAiScreen(appUser: user!),
+                            ),
+                          );
+                        },
+                        loggerText: 'Talk to AI',
+                      )
+                    ],
                   ),
                 ),
 
                 ///Plan Name
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 50.0),
+                  padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 40.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'next',
-                            style: Styles.trainingsplanSubTitle,
-                          ),
-                          Text(
-                            // 'Workout',
-                            selectedPlan.name,
-                            style: Styles.trainingsplanTitle,
-                          ),
-                        ],
-                      )
+                      Flexible(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'next',
+                              style: Styles.trainingsplanSubTitle,
+                            ),
+                            Text(
+                              // 'Workout',
+                              myGoal!.trainingsProgramms[0].actualPlan,
+                              style: Styles.trainingsplanTitle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Flexible(
+                      //   flex: 1,
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         'Phase',
+                      //         style: Styles.trainingsplanSubTitle,
+                      //       ),
+                      //       Text(
+                      //         myGoal!.trainingsProgramms[0].actualPhase.toString(),
+                      //         style: Styles.trainingsplanTitle,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -114,71 +149,70 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                   child: myGoal == null
                       ? const LoadingWidget()
                       : Padding(
-                        padding: const EdgeInsets.only(bottom: 0.0),
-                        child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 50.0,bottom: 100.0),
-                            itemCount: myGoal!.trainingsProgramms[0].plans.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 30.0),
-                                child: ExpansionTile(
-                                  // trailing: Icon(Icons.arrow_drop_down_circle_rounded),
-                                  // onExpansionChanged: ,
-                                  tilePadding: const EdgeInsetsDirectional.fromSTEB(20, 0, 16, 10),
-                                  collapsedIconColor: Styles.hiGymText,
-                                  collapsedTextColor: Styles.hiGymText,
-                                  iconColor: Styles.secondaryColor,
-                                  initiallyExpanded: activeExerciseCheck(index),
-                                  textColor: Styles.secondaryColor,
-                                  backgroundColor: Colors.transparent,
-                                  title: Row(
+                          padding: const EdgeInsets.only(bottom: 0.0),
+                          child: ListView.builder(
+                              padding: const EdgeInsets.only(top: 50.0, bottom: 100.0),
+                              itemCount: myGoal!.trainingsProgramms[0].plans.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 30.0),
+                                  child: ExpansionTile(
+                                    // trailing: Icon(Icons.arrow_drop_down_circle_rounded),
+                                    // onExpansionChanged: ,
+                                    tilePadding: const EdgeInsetsDirectional.fromSTEB(20, 0, 16, 10),
+                                    collapsedIconColor: Styles.hiGymText,
+                                    collapsedTextColor: Styles.hiGymText,
+                                    iconColor: Styles.secondaryColor,
+                                    initiallyExpanded: activeExerciseCheck(index),
+                                    textColor: Styles.secondaryColor,
+                                    backgroundColor: Colors.transparent,
+                                    title: Row(
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              helper_utils.truncatePlanName(
+                                                myGoal!.trainingsProgramms[0].plans[index].name,
+                                                Styles.trainingsplanSubTitle,
+                                                MediaQuery.of(context).size.width,
+                                              ),
+                                              style: Styles.trainingsplanSubTitle,
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.only(top: 4.0),
+                                              width: 30.0,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                color: activeExerciseCheck(index) ? Styles.primaryColor : Styles.grey,
+                                                borderRadius: BorderRadius.circular(50),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                     children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            helper_utils.truncatePlanName(
-                                              myGoal!.trainingsProgramms[0].plans[index].name,
-                                              Styles.trainingsplanSubTitle,
-                                              MediaQuery.of(context).size.width,
-                                            ),
-                                            style: Styles.trainingsplanSubTitle,
-                                          ),
-                                          Container(
-                                            margin: const EdgeInsets.only(top: 4.0),
-                                            width: 30.0,
-                                            height: 4,
-                                            decoration: BoxDecoration(
-                                              color: activeExerciseCheck(index) ? Styles.primaryColor : Styles.grey,
-                                              borderRadius: BorderRadius.circular(50),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      ListView.builder(
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
+                                          itemCount: myGoal!.trainingsProgramms[0].plans[index].exercises.length,
+                                          itemBuilder: (context, exeIndex) {
+                                            //Exercise Name is Loading...
+                                            return ExerciseCardWidget(
+                                              selectedExercise: myGoal!.trainingsProgramms[0].plans[index].exercises[exeIndex],
+                                              showInfoScreen: openExerciseInfo,
+                                              active: activeExerciseCheck(index),
+                                            );
+                                          }),
                                     ],
                                   ),
-                                  children: [
-                                    ListView.builder(
-                                        physics: const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                                        itemCount: myGoal!.trainingsProgramms[0].plans[index].exercises.length,
-                                        itemBuilder: (context, exeIndex) {
-                                          //Exercise Name is Loading...
-                                          return ExerciseCardWidget(
-                                                  selectedExercise: myGoal!.trainingsProgramms[0].plans[index].exercises[exeIndex],
-                                                  showInfoScreen: openExerciseInfo,
-                                                  active: activeExerciseCheck(index),
-                                                );
-                                        }),
-                                  ],
-                                ),
-                              );
-                            }),
-                      ),
+                                );
+                              }),
+                        ),
                 ),
-               
               ],
             )
           : const LoadingWidget(),
@@ -198,19 +232,21 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
     return true;
   }
 
-bool activeExerciseCheck(int index){
-  if(myGoal!.trainingsProgramms[0].actualPlan == myGoal!.trainingsProgramms[0].plans[index].name ){
-    return true;
-  }else{
-    return false;
+  /// Check If the selected Exerci is the Actual Plan
+  bool activeExerciseCheck(int index) {
+    if (myGoal!.trainingsProgramms[0].actualPlan == myGoal!.trainingsProgramms[0].plans[index].name) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
 
   void checkTrainingsPhaseAndUpdate(TrainingsProgramms trainingsProgramm) {
     DateTime now = DateTime.now();
-    DateTime phase1Start = DateTime.parse(trainingsProgramm.phases['1']!);
-    DateTime phase2Start = DateTime.parse(trainingsProgramm.phases['1']!);
-    DateTime phase3Start = DateTime.parse(trainingsProgramm.phases['1']!);
+    DateTime phase1Start = DateTime.parse(trainingsProgramm.phases[0]);
+    DateTime phase2Start = DateTime.parse(trainingsProgramm.phases[1]);
+    DateTime phase3Start = DateTime.parse(trainingsProgramm.phases[2]);
+    DateTime phase3End = DateTime.parse(trainingsProgramm.phases[3]);
 
     // if(phase3Start.isBefore(now)){
     //   //Update actualPhase to 3
@@ -220,23 +256,15 @@ bool activeExerciseCheck(int index){
     //  Plans myPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
   }
 
-  void getAndUpdateSelectedPlan() {
-    if (myGoal != null) {
-      Plans myPlan = myGoal!.trainingsProgramms[0].plans.firstWhere((element) => element.name == myGoal!.trainingsProgramms[0].actualPlan);
+  // void getAndUpdateSelectedPlan() {
+  //   if (myGoal != null) {
+  //     Plans myPlan = myGoal!.trainingsProgramms[0].plans.firstWhere((element) => element.name == myGoal!.trainingsProgramms[0].actualPlan);
 
-      setState(() {
-        selectedPlan = myPlan;
-      });
-    }
-    // for (Exercises exe in myPlan.exercises) {
-    //   dev.log(exe.name);
-    //   dev.log('setDoTimeScale: --- ${exe.setDoTimeScale['actualToDo']}');
-    //   dev.log('repetitionsScale: --- ${exe.repetitionsScale['actualToDo']}');
-    //   dev.log('setRestTimeScale: --- ${exe.setRestTimeScale['actualToDo']}');
-    //   dev.log('weigthScale: --- ${exe.weigthScale['actualToDo']}');
-
-    // }
-  }
+  //     setState(() {
+  //       selectedPlan = myPlan;
+  //     });
+  //   }
+  // }
 
   Future<void> openExerciseInfo(Exercises selectedExercise) async {
     await Navigator.push(

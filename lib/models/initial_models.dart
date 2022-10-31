@@ -14,11 +14,12 @@ class InitialModels {
         difficultyLevel: 1,
         durationWeeks: 24,
         actualPhase: 1,
-        phases: {
-          '1':'2022-09-20',
-          '2':'2022-10-20',
-          '3':'2022-11-20',
-        },
+        phases: [
+          '2022-09-20',
+          '2022-10-20',
+          '2022-11-20',
+          '2022-12-20',
+        ],
         actualPlan: 'Plan name is Loading...',
         plans: [
           Plans(
@@ -77,6 +78,10 @@ class InitialModels {
     goalName: null,
     dayFrequenz: null,
     minutesFrequenz: null,
+    fitnessLevel: null,
+    additionalMusclegroup: 'Generel',
+    reminder: null,
+    fitnessMethod: null,
     activityLevel: 0,
     activityPoints: { DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0},
   );

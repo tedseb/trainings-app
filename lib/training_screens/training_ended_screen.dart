@@ -11,7 +11,11 @@ import 'package:provider/provider.dart';
 import 'dart:developer' as dev;
 
 class TrainingEndedScreen extends StatefulWidget {
-  const TrainingEndedScreen({Key? key, required this.trainingsProgramm, required this.user}) : super(key: key);
+  const TrainingEndedScreen({
+    required this.trainingsProgramm,
+    required this.user,
+    Key? key,
+  }) : super(key: key);
 
   // final Map<String, dynamic> selectedPlan;
   final Map<String, dynamic> trainingsProgramm;
@@ -138,11 +142,17 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
 
   void updatePlan(Plans plan) {
     Map<String, double> updatedActivityPoints =
-        ActivityCalculator(activityPoints: widget.user.activityPoints!, trainingTime: plan.time).getActivityPoints();
+        ActivityCalculator(activityPoints: widget.user.activityPoints!, trainingTime: plan.time).getActivityPoints(widget.user);
     DatabaseService(uid: widget.user.uid).updateActivityPoints(activityPoints: updatedActivityPoints);
     String nextPlanName = TrainingsplanUpdater().getNextPlanName(trainingsProgramm);
     DatabaseService(uid: widget.user.uid).updateNextPlanName(nextPlanName);
-    DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(TrainingsplanUpdater().getAndUpdateSelectedPlan(plan));
+    DatabaseService(uid: widget.user.uid).updateTrainingsProgramm(
+      TrainingsplanUpdater().getAndUpdateSelectedPlan(
+        appUser: widget.user,
+        plansQuantity: trainingsProgramm.plans.length,
+        selectedPlan: selectedPlan,
+      ),
+    );
 
     dev.log('Update Plan');
   }

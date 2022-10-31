@@ -3,6 +3,8 @@ import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'dart:developer' as developer;
 
+import 'package:intl/intl.dart';
+
 class DatabaseService {
   final String? uid;
 
@@ -15,10 +17,42 @@ class DatabaseService {
 
   // START - User Related Data------------------------------------------------------------------------------------------------
   /// Update User
-  Future updateUserNameandMail(String userName, String userMail) {
+  Future signUpNewUser(AppUser appUser) {
     return usersCollection.doc(uid).set({
-      'userName': userName,
-      'userMail': userMail,
+      /// User Credentials
+      'userName': appUser.name,
+      'userMail': appUser.email,
+
+      /// User Personal Data
+      'userAge': appUser.age,
+      'userWeigth': appUser.weigth,
+      'userSize': appUser.size,
+      'userGender': appUser.gender,
+
+      /// User Goal Name
+      'userGoalName': appUser.goalName,
+
+      /// User Frequenz
+      'userDayFrequenz': appUser.dayFrequenz,
+      'userMinutesFrequenz': appUser.minutesFrequenz,
+
+      /// User Additional Musclegroup
+      'userAdditionalMusclegroup': appUser.additionalMusclegroup,
+
+      /// User Fitness Level
+      'userFitnessLevel': appUser.fitnessLevel,
+
+      /// User FitnessMethod
+      'userFitnessMethod': appUser.fitnessMethod,
+
+      /// User Reminder
+      'userReminder': appUser.reminder,
+
+      /// User Activity Points
+      'activityPoints': appUser.activityPoints,
+
+      /// User Activity Level
+      'activityLevel': appUser.activityLevel,
     });
   }
 
@@ -37,13 +71,13 @@ class DatabaseService {
     });
   }
 
-  Future updateUserGoal(AppUser appUser) {
+  Future updateUserGoalName(AppUser appUser) {
     return usersCollection.doc(uid).update({
       'userGoal': appUser.goalName,
     });
   }
 
-    Future updateUserFrequenz(AppUser appUser) {
+  Future updateUserFrequenz(AppUser appUser) {
     return usersCollection.doc(uid).update({
       'userDayFrequenz': appUser.dayFrequenz,
       'userMinutesFrequenz': appUser.minutesFrequenz,
@@ -68,21 +102,34 @@ class DatabaseService {
     });
   }
 
+    Future updateActualPhase({required int actualPhase}) {
+    return usersCollection.doc(uid).collection('Goal').doc('TrainingsProgramm').update({
+      'actualPhase': actualPhase,
+    });
+  }
+
   /// Get User-Data
   Stream<AppUser> get getUserData {
     final docUser = usersCollection.doc(uid);
     return docUser.snapshots().map(
           (event) => AppUser(
-            name: event.get('userName'),
+            name: event.data().toString().contains('userName') ? event.get('userName') : 'no_user_name',
             uid: uid,
             email: event.data().toString().contains('userMail') ? event.get('userMail') : 'no_user_mail',
-            age: event.data().toString().contains('userAge') ? event.get('userAge') : 0,
-            weigth: event.data().toString().contains('userWeigth') ? event.get('userWeigth') : 0,
-            size: event.data().toString().contains('userSize') ? event.get('userSize') : 0,
-            gender: event.data().toString().contains('userGender') ? event.get('userGender') : 'diverse',
-            goalName: event.data().toString().contains('userGoal') ? event.get('userGoal') : 'General Fitness',
-            reminder: event.data().toString().contains('userReminder') ? event.get('userReminder') : '08_00_Mon',//'08_00_Mon-Tue-Wed-Thu-Fri-Sat-Sun',
-            activityPoints: event.data().toString().contains('activityPoints') ? _fillStringDoubleMaps(event.get('activityPoints')) : {},
+            age: event.data().toString().contains('userAge') ? event.get('userAge') : 30,
+            weigth: event.data().toString().contains('userWeigth') ? event.get('userWeigth') : 80,
+            size: event.data().toString().contains('userSize') ? event.get('userSize') : 178,
+            gender: event.data().toString().contains('userGender') ? event.get('userGender') : 'Diverse',
+            goalName: event.data().toString().contains('userGoalName') ? event.get('userGoalName') : 'General Fitness',
+            reminder: event.data().toString().contains('userReminder') ? event.get('userReminder') : null, //'08_00_Mon-Tue-Wed-Thu-Fri-Sat-Sun',
+            additionalMusclegroup: event.data().toString().contains('userAdditionalMusclegroup') ? event.get('userAdditionalMusclegroup') : null,
+            dayFrequenz: event.data().toString().contains('userDayFrequenz') ? event.get('userDayFrequenz') : 2,
+            minutesFrequenz: event.data().toString().contains('userMinutesFrequenz') ? event.get('userMinutesFrequenz') : '40-50',
+            fitnessLevel: event.data().toString().contains('userFitnessLevel') ? event.get('userFitnessLevel') : 'Gelegenheits Sport',
+            fitnessMethod: event.data().toString().contains('userFitnessMethod') ? event.get('userFitnessMethod') : null,
+            activityPoints: event.data().toString().contains('activityPoints')
+                ? _fillStringDoubleMaps(event.get('activityPoints'))
+                : {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),
         );
@@ -194,7 +241,7 @@ class DatabaseService {
                   difficultyLevel: doc.get('difficultyLevel'),
                   durationWeeks: doc.get('durationWeeks'),
                   actualPhase: doc.get('actualPhase'),
-                  phases: _fillStringStringMaps(doc.get('phases')),
+                  phases: _convertStringListsFromDynamic(doc.get('phases')),
                   actualPlan: doc.get('actualPlan'),
                   plans: _fillPlans(doc.get("plans")),
                 ))
@@ -274,6 +321,16 @@ class DatabaseService {
     });
 
     return returnMap;
+  }
+
+  /// Convert List<dynamic> to List<String>
+  List<String> _convertStringListsFromDynamic(List<dynamic> list) {
+    List<String> returnList = [];
+
+    for (String element in list) {
+      returnList.add(element);
+    }
+    return returnList;
   }
 
   // -----------------------------------------END - Get My Goal--------------------------------

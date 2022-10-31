@@ -27,7 +27,8 @@ class _AiFrequencyContentState extends State<AiFrequencyContent> {
   final minutesController = TextEditingController();
 
 
-  List<int> daysList = [1,2,3,4,5,6];
+  List<int> daysList = [1,2,3,4];
+  // List<int> daysList = [1,2,3,4,5,6];
   List<String> minutesList = ['30-40','40-50', '50-60'];
 
 

@@ -16,10 +16,7 @@ import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
     Key? key,
-    required this.toggleView,
   }) : super(key: key);
-
-  final Function toggleView;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -44,9 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // String errorText = 'Ups... Something went wrong!';
 
   /// Error Text
-  bool loginResponse = false;
-  Color loginResponseColor = Styles.error;
-  String responseText = 'Ups... Something went wrong!';
+
+  String responseText = '';
 
   /// For Loading Screen
   bool loading = false;
@@ -78,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       key: formKey,
                       child: Column(
                         children: [
+                          /// Enter Email Field
                           TextFormField(
                             controller: emailController,
                             decoration: InputDecoration(
@@ -109,6 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           const SizedBox(height: 30),
+
+                          /// Enter Password Field
                           TextFormField(
                             controller: passwordController,
                             decoration: InputDecoration(
@@ -151,6 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                           ),
+
+                          /// Forgot Password Button
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -166,15 +167,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const SizedBox(height: 20),
+
+                          /// Login Error Text
                           Visibility(
-                            visible: loginResponse,
+                            visible: responseText != '',
                             child: Text(
                               responseText,
-                              style: Styles.loginScreenPrivacyText.copyWith(color: loginResponseColor),
+                              style: Styles.loginScreenPrivacyText.copyWith(color: Styles.error),
                               textAlign: TextAlign.center,
                             ),
                           ),
                           const SizedBox(height: 20),
+
+                          /// LogIn Button
                           ShadowButtonWidget(
                             buttonText: 'Sign in',
                             buttonWidth: double.infinity,
@@ -182,51 +187,62 @@ class _LoginScreenState extends State<LoginScreen> {
                             loggerText: 'Home #SignIn#',
                           ),
                           const SizedBox(height: 20),
+
+                          /// Agree Terms Text
                           Text(
                             'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
                             style: Styles.loginScreenPrivacyText,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 50),
-                          LoginRegisterAlternatives(platform: 'Mail',registerSignIn: 'Register with' ,onPressFunction: widget.toggleView),
-                          const SizedBox(height: 20),
-                          LoginRegisterAlternatives(platform: 'Google', registerSignIn: 'Sign in with' ,onPressFunction: _logInWithGoogle),
-                          const SizedBox(height: 20),
-                          LoginRegisterAlternatives(platform: 'Facebook', registerSignIn: 'Sign in with' ,onPressFunction: () {}),
-                          const SizedBox(height: 20),
-                          LoginRegisterAlternatives(platform: 'Apple', registerSignIn: 'Sign in with' ,onPressFunction: () {}),
+
+                          /// LogIn With Google
+                          LoginRegisterAlternatives(platform: 'Google', registerSignIn: 'Sign in with', onPressFunction: _logInWithGoogle),
                           const SizedBox(height: 20),
                         ],
                       )),
                 ],
               ),
             ),
+
+      /// Back to OnBoarding Screen
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 34.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ShadowButtonWidget(
+              buttonText: 'Zurück',
+              buttonWidth: 120.0,
+              onPressFunction: () => Navigator.pop(context),
+              loggerText: 'Login',
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   _signInWithEmail() async {
     FocusManager.instance.primaryFocus?.unfocus();
+
     if (formKey.currentState!.validate()) {
+      /// Set Loading Screen and wait for response
+      setState(() => loading = true);
       dynamic result = await _auth.signInWithEmailAndPassword(emailController.text, passwordController.text);
-      
+
       setState(() {
-        loading = true;
         if (result == null) {
           responseText = 'Could not sign in with those credentials.';
-          loginResponseColor = Styles.error;
-          loginResponse = true;
           loading = false;
-        } else if (result == false) {
-          FirebaseAuth.instance.signOut();
-          responseText = 'Pleas Verify your Email at first!';
-          loginResponseColor = Styles.error;
-          loginResponse = true;
+        } else if (result is String) {
+          responseText = result;
           loading = false;
         } else {
-          loginResponse = false;
+          responseText = '';
           loading = false;
-          
-          dev.log('${result.uid}    Hallo');
+          Navigator.pop(context);
+          dev.log('Login with Email Successfull');
         }
       });
     }
@@ -234,24 +250,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _logInWithGoogle() async {
     FocusManager.instance.primaryFocus?.unfocus();
+
+    /// Set Loading Screen and wait for response
     setState(() => loading = true);
     dynamic result = await _auth.signInWithGoogle();
-    if (result == null) {
-      setState(() {
+
+    setState(() {
+      if (result == null) {
         responseText = 'Could not sign in with Google.';
-        loginResponseColor = Styles.error;
-        loginResponse = true;
         loading = false;
-      });
-    } else {
-      loginResponse = false;
-      loading = true;
-      dev.log(result.toString());
-    }
+      } else if (result is String) {
+        loading = false;
+        responseText = result;
+      } else {
+        loading = false;
+        responseText = '';
+        Navigator.pop(context);
+        dev.log('Login with Google Successfull');
+      }
+    });
   }
 
   _openResetPassword() {
-    FocusManager.instance.primaryFocus?.unfocus();
+    // FocusManager.instance.primaryFocus?.unfocus();
     Navigator.push(
       context,
       MaterialPageRoute(

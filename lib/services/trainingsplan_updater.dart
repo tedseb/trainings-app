@@ -1,3 +1,4 @@
+import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 
 class TrainingsplanUpdater {
@@ -17,59 +18,84 @@ class TrainingsplanUpdater {
     return nextPlanName;
   }
 
-  Plans getAndUpdateSelectedPlan(Plans myPlan) {
-    for (Exercises exe in myPlan.exercises) {
+  Plans getAndUpdateSelectedPlan({ required Plans selectedPlan, required AppUser appUser, required int plansQuantity}) {
+    for (Exercises exe in selectedPlan.exercises) {
       if (exe.rpeScale.isNotEmpty) {
         int rpeLength = exe.rpeScale.entries.length;
+       int exeIndex =  selectedPlan.exercises.indexOf(exe);
+        ///check exercise in deloadPhase
 
-        if (exe.rpeScale.entries.last.value != -1) {
-          if (exe.rpeScale.entries.last.value != 3) {
-            if (exe.setDoTimeScale['actualToDo'] != 0 && exe.setDoTimeScale['actualToDo']! < exe.setDoTimeScale['rangeTo']!) {
-              /// Increase Set Do Time
-              exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['actualToDo']! + exe.setDoTimeScale['stepWidth']!;
-            } else if (exe.repetitionsScale['actualToDo']! < exe.repetitionsScale['rangeTo']!) {
-              /// Increase Repetition
-              exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! + exe.repetitionsScale['stepWidth']!;
-            } else if (exe.setRestTimeScale['actualToDo']! > exe.setRestTimeScale['rangeTo']!) {
-              /// Decrease Rest Time
-              exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['actualToDo']! - exe.setRestTimeScale['stepWidth']!;
-            } else {
-              /// Increase Weigth
-              exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! + exe.weigthScale['stepWidth']!;
+        if (isDelooadPhaseDone(appUser: appUser, exeIndex: exeIndex, plansQuantity: plansQuantity, selectedPlan: selectedPlan)) {
+          if (exe.rpeScale.entries.last.value != -1) {
+            if (exe.rpeScale.entries.last.value != 3) {
+              if (exe.setDoTimeScale['actualToDo'] != 0 && exe.setDoTimeScale['actualToDo']! < exe.setDoTimeScale['rangeTo']!) {
+                /// Increase Set Do Time
+                exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['actualToDo']! + exe.setDoTimeScale['stepWidth']!;
+              } else if (exe.repetitionsScale['actualToDo']! < exe.repetitionsScale['rangeTo']!) {
+                /// Increase Repetition
+                exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! + exe.repetitionsScale['stepWidth']!;
+              } else if (exe.setRestTimeScale['actualToDo']! > exe.setRestTimeScale['rangeTo']!) {
+                /// Decrease Rest Time
+                exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['actualToDo']! - exe.setRestTimeScale['stepWidth']!;
+              } else {
+                /// Increase Weigth
+                exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! + exe.weigthScale['stepWidth']!;
 
-              /// Decrease
-              exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['rangeFrom']!;
-              exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['rangeFrom']!;
-              exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['rangeFrom']!;
-            }
-          } else if (rpeLength > 2) {
-            ///IF last 3 RPEs smaller -> reverse scale
-            if (exe.rpeScale.entries.elementAt(rpeLength - 2).value == 3 && exe.rpeScale.entries.elementAt(rpeLength - 3).value == 3) {
-              if (exe.repetitionsScale['actualToDo']! == exe.repetitionsScale['rangeFrom']! &&
-                  exe.setDoTimeScale['actualToDo']! == exe.setDoTimeScale['rangeFrom']! &&
-                  exe.setRestTimeScale['actualToDo']! == exe.setRestTimeScale['rangeFrom']!) {
-                /// Decrease Weigth
-                exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! - exe.weigthScale['stepWidth']!;
-
-                /// Increase
+                /// Decrease
                 exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['rangeFrom']!;
                 exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['rangeFrom']!;
                 exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['rangeFrom']!;
-              } else if (exe.setRestTimeScale['actualToDo']! < exe.setRestTimeScale['rangeFrom']!) {
-                /// Increase Rest Time
-                exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['actualToDo']! + exe.setRestTimeScale['stepWidth']!;
-              } else if (exe.setDoTimeScale['actualToDo'] != 0) {
-                /// Decrease Set Do Time
-                exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['actualToDo']! - exe.setDoTimeScale['stepWidth']!;
-              } else {
-                /// Decrease Repetition
-                exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! - exe.repetitionsScale['stepWidth']!;
+              }
+            } else if (rpeLength > 2) {
+              ///IF last 3 RPEs smaller -> reverse scale
+              if (exe.rpeScale.entries.elementAt(rpeLength - 2).value == 3 && exe.rpeScale.entries.elementAt(rpeLength - 3).value == 3) {
+                if (exe.repetitionsScale['actualToDo']! == exe.repetitionsScale['rangeFrom']! &&
+                    exe.setDoTimeScale['actualToDo']! == exe.setDoTimeScale['rangeFrom']! &&
+                    exe.setRestTimeScale['actualToDo']! == exe.setRestTimeScale['rangeFrom']!) {
+                  /// Decrease Weigth
+                  exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! - exe.weigthScale['stepWidth']!;
+
+                  /// Increase
+                  exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['rangeFrom']!;
+                  exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['rangeFrom']!;
+                  exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['rangeFrom']!;
+                } else if (exe.setRestTimeScale['actualToDo']! < exe.setRestTimeScale['rangeFrom']!) {
+                  /// Increase Rest Time
+                  exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['actualToDo']! + exe.setRestTimeScale['stepWidth']!;
+                } else if (exe.setDoTimeScale['actualToDo'] != 0) {
+                  /// Decrease Set Do Time
+                  exe.setDoTimeScale['actualToDo'] = exe.setDoTimeScale['actualToDo']! - exe.setDoTimeScale['stepWidth']!;
+                } else {
+                  /// Decrease Repetition
+                  exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! - exe.repetitionsScale['stepWidth']!;
+                }
               }
             }
           }
         }
       }
     }
-    return myPlan;
+    return selectedPlan;
+  }
+
+  bool isDelooadPhaseDone({required int exeIndex, required Plans selectedPlan, required AppUser appUser, required int plansQuantity}) {
+    int fitnessLevel = appUser.fitnessLevel ?? 0;
+    int deloadCounter = 0;
+    // int plansQuantity = trainingsProgramm.plans.length;
+    int dailyFrequanz = appUser.dayFrequenz ?? 1;
+
+    int deloadDuration = fitnessLevel > 0 ? 1 : 2;
+    int deloadShouldBeQuantity = (dailyFrequanz / plansQuantity).round() * deloadDuration;
+
+    selectedPlan.exercises[exeIndex].rpeScale.forEach((key, value) {
+      if (value > -1) {
+        deloadCounter++;
+      }
+    });
+
+    if (deloadShouldBeQuantity >= deloadCounter) {
+      return false;
+    }
+    return true;
   }
 }
