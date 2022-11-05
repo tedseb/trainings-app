@@ -81,7 +81,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
           const AiWaveWidget(),
           AiTextWidget(aiText: aiText, key: ValueKey(aiText)),
           Flexible(child: SingleChildScrollView(child: contentWidget)),
-          aiContent != PossibleAiScreens.talkToAiContent ? const SizedBox() :const SizedBox(height: 32.0),
+          aiContent != PossibleAiScreens.talkToAiContent ? const SizedBox() : const SizedBox(height: 32.0),
         ],
       ),
       bottomNavigationBar: Visibility(
@@ -117,7 +117,9 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
           break;
         case PossibleAiScreens.aiGoalContent:
           aiText = 'Was ist dein Ziel?';
-          contentWidget = AiGoalContent(appUser: widget.appUser, goalUpdater: (){},);
+          contentWidget = AiGoalContent(
+            appUser: widget.appUser,
+          );
           aiContent = PossibleAiScreens.aiGoalContent;
           break;
         case PossibleAiScreens.aiFrequenzyContent:
@@ -132,7 +134,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
           break;
         case PossibleAiScreens.aiGymEquipmentContent:
           aiText = 'Welche Ausstattung bietet dein Fitnessstudio?';
-          contentWidget = AiGymEquipmentContent(gymEquipment: gymEquipment);
+          contentWidget = AiGymEquipmentContent(appUser: widget.appUser,goalUpdater: (){},);
           aiContent = PossibleAiScreens.aiGymEquipmentContent;
           break;
         default:

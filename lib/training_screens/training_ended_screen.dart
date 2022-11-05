@@ -29,11 +29,11 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
   Color modeColor = Styles.white;
 
   late Plans selectedPlan;
-  late TrainingsProgramms trainingsProgramm;
+  late TrainingPrograms trainingsProgramm;
 
   @override
   void initState() {
-    trainingsProgramm = TrainingsProgramms.trainingsProgrammsFromJson(widget.trainingsProgramm);
+    trainingsProgramm = TrainingPrograms.trainingsProgrammsFromJson(widget.trainingsProgramm);
     selectedPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
 
     updatePlan(selectedPlan);

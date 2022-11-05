@@ -62,7 +62,7 @@
 //   String? video;
 //   String? info;
 //   String? muscleGroup;
-//   int? pk;
+//   int? eID;
 //   int? exePauseTime;
 //   int? exePauseTimeDone;
 //   bool? exerciseFinished;
@@ -77,7 +77,7 @@
 //     this.video,
 //     this.info,
 //     this.muscleGroup,
-//     this.pk,
+//     this.eID,
 //     this.exePauseTime,
 //     this.exePauseTimeDone,
 //     this.exerciseFinished,
@@ -93,7 +93,7 @@
 //         'video': video,
 //         'info': info,
 //         'muscleGroup': muscleGroup,
-//         'pk': pk,
+//         'eID': eID,
 //         'exePauseTime': exePauseTime,
 //         'exerciseFinished': exerciseFinished,
 //         'exePauseTimeDone': exePauseTimeDone,
@@ -110,7 +110,7 @@
 //       video: json['video'],
 //       info: json['info'],
 //       muscleGroup: json['muscleGroup'],
-//       pk: json['pk'],
+//       eID: json['eID'],
 //       exePauseTime: json['exePauseTime'],
 //       exePauseTimeDone: json['exePauseTimeDone'],
 //       exerciseFinished: json['exerciseFinished'],

@@ -1,7 +1,7 @@
 class Goal {
   String name;
   String info;
-  List<TrainingsProgramms> trainingsProgramms;
+  List<TrainingPrograms> trainingsProgramms;
 
   Goal({
     required this.name,
@@ -20,13 +20,13 @@ class Goal {
       name: json['name'],
       info: json['info'],
       trainingsProgramms: json['trainingsProgramms']
-          .map<TrainingsProgramms>((trainingsProgramms) => TrainingsProgramms.trainingsProgrammsFromJson(trainingsProgramms))
+          .map<TrainingPrograms>((trainingsProgramms) => TrainingPrograms.trainingsProgrammsFromJson(trainingsProgramms))
           .toList(),
     );
   }
 }
 
-class TrainingsProgramms {
+class TrainingPrograms {
   String name;
   String info;
   String fitnesstype;
@@ -37,7 +37,7 @@ class TrainingsProgramms {
   String actualPlan;
   List<Plans> plans;
 
-  TrainingsProgramms({
+  TrainingPrograms({
     required this.name,
     required this.info,
     required this.fitnesstype,
@@ -61,8 +61,8 @@ class TrainingsProgramms {
         'plans': plans.map((plan) => plan.plansToJson()).toList(),
       };
 
-  static TrainingsProgramms trainingsProgrammsFromJson(Map<String, dynamic> json) {
-    return TrainingsProgramms(
+  static TrainingPrograms trainingsProgrammsFromJson(Map<String, dynamic> json) {
+    return TrainingPrograms(
       name: json['name'],
       info: json['info'],
       fitnesstype: json['fitnesstype'],
@@ -107,11 +107,19 @@ class Exercises {
   String subName;
   String info;
   String media;
-  int pk;
+  int eID;
+  List<int> alternativeExercises;
+  List<String> station;
+  List<String> stationShort;
+  List<String> handle;
+  List<String> handleShort;
+  List<double> ratio;
   Map<String, int> repetitionsScale;
   Map<String, int> setDoTimeScale;
   Map<String, int> setRestTimeScale;
   Map<String, double> weigthScale;
+  double warmupWeigth;
+  String warmupInfo;
   Map<String, int> exerciseRestTime;
   Map<String, int> rpeScale;
   List<Sets> sets;
@@ -121,11 +129,19 @@ class Exercises {
     required this.subName,
     required this.info,
     required this.media,
-    required this.pk,
+    required this.eID,
+    required this.alternativeExercises,
+    required this.station,
+    required this.stationShort,
+    required this.handle,
+    required this.handleShort,
+    required this.ratio,
     required this.repetitionsScale,
     required this.setDoTimeScale,
     required this.setRestTimeScale,
     required this.weigthScale,
+    required this.warmupWeigth,
+    required this.warmupInfo,
     this.exerciseRestTime = const {},
     this.rpeScale = const {},
     required this.sets,
@@ -136,11 +152,19 @@ class Exercises {
         'subName': subName,
         'info': info,
         'media': media,
-        'pk': pk,
+        'eID': eID,
+        'alternativeExercises': alternativeExercises,
+        'station': station,
+        'stationShort': stationShort,
+        'handle': handle,
+        'handleShort': handleShort,
+        'ratio': ratio,
         'repetitionsScale': repetitionsScale,
         'setDoTimeScale': setDoTimeScale,
         'setRestTimeScale': setRestTimeScale,
         'weigthScale': weigthScale,
+        'warmupWeigth': warmupWeigth,
+        'warmupInfo': warmupInfo,
         'exerciseRestTime': exerciseRestTime,
         'rpeScale': rpeScale,
         'sets': sets.map((sts) => sts.setsToJson()).toList(),
@@ -152,11 +176,19 @@ class Exercises {
       subName: json['subName'],
       info: json['info'],
       media: json['media'],
-      pk: json['pk'],
+      eID: json['eID'],
+      alternativeExercises: json['alternativeExercises'],
+      station: json['station'],
+      stationShort: json['stationShort'],
+      handle: json['handle'],
+      handleShort: json['handleShort'],
+      ratio: json['ratio'],
       repetitionsScale: json['repetitionsScale'],
       setDoTimeScale: json['setDoTimeScale'],
       setRestTimeScale: json['setRestTimeScale'],
       weigthScale: json['weigthScale'],
+      warmupWeigth: json['warmupWeigth'],
+      warmupInfo: json['warmupInfo'],
       exerciseRestTime: json['exerciseRestTime'],
       rpeScale: json['rpeScale'],
       sets: json['sets'].map<Sets>((sts) => Sets.setsFromJson(sts)).toList(),

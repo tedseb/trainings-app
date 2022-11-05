@@ -12,17 +12,27 @@ import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 
 class AiPresentTrainingsProgrammContent extends StatefulWidget {
   const AiPresentTrainingsProgrammContent({
-    required this.goal,
+    required this.getNewGoal,
     Key? key,
   }) : super(key: key);
 
-  final Goal goal;
+  // final Goal? goal;
+  final Function getNewGoal;
 
   @override
   State<AiPresentTrainingsProgrammContent> createState() => _AiPresentTrainingsProgrammContentState();
 }
 
 class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsProgrammContent> {
+
+  late Goal goal;
+
+@override
+  void initState() {
+    goal = widget.getNewGoal();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -91,21 +101,21 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                             children: [
                               Column(
                                 children: [
-                                  Styles.getFitnessTypeIcons(widget.goal.trainingsProgramms[0].fitnesstype),
-                                  Text(widget.goal.trainingsProgramms[0].fitnesstype, style: Styles.trainingsplanIconTitle),
+                                  Styles.getFitnessTypeIcons(goal.trainingsProgramms[0].fitnesstype),
+                                  Text(goal.trainingsProgramms[0].fitnesstype, style: Styles.trainingsplanIconTitle),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.levelIcon,
-                                  Text(Styles.getFitnessLevelText(widget.goal.trainingsProgramms[0].difficultyLevel),
+                                  Text(Styles.getFitnessLevelText(goal.trainingsProgramms[0].difficultyLevel),
                                       style: Styles.trainingsplanIconTitle),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.timerIcon,
-                                  Text('${widget.goal.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.trainingsplanIconTitle),
+                                  Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.trainingsplanIconTitle),
                                 ],
                               ),
                             ],
@@ -128,7 +138,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                             padding: const EdgeInsets.only(bottom: 0.0),
                             child: ListView.builder(
                                 padding: const EdgeInsets.only(top: 50.0, bottom: 100.0),
-                                itemCount: widget.goal.trainingsProgramms[0].plans.length,
+                                itemCount: goal.trainingsProgramms[0].plans.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 30.0),
@@ -150,7 +160,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                             children: [
                                               Text(
                                                 helper_utils.truncatePlanName(
-                                                  widget.goal.trainingsProgramms[0].plans[index].name,
+                                                  goal.trainingsProgramms[0].plans[index].name,
                                                   Styles.trainingsplanSubTitle,
                                                   MediaQuery.of(context).size.width,
                                                 ),
@@ -174,11 +184,11 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                             physics: const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                                            itemCount: widget.goal.trainingsProgramms[0].plans[index].exercises.length,
+                                            itemCount: goal.trainingsProgramms[0].plans[index].exercises.length,
                                             itemBuilder: (context, exeIndex) {
                                               //Exercise Name is Loading...
                                               return ExerciseCardWidget(
-                                                selectedExercise: widget.goal.trainingsProgramms[0].plans[index].exercises[exeIndex],
+                                                selectedExercise: goal.trainingsProgramms[0].plans[index].exercises[exeIndex],
                                                 showInfoScreen: () {},
                                                 active: index == 0,
                                               );

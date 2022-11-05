@@ -123,7 +123,7 @@ class ActivityCalculator {
     return weekStart;
   }
 
-  static Map<String, int> calculateActualWeekAndPhase(TrainingsProgramms trainingsprogram, String uid) {
+  static Map<String, int> calculateActualWeekAndPhase(TrainingPrograms trainingsprogram, String uid) {
     List<String> phases = trainingsprogram.phases;
     int passedDays = 0;
     int passedWeeks = 0;

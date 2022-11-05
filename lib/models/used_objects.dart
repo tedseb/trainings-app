@@ -43,35 +43,39 @@ class UsedObjects {
   ];
 
   static final List<Map<String, dynamic>> goalObjects = [
-  
     {
       'icon': Icons.monitor_weight_outlined,
       'titel': 'Abnehmen',
       'subTitel': 'Gewicht verlieren und Muskel erhalten',
+      'goalGroup': 'Abnehmen',
     },
     {
       'icon': Icons.fitness_center_rounded,
       'titel': 'Muskel Aufbau',
       'subTitel': 'Muskelwachstum Maximieren',
+      'goalGroup': 'Muskelwachstum',
     },
-      {
+    {
       'icon': Icons.sports_gymnastics_rounded,
       'titel': 'Generell Fitness',
       'subTitel': 'Stärke deinen Körper um angenehmer durch den Tag zu kommen',
+      'goalGroup': 'Abnehmen',
     },
     {
       'icon': Icons.monitor_weight_outlined,
       'titel': 'Gesundheit stärken',
       'subTitel': 'Bringe dein Imunsystem auf trap',
+      'goalGroup': 'Abnehmen',
     },
     {
       'icon': Icons.monitor_weight_outlined,
       'titel': 'Haut straffen',
       'subTitel': 'Eine schönere und straffere Haut',
+      'goalGroup': 'Muskelwachstum',
     },
   ];
 
- static final List<String> fitnessLevelText = [
+  static final List<String> fitnessLevelText = [
     'Gar kein Sport',
     'Gelegenheits Sport',
     'Regelmäßig Sport',
@@ -100,23 +104,28 @@ class UsedObjects {
   static final List<Map<String, dynamic>> additionalMusclegroupObject = [
     {
       'icon': Icons.sports_gymnastics_rounded,
-      'titel': 'Generel',
+      'titel': 'General',
+      'General': 'General',
     },
     {
       'icon': Icons.sports_gymnastics_rounded,
       'titel': 'Po/Beine',
+      'Po/Beine': 'Po_Bein',
     },
     {
       'icon': Icons.fitness_center_rounded,
       'titel': 'Schultern',
+      'Schultern': 'Schulter',
     },
     {
       'icon': Icons.monitor_weight_outlined,
       'titel': 'Bauch',
+      'Bauch': 'Bauch',
     },
     {
       'icon': Icons.monitor_weight_outlined,
       'titel': 'Arme',
+      'Arme': 'Arm',
     },
   ];
 
@@ -131,12 +140,11 @@ class UsedObjects {
     {'SZ-Stange': true},
   ];
 
-
- static final Goal shawanGoal = Goal(
+  static final Goal shawanGoal = Goal(
     name: 'General Fitness',
     info: 'Shawans Goal',
     trainingsProgramms: [
-      TrainingsProgramms(
+      TrainingPrograms(
         name: '3TE Full Body 40-50',
         info: 'Drei Trainingseinheiten pro Woche, jeweils 40 bis 50 Minuten, für den ganzen Körper',
         fitnesstype: 'Kraft',
@@ -159,7 +167,13 @@ class UsedObjects {
                 subName: 'Langhantel',
                 info: 'Info Rumänisches Kreuzheben',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -184,6 +198,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 70.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -195,7 +215,13 @@ class UsedObjects {
                 subName: 'Kabelzug - breit',
                 info: 'Info Latzug',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -220,6 +246,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 75.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -231,7 +263,13 @@ class UsedObjects {
                 subName: 'Schrägbank - Kurzhantel',
                 info: 'Info Positiv Brust',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -256,6 +294,12 @@ class UsedObjects {
                   'stepWidth': 2.5,
                   'actualToDo': 25.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -267,7 +311,13 @@ class UsedObjects {
                 subName: 'Schrägbank - Kurzhantel',
                 info: 'Info Fliegende',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -292,6 +342,12 @@ class UsedObjects {
                   'stepWidth': 2.5,
                   'actualToDo': 20.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -303,7 +359,13 @@ class UsedObjects {
                 subName: 'Kabelzug - T-Seil',
                 info: 'Info Facepulls',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -328,6 +390,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 36.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -339,7 +407,13 @@ class UsedObjects {
                 subName: 'Kabelzug - T-Seil',
                 info: 'Info Trizeps Seil',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -364,6 +438,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 41.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -380,7 +460,13 @@ class UsedObjects {
                 subName: 'Langhantel',
                 info: 'Info Kniebeuger',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -405,6 +491,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 80.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -416,7 +508,13 @@ class UsedObjects {
                 subName: 'Kabelzug - eng',
                 info: 'Info Rudern',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -441,6 +539,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 59.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -452,7 +556,13 @@ class UsedObjects {
                 subName: 'Flachbank',
                 info: 'Info Bankdrücken',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -477,6 +587,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 90.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -488,7 +604,13 @@ class UsedObjects {
                 subName: 'Turm - Breit',
                 info: 'Info Klimmzüge',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -513,6 +635,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': -23.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -524,7 +652,13 @@ class UsedObjects {
                 subName: 'Flachbank - Schulterbreit',
                 info: 'Info Over Head Press',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -549,6 +683,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 25.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -560,7 +700,13 @@ class UsedObjects {
                 subName: 'Kurzhantel',
                 info: 'Info Bizeps Curls',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -585,6 +731,12 @@ class UsedObjects {
                   'stepWidth': 2.5,
                   'actualToDo': 12.5,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -601,7 +753,13 @@ class UsedObjects {
                 subName: 'Langhantel',
                 info: 'Info Normales Kreuzheben',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -626,6 +784,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 80.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -637,7 +801,13 @@ class UsedObjects {
                 subName: 'Langhantel',
                 info: 'Info Rudern',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 10,
@@ -662,6 +832,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 75.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -673,7 +849,13 @@ class UsedObjects {
                 subName: 'Turm',
                 info: 'Info Dips',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -698,6 +880,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 0.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -709,7 +897,13 @@ class UsedObjects {
                 subName: 'Kurzhantel',
                 info: 'Info Seitenheber',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -734,6 +928,12 @@ class UsedObjects {
                   'stepWidth': 2.5,
                   'actualToDo': 8.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -745,7 +945,13 @@ class UsedObjects {
                 subName: 'Flachbank, SZ-Stange - eng',
                 info: 'Info Stirndrücken',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -770,6 +976,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 15.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -781,7 +993,13 @@ class UsedObjects {
                 subName: 'SZ-Stange - Schulterbreit',
                 info: 'Info Bizeps',
                 media: 'noMedia',
-                pk: -1,
+                eID: -1,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 8,
                   'rangeTo': 12,
@@ -806,6 +1024,12 @@ class UsedObjects {
                   'stepWidth': 5.0,
                   'actualToDo': 20.0,
                 },
+                warmupWeigth: 0,
+               warmupInfo: '',
+                rpeScale: {
+                  '2022-10-16':0,
+                  '2022-10-18':0,
+                },
                 sets: [
                   Sets(),
                   Sets(),
@@ -818,6 +1042,4 @@ class UsedObjects {
       ),
     ],
   );
-
-
 }

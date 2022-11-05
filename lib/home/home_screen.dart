@@ -293,9 +293,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void calculateManyTimesTrainedThisWeek() {
-    if (goal != null) {
+    if (goal != null && user != null) {
       if (goal!.trainingsProgramms.isNotEmpty) {
-        toTrainThisWeek = goal!.trainingsProgramms[0].plans.length;
+        toTrainThisWeek = user!.dayFrequenz ?? goal!.trainingsProgramms[0].plans.length;
         timesTrainedThisWeek = 0;
         if (user!.activityPoints != null) {
           timesTrainedThisWeek = ActivityCalculator.manyTimesThisWeek(user!.activityPoints!);

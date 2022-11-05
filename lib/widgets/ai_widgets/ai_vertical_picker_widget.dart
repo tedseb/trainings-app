@@ -31,7 +31,7 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
   @override
   void initState() {
     int initPage = widget.pickerList.indexWhere((element) => element.toString() == widget.initValue);
-    initPage = initPage != -1 ? initPage : (widget.pickerList.length~/2)~/2;
+    initPage = initPage != -1 ? initPage : (widget.pickerList.length ~/ 2) ~/ 2;
     _index = initPage;
     valueController = PageController(viewportFraction: 0.3, initialPage: initPage);
 
@@ -84,6 +84,7 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
                       scrollDirection: Axis.vertical,
                       itemCount: widget.pickerList.length,
                       controller: valueController,
+                      // physics: const CustomPageViewScrollPhysics(),
                       onPageChanged: (int index) => setState(() => _index = index),
                       itemBuilder: (_, i) {
                         return Center(
@@ -121,13 +122,13 @@ class CustomPageViewScrollPhysics extends ScrollPhysics {
 
   @override
   CustomPageViewScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return CustomPageViewScrollPhysics(parent: buildParent(ancestor)!);
+    return CustomPageViewScrollPhysics(parent: buildParent(ancestor));
   }
 
   @override
   SpringDescription get spring => const SpringDescription(
-        mass: 100,
-        stiffness: 0.1,
+        mass: 150,
+        stiffness: 100,
         damping: 1,
       );
 }

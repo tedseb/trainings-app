@@ -79,7 +79,7 @@
 //       tempOneExerciseMap['video'] = element.video ?? 'default';
 //       tempOneExerciseMap['info'] = element.info ?? 'default';
 //       tempOneExerciseMap['muscleGroup'] = element.muscleGroup ?? 'Muscle GroupssS';
-//       tempOneExerciseMap['pk'] = element.pk ?? 00;
+//       tempOneExerciseMap['eID'] = element.eID ?? 00;
 //       tempOneExerciseMap['exePauseTime'] = element.exePauseTime ?? 90;
 //       tempOneExerciseMap['exePauseTimeDone'] = element.exePauseTimeDone ?? 0;
 //       tempOneExerciseMap['rpeScale'] = element.rpeScale ?? [];
@@ -152,7 +152,7 @@
 //           video: v['video'] ?? 'default',
 //           info: v['info'] ?? 'default',
 //           muscleGroup: v['muscleGroup'] ?? 'Muscle GroupssS',
-//           pk: v['pk'] ?? 00,
+//           eID: v['eID'] ?? 00,
 //           exePauseTime: v['pause'] ?? 90,
 //           exePauseTimeDone: v['pauseDone'] ?? 0,
 //           rpeScale: _rpeScaleList(v['rpeScale']),
@@ -301,7 +301,7 @@
 //           ),
 //         ],
 //         muscleGroup: 'Muscle GroupssS',
-//         pk: doc.get('pk') ?? 00,
+//         eID: doc.get('eID') ?? 00,
 //       );
 //     }).toList();
 //   }

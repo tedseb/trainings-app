@@ -63,7 +63,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   bool deloadPhase = false;
 
   late Plans selectedPlan;
-  late TrainingsProgramms trainingsProgramm;
+  late TrainingPrograms trainingsProgramm;
   late Exercises selectedExercise;
   Completer<void>? buttonCompleter;
   VideoPlayerController? _vpController;
@@ -81,7 +81,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   @override
   void initState() {
-    trainingsProgramm = TrainingsProgramms.trainingsProgrammsFromJson(widget.trainingsProgramm);
+    trainingsProgramm = TrainingPrograms.trainingsProgrammsFromJson(widget.trainingsProgramm);
     selectedPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
     selectedPlan.time = 0;
     // fillPlanList = List.generate(
@@ -763,24 +763,33 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   bool isDelooadPhaseDone(int exeIndex) {
-    int fitnessLevel = widget.appUser.fitnessLevel ?? 0;
-    int deloadCounter = 0;
-    int plansQuantity = trainingsProgramm.plans.length;
-    int dailyFrequanz = widget.appUser.dayFrequenz ?? 1;
-
-    int deloadDuration = fitnessLevel > 0 ? 1 : 2;
-    int deloadShouldBeQuantity = (dailyFrequanz / plansQuantity).round() * deloadDuration;
+    bool returnBool = true;
 
     selectedPlan.exercises[exeIndex].rpeScale.forEach((key, value) {
       if (value > -1) {
-        deloadCounter++;
+        returnBool = false;
       }
     });
+    return returnBool;
 
-    if (deloadShouldBeQuantity >= deloadCounter) {
-      return false;
-    }
-    return true;
+    // int fitnessLevel = widget.appUser.fitnessLevel ?? 0;
+    // int deloadCounter = 0;
+    // int plansQuantity = trainingsProgramm.plans.length;
+    // int dailyFrequanz = widget.appUser.dayFrequenz ?? 1;
+
+    // int deloadDuration = fitnessLevel > 0 ? 1 : 2;
+    // int deloadShouldBeQuantity = (dailyFrequanz / plansQuantity).round() * deloadDuration;
+
+    // selectedPlan.exercises[exeIndex].rpeScale.forEach((key, value) {
+    //   if (value > -1) {
+    //     deloadCounter++;
+    //   }
+    // });
+
+    // if (deloadShouldBeQuantity >= deloadCounter) {
+    //   return false;
+    // }
+    // return true;
   }
 
   void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {

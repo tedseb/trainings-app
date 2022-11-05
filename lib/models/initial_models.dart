@@ -7,7 +7,7 @@ class InitialModels {
     info: 'Goal Info is Loading...',
     name: 'Goal Name is Loading...',
     trainingsProgramms: [
-      TrainingsProgramms(
+      TrainingPrograms(
         name: 'Training Programm Name is Loading...',
         info: 'Training Programm Info is Loading...',
         fitnesstype: 'Fitness Type is Loading...',
@@ -31,7 +31,13 @@ class InitialModels {
                 subName: 'Exercise Sub Name is Loading...',
                 info: 'Exercise Info is Loading...',
                 media: 'noMedia',
-                pk: 0,
+                eID: 0,
+                alternativeExercises: [0],
+                handle: [],
+                handleShort: [],
+                station: [],
+                stationShort: [],
+                ratio: [],
                 repetitionsScale: {
                   'rangeFrom': 6,
                   'rangeTo': 15,
@@ -56,6 +62,8 @@ class InitialModels {
                   'stepWidth': 2.5,
                   'actualToDo': 0.0,
                 },
+                warmupWeigth: 0,
+                warmupInfo: '',
                 sets: [
                   Sets(),
                 ],
@@ -66,6 +74,9 @@ class InitialModels {
       )
     ],
   );
+
+  static  Map<String, dynamic> goalJson = initialGoal.goalToJson();
+ static  Map<String, dynamic> plansJson = initialGoal.trainingsProgramms[0].plans[0].plansToJson();
 
   static AppUser initialAppUser = AppUser(
     uid: '',
@@ -78,8 +89,8 @@ class InitialModels {
     goalName: null,
     dayFrequenz: null,
     minutesFrequenz: null,
-    fitnessLevel: null,
-    additionalMusclegroup: 'Generel',
+    fitnessLevel: 0,
+    additionalMusclegroup: 'General',
     reminder: null,
     fitnessMethod: null,
     activityLevel: 0,

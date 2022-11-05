@@ -2,7 +2,7 @@ import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 
 class TrainingsplanUpdater {
-  String getNextPlanName(TrainingsProgramms trainingsProgramm) {
+  String getNextPlanName(TrainingPrograms trainingsProgramm) {
     String nextPlanName = '';
     int actualPlanIndex = -1;
 

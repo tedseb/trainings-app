@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'dart:developer' as developer;
+import 'dart:developer' as dev;
 
 import 'package:intl/intl.dart';
 
@@ -102,7 +102,7 @@ class DatabaseService {
     });
   }
 
-    Future updateActualPhase({required int actualPhase}) {
+  Future updateActualPhase({required int actualPhase}) {
     return usersCollection.doc(uid).collection('Goal').doc('TrainingsProgramm').update({
       'actualPhase': actualPhase,
     });
@@ -182,11 +182,19 @@ class DatabaseService {
                 'subName': exercise.subName,
                 'info': exercise.info,
                 'media': exercise.media,
-                'pk': exercise.pk,
+                'eID': exercise.eID,
+                'alternativeExercises': exercise.alternativeExercises,
+                'station': exercise.station,
+                'stationShort': exercise.stationShort,
+                'handle': exercise.handle,
+                'handleShort': exercise.handleShort,
+                'ratio': exercise.ratio,
                 'repetitionsScale': exercise.repetitionsScale,
                 'setDoTimeScale': exercise.setDoTimeScale,
                 'setRestTimeScale': exercise.setRestTimeScale,
                 'weigthScale': exercise.weigthScale,
+                'warmupWeigth': exercise.warmupWeigth,
+                'warmupInfo': exercise.warmupInfo,
                 'exerciseRestTime': exercise.exerciseRestTime,
                 'rpeScale': exercise.rpeScale,
                 'sets': exercise.sets
@@ -234,14 +242,14 @@ class DatabaseService {
         name: goalNameAndInfo['name'] ?? 'ERROR Goal Name',
         info: goalNameAndInfo['info'] ?? 'ERROR Goal Info',
         trainingsProgramms: snapshot.docs
-            .map((doc) => TrainingsProgramms(
+            .map((doc) => TrainingPrograms(
                   name: doc.get('name'),
                   info: doc.get('info'),
                   fitnesstype: doc.get('fitnesstype'),
                   difficultyLevel: doc.get('difficultyLevel'),
                   durationWeeks: doc.get('durationWeeks'),
                   actualPhase: doc.get('actualPhase'),
-                  phases: _convertStringListsFromDynamic(doc.get('phases')),
+                  phases: _convertStringListsFromDynamic(doc.get('phases'), 'phases'),
                   actualPlan: doc.get('actualPlan'),
                   plans: _fillPlans(doc.get("plans")),
                 ))
@@ -267,11 +275,19 @@ class DatabaseService {
             subName: exercise['subName'],
             info: exercise['info'],
             media: exercise['media'],
-            pk: exercise['pk'],
+            eID: exercise['eID'] ?? -1,
+            alternativeExercises:  _convertIntListsFromDynamic(exercise['alternativeExercises']),
+            station: _convertStringListsFromDynamic(exercise['station'], 'station'),
+            stationShort: _convertStringListsFromDynamic(exercise['stationShort'], 'stationShort'),
+            handle: _convertStringListsFromDynamic(exercise['handle'], 'handle'),
+            handleShort: _convertStringListsFromDynamic(exercise['handleShort'], 'handleShort'),
+            ratio: _convertDoubleListsFromDynamic(exercise['ratio']),
             repetitionsScale: _fillStringIntMaps(exercise['repetitionsScale']),
             setDoTimeScale: _fillStringIntMaps(exercise['setDoTimeScale']),
             setRestTimeScale: _fillStringIntMaps(exercise['setRestTimeScale']),
             weigthScale: _fillStringDoubleMaps(exercise['weigthScale']),
+            warmupInfo: exercise['warmupInfo'] ?? 'warmupInfo',
+            warmupWeigth: exercise['warmupWeigth'] ?? 0.0,
             exerciseRestTime: _fillStringIntMaps(exercise['exerciseRestTime']),
             rpeScale: _fillStringIntMaps(exercise['rpeScale']),
             sets: _fillSets(exercise['sets'])))
@@ -323,16 +339,51 @@ class DatabaseService {
     return returnMap;
   }
 
-  /// Convert List<dynamic> to List<String>
-  List<String> _convertStringListsFromDynamic(List<dynamic> list) {
+   /// Convert List<dynamic> to List<String>
+  List<String> _convertStringListsFromDynamic(List<dynamic>? list, String errorName) {
     List<String> returnList = [];
 
-    for (String element in list) {
-      returnList.add(element);
+    if (list != null) {
+      for (String element in list) {
+        returnList.add(element);
+      }
+    }
+    if (returnList.isEmpty) {
+      returnList.add(errorName);
     }
     return returnList;
   }
 
+  /// Convert List<dynamic> to List<int>
+  List<int> _convertIntListsFromDynamic(List<dynamic>? list) {
+    List<int> returnList = [];
+
+    if (list != null) {
+      for (int element in list) {
+        returnList.add(element);
+      }
+    }
+    if (returnList.isEmpty) {
+      returnList.add(-1);
+      returnList.add(-1);
+    }
+    return returnList;
+  }
+  /// Convert List<dynamic> to List<double>
+  List<double> _convertDoubleListsFromDynamic(List<dynamic>? list) {
+    List<double> returnList = [];
+
+    if (list != null) {
+      for (double element in list) {
+        returnList.add(element);
+      }
+    }
+    if (returnList.isEmpty) {
+      returnList.add(-1);
+      returnList.add(-1);
+    }
+    return returnList;
+  }
   // -----------------------------------------END - Get My Goal--------------------------------
 
 }

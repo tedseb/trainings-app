@@ -241,7 +241,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
     }
   }
 
-  void checkTrainingsPhaseAndUpdate(TrainingsProgramms trainingsProgramm) {
+  void checkTrainingsPhaseAndUpdate(TrainingPrograms trainingsProgramm) {
     DateTime now = DateTime.now();
     DateTime phase1Start = DateTime.parse(trainingsProgramm.phases[0]);
     DateTime phase2Start = DateTime.parse(trainingsProgramm.phases[1]);

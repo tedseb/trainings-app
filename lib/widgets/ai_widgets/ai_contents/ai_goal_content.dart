@@ -13,12 +13,12 @@ import 'package:intl/intl.dart';
 class AiGoalContent extends StatefulWidget {
   const AiGoalContent({
     required this.appUser,
-    required this.goalUpdater,
+    // required this.goalUpdater,
     Key? key,
   }) : super(key: key);
 
   final AppUser appUser;
-  final Function goalUpdater;
+  // final Function goalUpdater;
 
   @override
   State<AiGoalContent> createState() => _AiGoalContentState();
@@ -102,12 +102,12 @@ class _AiGoalContentState extends State<AiGoalContent> {
     setState(() {
       _selectedItem = index;
       widget.appUser.goalName = UsedObjects.goalObjects[index]['titel'];
-      Goal goalWithNewPhase = UsedObjects.shawanGoal;
-      goalWithNewPhase.trainingsProgramms[0].phases[0] = DateFormat('yyyy-MM-dd').format(phase1Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[1] = DateFormat('yyyy-MM-dd').format(phase2Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[2] = DateFormat('yyyy-MM-dd').format(phase3Start);
-      goalWithNewPhase.trainingsProgramms[0].phases[3] = DateFormat('yyyy-MM-dd').format(goalEnding);
-      widget.goalUpdater(UsedObjects.shawanGoal.goalToJson());
+      // Goal goalWithNewPhase = UsedObjects.shawanGoal;
+      // goalWithNewPhase.trainingsProgramms[0].phases[0] = DateFormat('yyyy-MM-dd').format(phase1Start);
+      // goalWithNewPhase.trainingsProgramms[0].phases[1] = DateFormat('yyyy-MM-dd').format(phase2Start);
+      // goalWithNewPhase.trainingsProgramms[0].phases[2] = DateFormat('yyyy-MM-dd').format(phase3Start);
+      // goalWithNewPhase.trainingsProgramms[0].phases[3] = DateFormat('yyyy-MM-dd').format(goalEnding);
+      // widget.goalUpdater(goalWithNewPhase.goalToJson());
     });
   }
 }
