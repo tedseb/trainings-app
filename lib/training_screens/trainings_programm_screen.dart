@@ -4,6 +4,7 @@ import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/models/initial_models.dart';
+import 'package:higym/models/used_objects.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
@@ -51,7 +52,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => TalkToAiScreen(appUser: user!),
+                              builder: (context) => TalkToAiScreen(appUser: user!.appUserToJson(), goal: myGoal!.goalToJson()),
                             ),
                           );
                         },
@@ -121,7 +122,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                       Column(
                         children: [
                           Styles.levelIcon,
-                          Text(Styles.getFitnessLevelText(myGoal!.trainingsProgramms[0].difficultyLevel), style: Styles.trainingsplanIconTitle),
+                          Text(UsedObjects.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel], style: Styles.trainingsplanIconTitle),
                         ],
                       ),
                       Column(

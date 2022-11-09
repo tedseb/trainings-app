@@ -34,7 +34,7 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)), //this right here
         child: Container(
           padding: const EdgeInsets.all(0.0),
-          height: 490,
+          height: 400,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 32.0),

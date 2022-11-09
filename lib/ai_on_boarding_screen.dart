@@ -82,6 +82,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
         'aiText': 'Wie fit bist du?',
         'aiContent': AiFitnessLevelContent(appUser: onBoardingAppUser),
       },
+      
       // {
       //   'aiText': 'Welche Fitnessmethoden bevorzugst du eher?',
       // 'aiContent': AiFitnessMethodsContent(appUser: onBoardingAppUser),
@@ -355,15 +356,10 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
       }
 
       if (onBoardingAppUser.fitnessMethod == 'Cardio') {
-        if (onBoardingAppUser.fitnessLevel! < 2) {
-          onBoardingAppUser.fitnessLevel = 0;
-        } else {
-          onBoardingAppUser.fitnessLevel = 1;
-        }
+        onBoardingAppUser.fitnessLevel = 0;
+        // setState(() => onBoardingAppUser.fitnessLevel = 0);
       }
-      setState(() {
-        errorText = '';
-      });
+      setState(() => errorText = '');
       return true;
     }
 

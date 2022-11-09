@@ -25,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser?>(context);
+    final goal = Provider.of<Goal?>(context);
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
@@ -89,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TalkToAiScreen(appUser: user),
+                      builder: (context) => TalkToAiScreen(appUser: user.appUserToJson(), goal: goal!.goalToJson()),
                     ),
                   );
                 },

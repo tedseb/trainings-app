@@ -61,7 +61,7 @@ class Styles {
   static TextStyle get exercisingSubTitle => const TextStyle(
         color: white,
         fontWeight: FontWeight.normal,
-        fontSize: 20,
+        fontSize: 18,
       );
   static TextStyle get trainingsplanTitle => const TextStyle(
         color: hiGymText,
@@ -217,24 +217,7 @@ class Styles {
     return returnIcon;
   }
 
-  static String getFitnessLevelText(int lvl) {
-    String returnText;
-    switch (lvl) {
-      case 1:
-        returnText = 'Easy';
-        break;
-      case 2:
-        returnText = 'Medium';
-        break;
-      case 3:
-        returnText = 'Hard';
-        break;
-      default:
-        returnText = 'Easy';
-        break;
-    }
-    return returnText;
-  }
+ 
 
   //       double width = MediaQuery.of(context).size.width;
   // double height = MediaQuery.of(context).size.height;

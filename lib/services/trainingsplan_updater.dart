@@ -18,11 +18,12 @@ class TrainingsplanUpdater {
     return nextPlanName;
   }
 
-  Plans getAndUpdateSelectedPlan({ required Plans selectedPlan, required AppUser appUser, required int plansQuantity}) {
+  Plans getAndUpdateSelectedPlan({required Plans selectedPlan, required AppUser appUser, required int plansQuantity}) {
     for (Exercises exe in selectedPlan.exercises) {
       if (exe.rpeScale.isNotEmpty) {
         int rpeLength = exe.rpeScale.entries.length;
-       int exeIndex =  selectedPlan.exercises.indexOf(exe);
+        int exeIndex = selectedPlan.exercises.indexOf(exe);
+
         ///check exercise in deloadPhase
 
         if (isDelooadPhaseDone(appUser: appUser, exeIndex: exeIndex, plansQuantity: plansQuantity, selectedPlan: selectedPlan)) {
@@ -46,9 +47,9 @@ class TrainingsplanUpdater {
                 exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['rangeFrom']!;
                 exe.setRestTimeScale['actualToDo'] = exe.setRestTimeScale['rangeFrom']!;
               }
-            } else if (rpeLength > 2) {
-              ///IF last 3 RPEs smaller -> reverse scale
-              if (exe.rpeScale.entries.elementAt(rpeLength - 2).value == 3 && exe.rpeScale.entries.elementAt(rpeLength - 3).value == 3) {
+            } else if (rpeLength > 1) {
+              ///IF last 2 RPEs smaller -> reverse scale
+              if (exe.rpeScale.entries.elementAt(rpeLength - 2).value == 3 /*&& exe.rpeScale.entries.elementAt(rpeLength - 3).value == 3*/) {
                 if (exe.repetitionsScale['actualToDo']! == exe.repetitionsScale['rangeFrom']! &&
                     exe.setDoTimeScale['actualToDo']! == exe.setDoTimeScale['rangeFrom']! &&
                     exe.setRestTimeScale['actualToDo']! == exe.setRestTimeScale['rangeFrom']!) {
@@ -69,6 +70,24 @@ class TrainingsplanUpdater {
                   /// Decrease Repetition
                   exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! - exe.repetitionsScale['stepWidth']!;
                 }
+              }
+            }
+          }
+        } else {
+          if (exe.rpeScale.entries.last.value != -1 && exe.rpeScale.entries.last.value != 2) {
+            if (exe.weigthScale['stepWidth'] != 0.0) {
+              if (exe.rpeScale.entries.last.value == 3) {
+                exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! - (exe.weigthScale['stepWidth']! * 2);
+              }
+              if (exe.rpeScale.entries.last.value == 1) {
+                exe.weigthScale['actualToDo'] = exe.weigthScale['actualToDo']! + exe.weigthScale['stepWidth']!;
+              }
+            }else{
+               if (exe.rpeScale.entries.last.value == 3) {
+                exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! - (exe.repetitionsScale['stepWidth']!*2);
+              }
+              if (exe.rpeScale.entries.last.value == 1) {
+                 exe.repetitionsScale['actualToDo'] = exe.repetitionsScale['actualToDo']! + exe.repetitionsScale['stepWidth']!;
               }
             }
           }

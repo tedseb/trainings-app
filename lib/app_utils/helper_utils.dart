@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
 void showSnackbar(
   BuildContext context,
   String message, {
@@ -52,7 +49,7 @@ Future<dynamic> myBottomSheet(BuildContext context, Widget driveScreenUp) {
 }
 
 String truncateExerciseName(String myString, TextStyle myTextStyle, double screensize) {
-  double maxSize = screensize/2.16;
+  double maxSize = screensize / 2.16;
   int stringCounter = 1;
   int myStringLength = myString.length;
   String newMyString = myString;
@@ -75,8 +72,9 @@ String truncateExerciseName(String myString, TextStyle myTextStyle, double scree
 
   return newMyString;
 }
+
 String truncatePlanName(String myString, TextStyle myTextStyle, double screensize) {
-  double maxSize = screensize/1.55;
+  double maxSize = screensize / 1.55;
   int stringCounter = 1;
   int myStringLength = myString.length;
   String newMyString = myString;
@@ -100,14 +98,13 @@ String truncatePlanName(String myString, TextStyle myTextStyle, double screensiz
   return newMyString;
 }
 
-  String truncateWithEllipsis(String myString) {
-    int cutoff = 13;
-    return (myString.length <= cutoff) ? myString : '${myString.substring(0, cutoff)}...';
-  }
-
+String truncateWithEllipsis(String myString) {
+  int cutoff = 13;
+  return (myString.length <= cutoff) ? myString : '${myString.substring(0, cutoff)}...';
+}
 
 String truncateTrainingsProgrammExeCardName(String myString, TextStyle myTextStyle, double screensize) {
-  double maxSize = (screensize-190)/1.28;
+  double maxSize = (screensize - 190) / 1.28;
   int stringCounter = 1;
   int myStringLength = myString.length;
   String newMyString = myString;
@@ -129,4 +126,12 @@ String truncateTrainingsProgrammExeCardName(String myString, TextStyle myTextSty
   }
 
   return newMyString;
+}
+
+String listToString(List<String> handle) {
+  String returnString = (handle.toString().replaceAll(']', ',')).replaceAll('[', '');
+
+  returnString = returnString.substring(0, returnString.length - 1);
+
+  return returnString;
 }

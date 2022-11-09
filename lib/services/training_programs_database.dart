@@ -15,6 +15,7 @@ class TrainingProgramsDatabase {
   final String userDayFrequenz;
   final String userAdditionalMusclegroup;
   final String userMinutesFrequenz;
+  final AppUser appUser;
 
   TrainingProgramsDatabase({
     required this.userGoalGroup,
@@ -23,19 +24,23 @@ class TrainingProgramsDatabase {
     required this.userDayFrequenz,
     required this.userAdditionalMusclegroup,
     required this.userMinutesFrequenz,
+    required this.appUser,
   });
 
   /// Collection reference
-  final CollectionReference trainingProgramsCollection = FirebaseFirestore.instance.collection('TrainingProgramsTest');
+  final CollectionReference trainingProgramsCollection = FirebaseFirestore.instance.collection('TrainingPrograms');
 
   Future<Goal> getNewGoal() async {
     CollectionReference<Map<String, dynamic>> goalLocation;
     if (userLevel == 0) {
-      goalLocation =
-          trainingProgramsCollection.doc(userGoalGroup).collection('Noob').doc('General').collection(userMinutesFrequenz);
+      goalLocation = trainingProgramsCollection.doc(userGoalGroup).collection('Noob').doc('General').collection(userMinutesFrequenz);
     } else {
-      goalLocation =
-          trainingProgramsCollection.doc(userGoalGroup).collection(userDayFrequenz).doc(userAdditionalMusclegroup).collection(userMinutesFrequenz);
+      goalLocation = trainingProgramsCollection
+          .doc(userGoalGroup)
+          .collection(userDayFrequenz)
+          .doc(UsedObjects.additionalMusclegroupObject
+              .firstWhere((element) => element['titel'] == userAdditionalMusclegroup)[userAdditionalMusclegroup])
+          .collection(userMinutesFrequenz);
     }
 
     Goal newGoal = Goal.goalFromJson(InitialModels.goalJson);
@@ -48,8 +53,8 @@ class TrainingProgramsDatabase {
       newGoal.info = 'Goal Info';
       // newGoal.info = UsedObjects.goalObjects.firstWhere((element) => element['title'] == userGoal)['subTitel'];
       newGoal.trainingsProgramms[0].actualPhase = 0;
-      newGoal.trainingsProgramms[0].actualPlan = infoDoc.get('splitOrder')[0];
-      newGoal.trainingsProgramms[0].difficultyLevel = userLevel + 1;
+      newGoal.trainingsProgramms[0].actualPlan = 'Split ${infoDoc.get('splitOrder')[0]}';
+      newGoal.trainingsProgramms[0].difficultyLevel = userLevel;
       newGoal.trainingsProgramms[0].durationWeeks = int.tryParse(infoDoc.get('tpDuration')) ?? 12;
       newGoal.trainingsProgramms[0].fitnesstype = userGoal;
       newGoal.trainingsProgramms[0].info = 'Trainingsprogram Info';
@@ -65,7 +70,7 @@ class TrainingProgramsDatabase {
 
       for (var splitOrderElement in infoDoc.get('splitOrder')) {
         final exeListDoc = snapshot.docs.firstWhere((planDocs) => planDocs.id == splitOrderElement);
-        newGoal.trainingsProgramms[0].plans[plansCounter].name = splitOrderElement;
+        newGoal.trainingsProgramms[0].plans[plansCounter].name = 'Split $splitOrderElement';
         newGoal.trainingsProgramms[0].plans[plansCounter].exercises = _fillExercises(exeListDoc.get('exercises'));
         plansCounter++;
       }
@@ -83,10 +88,10 @@ class TrainingProgramsDatabase {
               media: exercise['eID'].toString() != null.toString() ? exercise['eID'] : 'noMedia',
               eID: exercise['eID'] ?? -1,
               alternativeExercises: _convertIntListsFromDynamic(exercise['alternativeExercises']),
-              station: _convertStringListsFromDynamic(exercise['station'], 'station'),
-              stationShort: _convertStringListsFromDynamic(exercise['stationShort'], 'stationShort'),
-              handle: _convertStringListsFromDynamic(exercise['handle'], 'handle'),
-              handleShort: _convertStringListsFromDynamic(exercise['handleShort'], 'handleShort'),
+              station: _convertStringListsFromDynamic(exercise['station']),
+              stationShort: _convertStringListsFromDynamic(exercise['stationShort']),
+              handle: _convertStringListsFromDynamic(exercise['handle']),
+              handleShort: _convertStringListsFromDynamic(exercise['handleShort']),
               ratio: ratioList(exercise['ratios']),
               repetitionsScale: {
                 'rangeFrom': exercise['repetitions'][0],
@@ -109,10 +114,12 @@ class TrainingProgramsDatabase {
                 'actualToDo': exercise['restTime'][0],
               },
               weigthScale: {
-                'rangeFrom': double.tryParse(exercise['warmupWeight']) ?? 0.0,
+                'rangeFrom':
+                    startWeight(ratioList(exercise['ratios']), double.tryParse(exercise['warmupWeight']), double.tryParse(exercise['weightInc'])),
                 'rangeTo': 9999.0,
                 'stepWidth': double.tryParse(exercise['weightInc']) ?? 0.0,
-                'actualToDo': double.tryParse(exercise['warmupWeight']) ?? 0.0,
+                'actualToDo':
+                    startWeight(ratioList(exercise['ratios']), double.tryParse(exercise['warmupWeight']), double.tryParse(exercise['weightInc'])),
               },
               warmupInfo: exercise['warmupInfo'] ?? 'warmupInfo',
               warmupWeigth: double.tryParse(exercise['warmupWeight']) ?? 0.0,
@@ -124,17 +131,47 @@ class TrainingProgramsDatabase {
 
   /// Ratio to list here
   List<double> ratioList(Map<dynamic, dynamic>? ratio) {
+    int lvlOverEstimateProtection = userLevel != 0 ? userLevel - 1 : userLevel;
     if (ratio != null) {
       return [
-        (ratio[(userLevel + 1).toString()][0]).toDouble(),
-        (ratio[(userLevel + 1).toString()][1]).toDouble(),
+        (ratio[(lvlOverEstimateProtection + 1).toString()][0]).toDouble(),
+        (ratio[(lvlOverEstimateProtection + 1).toString()][1]).toDouble(),
       ];
     }
     return [-1, -1];
   }
 
+  /// Start Weight Calculator
+  double startWeight(List<double> ratioList, double? warmupWeight, double? weightInc) {
+    double ratio = appUser.gender == 'Male' ? ratioList[0] : ratioList[1];
+    double userWeight = appUser.weigth ?? 70.0;
+    double userSize = appUser.size ?? 175.0;
+    double userBMI = (userWeight / (userSize * userSize)) * 10000;
+
+    if (userBMI > 24) {
+      userWeight = (24 / 10000) * userSize * userSize;
+    }
+
+    double startWeight = userWeight * ratio * 0.6;
+
+    warmupWeight ??= 0.0;
+    weightInc ??= 0.0;
+
+    if (weightInc != 0.0) {
+      if (startWeight < warmupWeight) {
+        startWeight = warmupWeight;
+      }
+
+      startWeight = startWeight - (startWeight % 2.5);
+    } else {
+      startWeight = 0.0;
+    }
+
+    return startWeight;
+  }
+
   /// Convert List<dynamic> to List<String>
-  List<String> _convertStringListsFromDynamic(List<dynamic>? list, String errorName) {
+  List<String> _convertStringListsFromDynamic(List<dynamic>? list) {
     List<String> returnList = [];
 
     if (list != null) {
@@ -142,9 +179,7 @@ class TrainingProgramsDatabase {
         returnList.add(element);
       }
     }
-    if (returnList.isEmpty) {
-      returnList.add(errorName);
-    }
+    
     return returnList;
   }
 

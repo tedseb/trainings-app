@@ -42,6 +42,7 @@ class _AiGymEquipmentContentState extends State<AiGymEquipmentContent> {
         userDayFrequenz: widget.appUser.dayFrequenz.toString(),
         userAdditionalMusclegroup: widget.appUser.additionalMusclegroup!,
         userMinutesFrequenz: widget.appUser.minutesFrequenz!,
+        appUser: widget.appUser,
       ).getNewGoal(),
       builder: (context, snapshot) {
         newGoal = snapshot.data;

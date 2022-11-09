@@ -42,7 +42,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   int trainModeTimeDone = 0;
   int actualTimeOrRepNumber = 0;
   late String exeriseName;
-  late String exeriseSubName;
+  late String exerciseStation;
+  late String exerciseHandle;
   late String prepareFor;
   double progressValue = 0.0;
 
@@ -220,9 +221,19 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                             helper_utils.truncateExerciseName(exeriseName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
                             style: Styles.exercisingTitle,
                           ),
-                          Text(
-                            helper_utils.truncateExerciseName(exeriseSubName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
-                            style: Styles.exercisingTitle,
+                          Visibility(
+                            visible: exerciseStation != '',
+                            child: Text(
+                              helper_utils.truncateExerciseName(exerciseStation, Styles.exercisingSubTitle, MediaQuery.of(context).size.width),
+                              style: Styles.exercisingSubTitle,
+                            ),
+                          ),
+                          Visibility(
+                            visible: exerciseHandle != '',
+                            child: Text(
+                              helper_utils.truncateExerciseName(exerciseHandle, Styles.exercisingSubTitle, MediaQuery.of(context).size.width),
+                              style: Styles.exercisingSubTitle,
+                            ),
                           ),
                         ],
                       ),
@@ -449,7 +460,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   Future<void> startExercise(int exeIndex) async {
     Exercises exercise = selectedPlan.exercises[exeIndex];
     int setsLength = exercise.sets.length - 1;
-    deloadPhase = !isDelooadPhaseDone(exeIndex);
+    deloadPhase = isDelooadPhaseDone(exeIndex);
     for (int setIndex = 0; setIndex <= setsLength; setIndex++) {
       /// Trainings Screen
       if (!skipExe) {
@@ -668,7 +679,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     ///Initialize Screen Info
     setState(() {
       exeriseName = doingExercise.name;
-      exeriseSubName = doingExercise.subName;
+      exerciseStation = helper_utils.listToString(doingExercise.stationShort);
+      exerciseHandle = helper_utils.listToString(doingExercise.handleShort);
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
 
@@ -727,10 +739,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     setState(() {
       exeriseName = doingExercise.name;
       selectedExerciseIndex = exeIndex;
-      exeriseSubName = doingExercise.subName;
+      exerciseStation = helper_utils.listToString(doingExercise.stationShort);
+      exerciseHandle = helper_utils.listToString(doingExercise.handleShort);
       actualSetNumber = doingSetIndex + 1;
       actualWeight = doingExercise.weigthScale['actualToDo'] ?? 0.0;
-      prepareFor = 'Next Exercise';
+      prepareFor = 'next';
 
       modeColor = Styles.pastelYellow;
 
@@ -764,7 +777,9 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
 
   bool isDelooadPhaseDone(int exeIndex) {
     bool returnBool = true;
-
+    Map<String, int> scale = selectedPlan.exercises[exeIndex].rpeScale;
+    dev.log(selectedPlan.exercises[exeIndex].rpeScale.toString());
+    dev.log(scale.toString());
     selectedPlan.exercises[exeIndex].rpeScale.forEach((key, value) {
       if (value > -1) {
         returnBool = false;
@@ -793,17 +808,25 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 
   void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
-    double newWeigth = weigth;
-    if (repetitions != 15) {
-      ///after 30kg u can tripple the weigth with ease
-      if (repetitions < 30) {
-        newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
-      } else {
-        newWeigth = weigth * 3;
+    if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
+      double newWeigth = weigth;
+      if (repetitions != 15) {
+        ///after 30kg u can tripple the weigth with ease
+        if (repetitions < 29) {
+          newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
+          newWeigth = newWeigth * 0.9;
+        } else {
+          newWeigth = weigth * 2.5;
+        }
       }
+
+      newWeigth = newWeigth - (newWeigth % 2.5);
+      setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
+    } else {
+      int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
+
+      setState(() => selectedPlan.exercises[exeIndexUpdate].repetitionsScale['actualToDo'] = weightlessRepetitionsToDo);
     }
-    newWeigth = newWeigth - (newWeigth % 2.5);
-    setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
   }
 
   void changeRpeScale(int addNewValue, int exeIndex) {

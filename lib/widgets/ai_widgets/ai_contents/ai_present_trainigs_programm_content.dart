@@ -6,6 +6,7 @@ import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/goal.dart';
 
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
+import 'package:higym/models/used_objects.dart';
 import 'dart:developer' as dev;
 
 import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
@@ -108,7 +109,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                               Column(
                                 children: [
                                   Styles.levelIcon,
-                                  Text(Styles.getFitnessLevelText(goal.trainingsProgramms[0].difficultyLevel),
+                                  Text(UsedObjects.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel],
                                       style: Styles.trainingsplanIconTitle),
                                 ],
                               ),

@@ -22,7 +22,7 @@ class ActivityCalculator {
   });
 
   double getWeigth() {
-    double bmi = weight / (size * size);
+    double bmi = (weight / (size * size))*10000;
 
     if (bmi >= 30 && fitnessLevel < 2) {
       return 0.75 * (size - 100) + 0.25 * weight;
@@ -101,8 +101,10 @@ class ActivityCalculator {
   static int manyTimesThisWeek(Map<String, double> activityMap) {
     int timesThisWeek = 0;
 
-    activityMap.keys.where((k) => compareDateTimeThisWeek(k)).toList().forEach((_) {
-      timesThisWeek++;
+    activityMap.keys.where((k) => compareDateTimeThisWeek(k)).toList().forEach((activityKey) {
+      if(activityMap[activityKey]! > 3) {
+        timesThisWeek++;
+      }
     }); //
 
     return timesThisWeek;

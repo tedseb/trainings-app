@@ -56,6 +56,27 @@ class DatabaseService {
     });
   }
 
+  ///Not usind at the moment
+  Future updateUserNameAndPersonalData(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userName': appUser.name,
+      'userAge': appUser.age,
+      'userWeigth': appUser.weigth,
+      'userSize': appUser.size,
+      'userGender': appUser.gender,
+    });
+  }
+
+  Future updateUserStartingNewGoalData(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      'userGoal': appUser.goalName,
+      'userDayFrequenz': appUser.dayFrequenz,
+      'userMinutesFrequenz': appUser.minutesFrequenz,
+      'activityPoints': {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
+      'activityLevel': 0,
+    });
+  }
+
   Future updateUserName(AppUser appUser) {
     return usersCollection.doc(uid).update({
       'userName': appUser.name,
@@ -127,9 +148,11 @@ class DatabaseService {
             minutesFrequenz: event.data().toString().contains('userMinutesFrequenz') ? event.get('userMinutesFrequenz') : '40-50',
             fitnessLevel: event.data().toString().contains('userFitnessLevel') ? event.get('userFitnessLevel') : 'Gelegenheits Sport',
             fitnessMethod: event.data().toString().contains('userFitnessMethod') ? event.get('userFitnessMethod') : null,
-            activityPoints: event.data().toString().contains('activityPoints')
-                ? _fillStringDoubleMaps(event.get('activityPoints'))
-                : {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0},
+            activityPoints: 
+            // event.data().toString().contains('activityPoints')
+            //     ? _fillStringDoubleMaps(event.get('activityPoints'))
+            //     : 
+                {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),
         );
@@ -276,7 +299,7 @@ class DatabaseService {
             info: exercise['info'],
             media: exercise['media'],
             eID: exercise['eID'] ?? -1,
-            alternativeExercises:  _convertIntListsFromDynamic(exercise['alternativeExercises']),
+            alternativeExercises: _convertIntListsFromDynamic(exercise['alternativeExercises']),
             station: _convertStringListsFromDynamic(exercise['station'], 'station'),
             stationShort: _convertStringListsFromDynamic(exercise['stationShort'], 'stationShort'),
             handle: _convertStringListsFromDynamic(exercise['handle'], 'handle'),
@@ -339,7 +362,7 @@ class DatabaseService {
     return returnMap;
   }
 
-   /// Convert List<dynamic> to List<String>
+  /// Convert List<dynamic> to List<String>
   List<String> _convertStringListsFromDynamic(List<dynamic>? list, String errorName) {
     List<String> returnList = [];
 
@@ -369,6 +392,7 @@ class DatabaseService {
     }
     return returnList;
   }
+
   /// Convert List<dynamic> to List<double>
   List<double> _convertDoubleListsFromDynamic(List<dynamic>? list) {
     List<double> returnList = [];

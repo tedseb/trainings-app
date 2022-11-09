@@ -94,6 +94,6 @@ class InitialModels {
     reminder: null,
     fitnessMethod: null,
     activityLevel: 0,
-    activityPoints: { DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0},
+    activityPoints: {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
   );
 }

@@ -5,10 +5,12 @@ import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/used_objects.dart';
 import 'package:higym/profile/profile_screen.dart';
+import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 import 'package:higym/widgets/screen_widgets/expanded_example.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_programm_screen.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
+import 'package:higym/widgets/screen_widgets/talk_to_ai_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,7 +22,8 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  late Plans selectedPlan;
+  late Goal goal;
+  late AppUser appUser;
 
   int _selectedItem = 0;
   final _pages = [
@@ -38,8 +41,8 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Goal goal = Provider.of<Goal>(context);
-    AppUser appUser = Provider.of<AppUser>(context);
+    goal = Provider.of<Goal>(context);
+    appUser = Provider.of<AppUser>(context);
     return Scaffold(
       backgroundColor: Styles.white,
       extendBody: true,
@@ -86,17 +89,7 @@ class _InitialScreenState extends State<InitialScreen> {
                 iconSize: 80,
                 color: Styles.primaryColor,
                 icon: const Icon(Icons.play_circle_rounded),
-                onPressed: () async {
-                  // selectedPlan = goal.trainingsProgramms[0].plans[0];
-
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ExercisingScreen(trainingsProgramm: goal.trainingsProgramms[0].trainingsProgrammsToJson(), appUser: appUser),
-                    ),
-                  );
-                },
+                onPressed: () => newGoalNeeded(),
               ),
               NavbarIconButtonWidget(
                   onPressedFunction: () => _onItemTapped(2),
@@ -128,5 +121,65 @@ class _InitialScreenState extends State<InitialScreen> {
         curve: Curves.linear,
       );
     });
+  }
+
+  void newGoalNeeded() {
+    DateTime now = DateTime.now();
+    DateTime endPahse = DateTime.parse(goal.trainingsProgramms[0].phases.last);
+
+    if (now.isBefore(endPahse)) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ExercisingScreen(trainingsProgramm: goal.trainingsProgramms[0].trainingsProgrammsToJson(), appUser: appUser),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)), //this right here
+          child: Container(
+            padding: const EdgeInsets.all(0.0),
+            height: 330,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'You have reached your goal! You need a new one!',
+                          style: Styles.rpeScaleTitle.copyWith(color: Styles.hiGymText),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                  ShadowButtonWidget(
+                    buttonText: 'Okay',
+                    buttonWidth: 120.0,
+                    onPressFunction: () async {
+                      Navigator.pop(context);
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TalkToAiScreen(appUser: appUser.appUserToJson(), goal: goal.goalToJson(), startingPage: 3),
+                        ),
+                      );
+                    },
+                    loggerText: 'First Repetitons',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

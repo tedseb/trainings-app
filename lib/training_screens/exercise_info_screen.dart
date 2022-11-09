@@ -3,6 +3,8 @@ import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/training_screens/exercise_info_text_screen.dart';
 import 'package:video_player/video_player.dart';
+import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
+
 
 import 'dart:developer' as dev;
 
@@ -125,7 +127,12 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                           ),
                           Text(
                             //  selectedExercise!.name!,
-                           selectedExercise.subName,
+                           helper_utils.listToString(selectedExercise.station),
+                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
+                          ),
+                          Text(
+                            //  selectedExercise!.name!,
+                           helper_utils.listToString(selectedExercise.handle),
                             style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
                           ),
                         ],

@@ -348,13 +348,13 @@ class _HomeScreenState extends State<HomeScreen> {
         doneWeeks = weekCalculates['passedWeeks']!;
         allWeeks = weekCalculates['allWeeks']!;
 
-        double actualWeekFromAllWeeks = weekCalculates['passedWeeks']! / weekCalculates['allWeeks']!;
-        double nextMileStoneWeekFromAllWeeks = weekCalculates['nextMileStone']! / weekCalculates['allWeeks']!;
+        double actualWeekFromAllWeeks = doneWeeks / allWeeks;
+        double nextMileStoneWeekFromAllWeeks = weekCalculates['nextMileStone']! / allWeeks;
 
         if (actualWeekFromAllWeeks <= 1) {
           weekPercentage = actualWeekFromAllWeeks;
         } else {
-          weekNextPhasePercentage = 0.9999;
+          weekPercentage = 0.9999;
         }
 
         if (nextMileStoneWeekFromAllWeeks <= 1) {

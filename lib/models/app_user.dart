@@ -34,4 +34,44 @@ class AppUser {
     this.activityPoints,
     this.activityLevel,
   });
+
+  Map<String, dynamic> appUserToJson() => {
+        'uid': uid,
+        'name': name,
+        'email': email,
+        'weigth': weigth,
+        'size': size,
+        'age': age,
+        'gender': gender,
+        'goalName': goalName,
+        'dayFrequenz': dayFrequenz,
+        'minutesFrequenz': minutesFrequenz,
+        'reminder': reminder,
+        'fitnessLevel': fitnessLevel,
+        'fitnessMethod': fitnessMethod,
+        'additionalMusclegroup': additionalMusclegroup,
+        'activityPoints': activityPoints,
+        'activityLevel': activityLevel,
+      };
+
+  static AppUser appUserFromJson(Map<String, dynamic> json) {
+    return AppUser(
+      uid: json['uid'],
+      name: json['name'],
+      email: json['email'],
+      weigth: json['weigth'],
+      size: json['size'],
+      age: json['age'],
+      gender: json['gender'],
+      goalName: json['goalName'],
+      dayFrequenz: json['dayFrequenz'],
+      minutesFrequenz: json['minutesFrequenz'],
+      reminder: json['reminder'],
+      fitnessLevel: json['fitnessLevel'],
+      fitnessMethod: json['fitnessMethod'],
+      additionalMusclegroup: json['additionalMusclegroup'],
+      activityPoints: json['activityPoints'],
+      activityLevel: json['activityLevel'],
+    );
+  }
 }

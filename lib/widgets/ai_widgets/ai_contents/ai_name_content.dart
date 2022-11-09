@@ -40,6 +40,20 @@ class _AiNameContentState extends State<AiNameContent> {
 
 
   changeName(String val){
-    widget.appUser.name = val;
+    // widget.appUser.name = val;
+    widget.appUser.name = gowanNameCheck(val);
+  }
+
+  String gowanNameCheck(String gowanName){
+    
+    String lowerCaseGowanName = gowanName.toLowerCase();
+
+    if(lowerCaseGowanName.contains('gowan')){
+      return 'Rücken Speck';
+    }if (lowerCaseGowanName.contains('hevar')){
+      return 'NaAtUr GEwAlTT';
+    }else{
+      return gowanName;
+    }
   }
 }

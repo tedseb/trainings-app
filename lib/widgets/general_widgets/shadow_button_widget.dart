@@ -9,13 +9,15 @@ class ShadowButtonWidget extends StatelessWidget {
     required this.buttonText,
     required this.buttonWidth,
     required this.onPressFunction,
-     required this.loggerText,
+    required this.loggerText,
+    this.buttonTextColor = Styles.hiGymText,
   }) : super(key: key);
 
   final String buttonText;
   final double buttonWidth;
   final Function onPressFunction;
-    final String loggerText;
+  final String loggerText;
+  final Color buttonTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class ShadowButtonWidget extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-        dev.log('Open $loggerText Screen');
-        onPressFunction();
-      },
+          dev.log('Open $loggerText Screen');
+          onPressFunction();
+        },
         style: ElevatedButton.styleFrom(
           minimumSize: Size.zero,
           shape: RoundedRectangleBorder(
@@ -46,7 +48,7 @@ class ShadowButtonWidget extends StatelessWidget {
             // side: options.borderSide ?? BorderSide.none,
           ),
           primary: Colors.grey[200],
-          onPrimary: Styles.hiGymText,
+          onPrimary: buttonTextColor,
           elevation: 0.0,
         ),
         child: Text(buttonText),
