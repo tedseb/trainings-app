@@ -10,7 +10,7 @@ class ShadowButtonWidget extends StatelessWidget {
     required this.buttonWidth,
     required this.onPressFunction,
     required this.loggerText,
-    this.buttonTextColor = Styles.hiGymText,
+    this.buttonTextColor = Styles.darkGrey,
   }) : super(key: key);
 
   final String buttonText;
@@ -51,7 +51,7 @@ class ShadowButtonWidget extends StatelessWidget {
           onPrimary: buttonTextColor,
           elevation: 0.0,
         ),
-        child: Text(buttonText),
+        child: Text(buttonText, style: Styles.normalText,),
       ),
     );
   }

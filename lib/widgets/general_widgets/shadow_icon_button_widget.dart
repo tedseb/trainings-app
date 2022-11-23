@@ -39,7 +39,7 @@ class ShadowIconButtonWidget extends StatelessWidget {
         ),
         child: Icon(
           buttonIcon,
-          color: Styles.hiGymText,
+          color: Styles.darkGrey,
         ),
       ),
     );

@@ -72,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   /// AI Sign Up Text
                   Text(
                     'Sign up to save your workout progress and stats',
-                    style: Styles.logInScreenWelcomeText,
+                    style: Styles.subLine,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
@@ -83,14 +83,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Email Field
                           TextFormField(
                             controller: emailController,
+                             style: Styles.normalText,
                             decoration: InputDecoration(
                               labelText: 'E-mail',
-                              labelStyle: Styles.textFormFieldLabel,
+                              labelStyle: Styles.subLine,
                               hintText: 'Your Email Address',
-                              hintStyle: Styles.textFormFieldHintText,
+                              hintStyle: Styles.smalText,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.hiGymText, width: 2.0),
+                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
@@ -116,14 +117,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Password1 Field
                           TextFormField(
                             controller: passwordController,
+                             style: Styles.normalText,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: Styles.textFormFieldLabel,
+                              labelStyle: Styles.subLine,
                               hintText: 'Your Password',
-                              hintStyle: Styles.textFormFieldHintText,
+                              hintStyle: Styles.smalText,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.hiGymText, width: 2.0),
+                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
@@ -161,14 +163,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Password2 Field
                           TextFormField(
                             controller: passwordController2,
+                             style: Styles.normalText,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: Styles.textFormFieldLabel,
+                              labelStyle: Styles.subLine,
                               hintText: 'Repeat your Password',
-                              hintStyle: Styles.textFormFieldHintText,
+                              hintStyle: Styles.smalText,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.hiGymText, width: 2.0),
+                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
@@ -208,7 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             visible: responseText != '',
                             child: Text(
                               responseText,
-                              style: Styles.loginScreenPrivacyText.copyWith(color: Styles.error),
+                              style: Styles.smalText.copyWith(color: Styles.error),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -226,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Agree Terms Text
                           Text(
                             'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
-                            style: Styles.loginScreenPrivacyText,
+                            style: Styles.smalText,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 50),

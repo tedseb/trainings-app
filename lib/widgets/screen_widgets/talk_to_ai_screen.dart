@@ -53,7 +53,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
     appUser = AppUser.appUserFromJson(widget.appUser);
     myGoal = Goal.goalFromJson(widget.goal);
 
-    pageViewIndex =  widget.startingPage;
+    pageViewIndex = widget.startingPage;
     pageController = PageController(initialPage: pageViewIndex);
 
     aiContentScreenChain = [
@@ -127,7 +127,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
                   iconSize: 38.0,
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Styles.hiGymText,
+                    color: Styles.darkGrey,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -190,7 +190,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
 
   Widget bottomNavBar() {
     if (pageViewIndex == 0) {
-      return const SizedBox();
+      return const SizedBox(height: 104.0);
     }
     if (pageViewIndex < 3) {
       return AiBottomSimpleBackDoneWidget(

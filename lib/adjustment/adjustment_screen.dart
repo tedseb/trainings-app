@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/widgets/general_widgets/row_item_with_select_widget.dart';
@@ -12,14 +13,14 @@ import 'package:provider/provider.dart';
 
 import 'dart:developer' as dev;
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class AdjustmentScreen extends StatefulWidget {
+  const AdjustmentScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<AdjustmentScreen> createState() => _AdjustmentScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _AdjustmentScreenState extends State<AdjustmentScreen> {
   final AuthService _auth = AuthService();
 
   @override
@@ -42,10 +43,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Flexible(
                     child: RichText(
                       text: TextSpan(
-                        style: Styles.homeCardName,
                         children: [
-                          TextSpan(text: 'Hi ', style: Styles.title.copyWith(fontWeight: FontWeight.w500)),
-                          TextSpan(text: user!.name.toString(), style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
+                          TextSpan(text: 'Hi ', style: Styles.headline.copyWith(fontWeight: FontWeight.w500)),
+                          TextSpan(text: user!.name.toString(), style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
                         ],
                       ),
                     ),
@@ -84,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
-                leadingIcon: Icons.surround_sound_outlined,
+                leadingIcon: GymionIcons_1_0.kiAnpassen,
                 widgetText: 'Talk AI',
                 onPressFunction: () async {
                   await Navigator.push(
@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
-                leadingIcon: Icons.settings_outlined,
+                leadingIcon: GymionIcons_1_0.einstellungen,
                 widgetText: 'About',
                 onPressFunction: () async {
                   await Navigator.push(

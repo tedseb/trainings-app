@@ -28,7 +28,7 @@ class LoadingWidget extends StatelessWidget {
                 TyperAnimatedText(
                   'Loading...',
                   speed: const Duration(milliseconds: 500),
-                  textStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: Styles.hiGymText),
+                  textStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: Styles.darkGrey),
                 )
               ],
               isRepeatingAnimation: true,

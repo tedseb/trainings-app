@@ -35,12 +35,12 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(
         children: [
-          Text(fitnessLevelText[sliderValue.toInt()], style: Styles.headLine.copyWith(fontWeight: FontWeight.w500)),
-          const SizedBox(height: 16.0),
+          Text(fitnessLevelText[sliderValue.toInt()], style: Styles.subLineLigth),
+          const SizedBox(height: 32.0),
           Slider(
             thumbColor: Styles.primaryColor,
             activeColor: Styles.grey,
-            inactiveColor: Styles.grey,
+            inactiveColor: Styles.lightGrey,
             value: widget.appUser.fitnessLevel!.toDouble(),
             min: 0,
             max: fitnessLevelText.length - 1,
@@ -56,8 +56,8 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:  [
-              Text('Nicht Fit', style: Styles.headLine.copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
-              Text('Sehr Fit',style: Styles.headLine.copyWith(fontWeight: FontWeight.w500, fontSize: 18)),
+              Text('Nicht Fit', style: Styles.subLineLigth),
+              Text('Sehr Fit',style: Styles.subLineLigth),
             ],
           )
         ],

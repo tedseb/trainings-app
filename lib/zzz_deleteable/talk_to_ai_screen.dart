@@ -69,7 +69,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
                   iconSize: 38.0,
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Styles.hiGymText,
+                    color: Styles.darkGrey,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();

@@ -10,6 +10,8 @@ import 'package:higym/widgets/general_widgets/textfield_widget.dart';
 
 import 'dart:developer' as dev;
 
+import 'package:intl/intl.dart';
+
 class AiPersonalDataContent extends StatefulWidget {
   const AiPersonalDataContent({
     required this.appUser,
@@ -28,10 +30,10 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
   final sizeController = TextEditingController();
   final genderController = TextEditingController();
 
-  List<int> ageList = List<int>.generate(90, (i) => i+10);
+  List<int> ageList = List<int>.generate(90, (i) => i + 10);
   List<double> weightList = List<double>.generate(320, (i) => ((i / 2) + 40));
   List<double> sizeList = List<double>.generate(180, (i) => ((i / 2) + 130));
-  List<String> genderList = ['Male', 'Female', 'Diverse'];
+  List<String> genderList = ['Male', 'Female'];
 
   @override
   void initState() {
@@ -123,7 +125,7 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AiVerticalPickerWidget(
-                            dialogName: 'Geschlecht',
+                            dialogName: 'Dein medizinisches Geschlecht',
                             valueUnit: '',
                             pickerList: genderList,
                             valueUpdater: changeGender,
@@ -146,8 +148,14 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
   }
 
   changeWeigth(double val) {
+    String now = DateFormat('dd.MM').format(DateTime.now());
     setState(() {
-      widget.appUser.weigth = val;
+      if (widget.appUser.weigth!.isEmpty) {
+        widget.appUser.weigth!.add({now: val});
+      } else {
+        widget.appUser.weigth!.last.entries.first.key != now ? widget.appUser.weigth!.add({now: val}) : widget.appUser.weigth!.last = {now: val};
+      }
+      // widget.appUser.weigth = val;
       weightController.text = val.toString();
     });
   }

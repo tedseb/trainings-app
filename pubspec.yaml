@@ -124,6 +124,9 @@ flutter:
           weight: 800
         - asset: fonts/GreycliffCF-Heavy.otf
           weight: 900
+    - family: GymionIcons_1_0
+      fonts: 
+        - asset: icons/GymionIcons_1_0.ttf
         
 
 

@@ -5,7 +5,6 @@ import 'package:higym/training_screens/exercise_info_text_screen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 
-
 import 'dart:developer' as dev;
 
 class ExerciseInfoScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
   // Duration _duration = Duration(milliseconds: 500);
   // Tween<Offset> _tween = Tween(begin: Offset(0, 1), end: Offset(0, 0));
 
-  Color modeColor = Styles.backgroundActivity;
+  Color modeColor = Styles.pastelGreen;
 
   late Exercises selectedExercise;
 
@@ -64,28 +63,27 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    double normalMinHeight = 1 / (size.height / 113);
-
     return Scaffold(
       backgroundColor: Styles.white,
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 100,
-                padding: const EdgeInsets.only(left: 16.0, top: 26.0, right: 16.0, bottom: 30.0),
-              ),
+          Container(
+            height: 100,
+            // padding: const EdgeInsets.only(left: 16.0, top: 26.0, right: 16.0, bottom: 300000.0),
+          ),
 
-              /// Exercise Informations
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Row(
+          /// Exercise Informations
+          Container(
+            padding: const EdgeInsets.only(right: 16.0),
+            height: 125,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    /// Back Button
                     SizedBox(
                       width: 40.0,
                       child: ElevatedButton(
@@ -116,98 +114,99 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            selectedExercise.name,
-                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
-                          ),
-                          Text(
-                            //  selectedExercise!.name!,
-                           helper_utils.listToString(selectedExercise.station),
-                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
-                          ),
-                          Text(
-                            //  selectedExercise!.name!,
-                           helper_utils.listToString(selectedExercise.handle),
-                            style: Styles.exercisingTitle.copyWith(color: Styles.hiGymText),
-                          ),
-                        ],
+
+                    /// Exercise Informations
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              selectedExercise.name,
+                              style: Styles.subLine,
+                            ),
+                            Text(
+                              helper_utils.listToString(selectedExercise.station),
+                              style: Styles.normalText,
+                            ),
+                            Text(
+                              helper_utils.listToString(selectedExercise.handle),
+                              style: Styles.normalText,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const Expanded(child: SizedBox(height: 125)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          /// Progress Indicator
+          Expanded(
+            child: Center(
+              child: ColorFiltered(
+                colorFilter: const ColorFilter.mode(Styles.white, BlendMode.modulate),
+                child: AspectRatio(
+                  aspectRatio: _vpController.value.aspectRatio,
+                  child: VideoPlayer(_vpController),
+                ),
+              ),
+            ),
+          ),
+
+          /// Swipe Up Widget
+          SizedBox(
+            height: gestureHeigth,
+            child: GestureDetector(
+              onVerticalDragUpdate: (details) {
+                int sensitivity = 8;
+                if (details.delta.dy > sensitivity) {
+                  // Down Swipe
+                  dev.log('Down Swipe');
+                  setState(() {});
+                } else if (details.delta.dy < -sensitivity) {
+                  // Up Swipe
+                  dev.log('Up Swipe');
+                  setState(() {
+                    swipeVisibility = false;
+                  });
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) => ExerciseInfoTextScreen(exeInfo: selectedExercise.info),
+                  ).then((_) => setState(() {
+                        swipeVisibility = true;
+                      }));
+                }
+              },
+              child: Visibility(
+                visible: swipeVisibility,
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.keyboard_arrow_up_rounded,
+                      color: Styles.darkGrey,
+                      size: 32.0,
+                    ),
+                    Text(
+                      swipeText,
+                      style: Styles.subLineLigth
+                    ),
+                    Text(
+                      swipeSupText,
+                      style: Styles.normalText,
+                    ),
                   ],
                 ),
               ),
-
-              /// Progress Indicator
-              Expanded(
-                child: Center(
-                  child: ColorFiltered(
-                    colorFilter: const ColorFilter.mode(Styles.white, BlendMode.modulate),
-                    child: AspectRatio(
-                      aspectRatio: _vpController.value.aspectRatio,
-                      child: VideoPlayer(_vpController),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: gestureHeigth,
-                child: GestureDetector(
-                  onVerticalDragUpdate: (details) {
-                    int sensitivity = 8;
-                    if (details.delta.dy > sensitivity) {
-                      // Down Swipe
-                      dev.log('Down Swipe');
-                      setState(() {});
-                    } else if (details.delta.dy < -sensitivity) {
-                      // Up Swipe
-                      dev.log('Up Swipe');
-                      setState(() {
-                        swipeVisibility = false;
-                      });
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        builder: (context) =>  ExerciseInfoTextScreen(exeInfo: selectedExercise.info),
-                      ).then((_) => setState(() {
-                            swipeVisibility = true;
-                          }));
-                    }
-                  },
-                  child: Visibility(
-                    visible: swipeVisibility,
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.keyboard_arrow_up_rounded,
-                          color: Styles.hiGymText,
-                          size: 32.0,
-                        ),
-                        Text(
-                          swipeText,
-                          style: const TextStyle(color: Styles.hiGymText, fontSize: 26.0, fontWeight: FontWeight.w300),
-                        ),
-                        Text(
-                          swipeSupText,
-                          style: const TextStyle(color: Styles.hiGymText, fontSize: 22.0, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),
     );
   }
-
-  
 }

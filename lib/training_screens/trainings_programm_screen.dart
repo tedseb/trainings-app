@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/models/initial_models.dart';
@@ -47,7 +48,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ShadowIconButtonWidget(
-                        buttonIcon: Icons.surround_sound_outlined,
+                        buttonIcon: GymionIcons_1_0.kiAnpassen,
                         onPressFunction: () async {
                           await Navigator.push(
                             context,
@@ -76,12 +77,12 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                           children: [
                             Text(
                               'next',
-                              style: Styles.trainingsplanSubTitle,
+                              style: Styles.normalText.copyWith(color: Styles.darkGrey),
                             ),
                             Text(
                               // 'Workout',
                               myGoal!.trainingsProgramms[0].actualPlan,
-                              style: Styles.trainingsplanTitle,
+                              style: Styles.subLine.copyWith(color: Styles.darkGrey),
                             ),
                           ],
                         ),
@@ -115,20 +116,26 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                     children: [
                       Column(
                         children: [
-                          Styles.getFitnessTypeIcons(myGoal!.trainingsProgramms[0].fitnesstype),
-                          Text(myGoal!.trainingsProgramms[0].fitnesstype, style: Styles.trainingsplanIconTitle),
+                          Icon(
+                            UsedObjects.goalObjects.firstWhere((element) => element['titel'] == myGoal!.trainingsProgramms[0].fitnesstype)['icon'],
+                            color: Styles.darkGrey,
+                            size: 30.0,
+                          ),
+                          // Styles.getFitnessTypeIcons(myGoal!.trainingsProgramms[0].fitnesstype),
+                          Text(myGoal!.trainingsProgramms[0].fitnesstype, style: Styles.smalText.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                       Column(
                         children: [
                           Styles.levelIcon,
-                          Text(UsedObjects.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel], style: Styles.trainingsplanIconTitle),
+                          Text(UsedObjects.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel],
+                              style: Styles.smalText.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                       Column(
                         children: [
                           Styles.timerIcon,
-                          Text('${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.trainingsplanIconTitle),
+                          Text('${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks', style:  Styles.smalText.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                     ],
@@ -161,11 +168,10 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                     // trailing: Icon(Icons.arrow_drop_down_circle_rounded),
                                     // onExpansionChanged: ,
                                     tilePadding: const EdgeInsetsDirectional.fromSTEB(20, 0, 16, 10),
-                                    collapsedIconColor: Styles.hiGymText,
-                                    collapsedTextColor: Styles.hiGymText,
-                                    iconColor: Styles.secondaryColor,
+                                    collapsedIconColor: Styles.darkGrey,
+                                    collapsedTextColor: Styles.darkGrey,
+                                    iconColor: Styles.primaryColor,
                                     initiallyExpanded: activeExerciseCheck(index),
-                                    textColor: Styles.secondaryColor,
                                     backgroundColor: Colors.transparent,
                                     title: Row(
                                       children: [
@@ -176,10 +182,10 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                             Text(
                                               helper_utils.truncatePlanName(
                                                 myGoal!.trainingsProgramms[0].plans[index].name,
-                                                Styles.trainingsplanSubTitle,
+                                                Styles.normalTextBold,
                                                 MediaQuery.of(context).size.width,
                                               ),
-                                              style: Styles.trainingsplanSubTitle,
+                                              style: Styles.normalTextBold,
                                             ),
                                             Container(
                                               margin: const EdgeInsets.only(top: 4.0),

@@ -42,9 +42,9 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
               Icon(
                 widget.iconData,
                 size: 26,
-                color: Styles.hiGymText,
+                color: Styles.darkGrey,
               ),
-              widget.iconText != null ? Text(widget.iconText! , style: Styles.navBarMenuText,) : const SizedBox(),
+              widget.iconText != null ? Text(widget.iconText! , style: Styles.smalText.copyWith(color:Styles.darkGrey),) : const SizedBox(),
             ],
           ),
           AnimatedContainer(

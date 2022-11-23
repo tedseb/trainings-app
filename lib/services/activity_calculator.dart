@@ -65,7 +65,7 @@ class ActivityCalculator {
 
   Map<String, double> getActivityPoints(AppUser user) {
     String toDay = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
-    weight = user.weigth!;
+    weight = user.weigth!.last.entries.first.value;
     size = user.size!;
     age = user.age!;
     gender = user.gender!;

@@ -90,7 +90,7 @@ class _GoalsScreenState extends State<GoalsScreen> {
                             Text(
                               // 'TRAINING 1',
                               'Build Muscles',
-                              style: Styles.goalsCardTitle,
+                              style: Styles.headline,
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 4.0),

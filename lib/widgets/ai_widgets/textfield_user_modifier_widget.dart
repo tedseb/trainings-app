@@ -27,14 +27,15 @@ class _TextFieldUserModifierWidgetState extends State<TextFieldUserModifierWidge
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
+      style: Styles.normalText,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: Styles.textFormFieldLabel,
+        labelStyle: Styles.subLine,
         hintText: widget.hintText,
-        hintStyle: Styles.textFormFieldHintText,
+        hintStyle: Styles.smalText,
         isDense: true,
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Styles.hiGymText, width: 2.0),
+          borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
         ),
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),

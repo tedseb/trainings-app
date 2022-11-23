@@ -21,15 +21,15 @@ class _AiTextWidgetState extends State<AiTextWidget> {
   Widget build(BuildContext context) {
     return Container(
       /// heighth is needed, to prevent the page movement if text is double lined
-      height: 112,
-      padding: const EdgeInsets.all(26.0),
+      height: 90,
+      padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 8.0),
       child: AnimatedTextKit(
         animatedTexts: [
           TyperAnimatedText(
             widget.aiText,
             textAlign: TextAlign.center,
             speed: const Duration(milliseconds: 100),
-            textStyle: Styles.logInScreenWelcomeText
+            textStyle: Styles.subLine
           )
         ],
         isRepeatingAnimation: false,

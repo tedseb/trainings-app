@@ -55,13 +55,13 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
                 Text(
                   'Great Workout !',
                   style: TextStyle(
-                    color: Styles.hiGymText,
+                    color: Styles.darkGrey,
                     fontSize: 40,
                   ),
                 ),
                 Text(
                   'nicely done.',
-                  style: TextStyle(color: Styles.hiGymText, fontSize: 32),
+                  style: TextStyle(color: Styles.darkGrey, fontSize: 32),
                 ),
               ],
             ),
@@ -131,7 +131,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
                   iconSize: 72,
                   icon: const Icon(
                     Icons.check_circle_rounded,
-                    color: Styles.hiGymText,
+                    color: Styles.darkGrey,
                   )),
             ),
           ],

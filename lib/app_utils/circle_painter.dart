@@ -42,7 +42,7 @@ class BackgroundCirclePainter extends CustomPainter {
     final rectBig = Rect.fromCircle(center: center, radius: radiusBig);
 
     final paintBig = Paint()
-      ..color = Styles.progressCircleBig
+      ..color = Styles.orange
       ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
@@ -67,7 +67,7 @@ class BackgroundCirclePainter extends CustomPainter {
     final rectSmall = Rect.fromCircle(center: center, radius: radiusSmall);
 
     final paintSmall = Paint()
-      ..color = Styles.progressCircleSmall
+      ..color = Styles.blue
       ..strokeWidth = 9
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;

@@ -42,198 +42,199 @@ class _HomeScreenState extends State<HomeScreen> {
     dev.log('Width:  ${screenSize.width}');
     dev.log('Heigth:  ${screenSize.height}');
     return Scaffold(
-        backgroundColor: Styles.white,
-        body: userTester()
-            ? ListView(
-                padding: EdgeInsets.zero,
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  /// Home Welcome Card height ca 195
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(32.0, 96.0, 32.0, 0.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-                      decoration: BoxDecoration(
-                        color: Styles.white,
-                        borderRadius: BorderRadius.circular(12.0),
-                        boxShadow: [
-                          ///bottom right
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: const Offset(3, 3),
-                            blurRadius: 3,
-                          ),
-
-                          ///top left
-                          BoxShadow(
-                            color: Colors.grey.shade200,
-                            offset: const Offset(-3, -3),
-                            blurRadius: 3,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          /// Name and Badge
-                          /// User Name and Badge
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: Styles.homeCardName,
-                                    children: [
-                                      TextSpan(text: 'Hi ', style: Styles.title.copyWith(fontWeight: FontWeight.w500)),
-                                      TextSpan(text: user!.name.toString(), style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Image.asset('assets/badges/${user!.activityLevel}.png', height: 75),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 24.0),
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Text(welcomeCardText, style: Styles.homeCardText),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 24.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      'TE $timesTrainedThisWeek/$toTrainThisWeek',
-                                      style: Styles.homeCardText,
-                                    ),
-                                  ),
-                                  timesTrainedThisWeek < toTrainThisWeek
-                                      ? Container(
-                                          width: 7.0,
-                                          height: 7.0,
-                                          decoration: const BoxDecoration(
-                                            color: Styles.primaryColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        )
-                                      : const SizedBox(),
-                                ],
-                              ),
-                              // Text(
-                              //   'Parameter',
-                              //   style: Styles.homeCardText,
-                              // ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 100.0),
-                    child: SizedBox(
-                      height: screenSize.width,
-                      width: screenSize.width,
-                      child: CustomPaint(
-                        foregroundPainter: BackgroundCirclePainter(
-                          progressBigPercent: activityPercentage,
-                          progressBigReachPercent: 16 / 16,
-                          progressSmallPercet: weekPercentage,
-                          progressSmallReachPercet: weekNextPhasePercentage,
+      backgroundColor: Styles.white,
+      body: userTester()
+          ? ListView(
+              padding: EdgeInsets.zero,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                /// Home Welcome Card height ca 195
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32.0, 96.0, 32.0, 0.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    decoration: BoxDecoration(
+                      color: Styles.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        ///bottom right
+                        BoxShadow(
+                          color: Colors.grey.shade400,
+                          offset: const Offset(3, 3),
+                          blurRadius: 3,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+
+                        ///top left
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          offset: const Offset(-3, -3),
+                          blurRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        /// Name and Badge
+                        /// User Name and Badge
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 2.0),
-                                  width: 15.0,
-                                  height: 15.0,
-                                  decoration: const BoxDecoration(
-                                    color: Styles.progressCircleBig,
-                                    shape: BoxShape.circle,
-                                  ),
+                            Flexible(
+                              child: RichText(
+                                text: TextSpan(
+                                  // style: Styles.homeCardName,
+                                  children: [
+                                    TextSpan(text: 'Hi ', style: Styles.headline.copyWith(fontWeight: FontWeight.w500)),
+                                    TextSpan(text: user!.name.toString(), style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
+                                  ],
                                 ),
-                                const SizedBox(width: 4),
-                                SizedBox(
-                                  width: 56.0,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Points', style: Styles.homeProgressText),
-                                      Text(totalActivityPoints.round().toString(), style: Styles.homeProgressText),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 2.0),
-                                  width: 15.0,
-                                  height: 15.0,
-                                  decoration: const BoxDecoration(
-                                    color: Styles.progressCircleSmall,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                SizedBox(
-                                  width: 56.0,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Weeks', style: Styles.homeProgressText),
-                                      Text('$doneWeeks/$allWeeks', style: Styles.homeProgressText),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Image.asset('assets/badges/${user!.activityLevel}.png', height: 75),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 24.0),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(welcomeCardText, style: Styles.normalText),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4.0),
+                                  child: Text(
+                                    'TE $timesTrainedThisWeek/$toTrainThisWeek',
+                                    style: Styles.normalText,
+                                  ),
+                                ),
+                                timesTrainedThisWeek < toTrainThisWeek
+                                    ? Container(
+                                        width: 7.0,
+                                        height: 7.0,
+                                        decoration: const BoxDecoration(
+                                          color: Styles.primaryColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                            // Text(
+                            //   'Parameter',
+                            //   style: Styles.homeCardText,
+                            // ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 100.0),
+                  child: SizedBox(
+                    height: screenSize.width,
+                    width: screenSize.width,
+                    child: CustomPaint(
+                      foregroundPainter: BackgroundCirclePainter(
+                        progressBigPercent: activityPercentage,
+                        progressBigReachPercent: 16 / 16,
+                        progressSmallPercet: weekPercentage,
+                        progressSmallReachPercet: weekNextPhasePercentage,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 2.0),
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: const BoxDecoration(
+                                  color: Styles.orange,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              SizedBox(
+                                width: 56.0,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Points', style: Styles.normalText),
+                                    Text(totalActivityPoints.round().toString(), style: Styles.normalText),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 2.0),
+                                width: 15.0,
+                                height: 15.0,
+                                decoration: const BoxDecoration(
+                                  color: Styles.blue,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              SizedBox(
+                                width: 56.0,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Weeks', style: Styles.normalText),
+                                    Text('$doneWeeks/$allWeeks', style: Styles.normalText),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              )
-            : const LoadingWidget());
+                ),
+              ],
+            )
+          : const LoadingWidget(),
+    );
   }
 
   bool userTester() {
-    if (user != null) {
-      if (user!.activityLevel != null) {
-        dev.log('user!.activityLevel != null');
-        return true;
-      } else {
-        dev.log('user!.activityLevel IST null');
-        return false;
-      }
-    } else {
+    if (user == null) {
       dev.log('User IST null');
       return false;
     }
+
+    if (user!.activityLevel == null) {
+      dev.log('user!.activityLevel IST null');
+      return false;
+    }
+
+    dev.log('user!.activityLevel != null');
+    return true;
   }
 
   void calculateActivity() {
@@ -329,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
               zahlText = 'ein';
               break;
           }
-          welcomeCardText = 'Du solltest diese Woche noch $zahlText trainieren.';
+          welcomeCardText = 'Du solltest diese Woche noch $zahlText mal trainieren.';
         } else if (timesTrainedThisWeek == toTrainThisWeek) {
           welcomeCardText = 'Gratulation! Du hast dies Woche dein Trainingsziel erreicht!';
         } else {

@@ -131,6 +131,7 @@ class DatabaseService {
 
   /// Get User-Data
   Stream<AppUser> get getUserData {
+    DateTime now = DateTime.now();
     final docUser = usersCollection.doc(uid);
     return docUser.snapshots().map(
           (event) => AppUser(
@@ -138,7 +139,7 @@ class DatabaseService {
             uid: uid,
             email: event.data().toString().contains('userMail') ? event.get('userMail') : 'no_user_mail',
             age: event.data().toString().contains('userAge') ? event.get('userAge') : 30,
-            weigth: event.data().toString().contains('userWeigth') ? event.get('userWeigth') : 80,
+            weigth: event.data().toString().contains('userWeigth') ? _convertListOfMapsFromDynamic(event.get('userWeigth')) : null,
             size: event.data().toString().contains('userSize') ? event.get('userSize') : 178,
             gender: event.data().toString().contains('userGender') ? event.get('userGender') : 'Diverse',
             goalName: event.data().toString().contains('userGoalName') ? event.get('userGoalName') : 'General Fitness',
@@ -148,11 +149,9 @@ class DatabaseService {
             minutesFrequenz: event.data().toString().contains('userMinutesFrequenz') ? event.get('userMinutesFrequenz') : '40-50',
             fitnessLevel: event.data().toString().contains('userFitnessLevel') ? event.get('userFitnessLevel') : 'Gelegenheits Sport',
             fitnessMethod: event.data().toString().contains('userFitnessMethod') ? event.get('userFitnessMethod') : null,
-            activityPoints: 
-            // event.data().toString().contains('activityPoints')
-            //     ? _fillStringDoubleMaps(event.get('activityPoints'))
-            //     : 
-                {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
+            activityPoints: event.data().toString().contains('activityPoints')
+                ? _fillStringDoubleMaps(event.get('activityPoints'))
+                : {DateFormat('yyyy-MM-dd hh:mm:ss').format(now): 0.0},
             activityLevel: event.data().toString().contains('activityLevel') ? (event.get('activityLevel')).round() : 0,
           ),
         );
@@ -272,7 +271,7 @@ class DatabaseService {
                   difficultyLevel: doc.get('difficultyLevel'),
                   durationWeeks: doc.get('durationWeeks'),
                   actualPhase: doc.get('actualPhase'),
-                  phases: _convertStringListsFromDynamic(doc.get('phases'), 'phases'),
+                  phases: _convertStringListsFromDynamic(doc.get('phases')),
                   actualPlan: doc.get('actualPlan'),
                   plans: _fillPlans(doc.get("plans")),
                 ))
@@ -287,6 +286,8 @@ class DatabaseService {
               time: plan.value['time'],
               exercises: _fillExercises(plan.value['exercises']),
             ))
+        .toList()
+        .reversed
         .toList();
   }
 
@@ -300,10 +301,12 @@ class DatabaseService {
             media: exercise['media'],
             eID: exercise['eID'] ?? -1,
             alternativeExercises: _convertIntListsFromDynamic(exercise['alternativeExercises']),
-            station: _convertStringListsFromDynamic(exercise['station'], 'station'),
-            stationShort: _convertStringListsFromDynamic(exercise['stationShort'], 'stationShort'),
-            handle: _convertStringListsFromDynamic(exercise['handle'], 'handle'),
-            handleShort: _convertStringListsFromDynamic(exercise['handleShort'], 'handleShort'),
+            station: _convertStringListsFromDynamic(
+              exercise['station'],
+            ),
+            stationShort: _convertStringListsFromDynamic(exercise['stationShort']),
+            handle: _convertStringListsFromDynamic(exercise['handle']),
+            handleShort: _convertStringListsFromDynamic(exercise['handleShort']),
             ratio: _convertDoubleListsFromDynamic(exercise['ratio']),
             repetitionsScale: _fillStringIntMaps(exercise['repetitionsScale']),
             setDoTimeScale: _fillStringIntMaps(exercise['setDoTimeScale']),
@@ -345,7 +348,7 @@ class DatabaseService {
     Map<String, double> returnMap = {};
 
     map.forEach((key, value) {
-      returnMap[key] = value;
+      returnMap[key.toString()] = value;
     });
 
     return returnMap;
@@ -363,17 +366,17 @@ class DatabaseService {
   }
 
   /// Convert List<dynamic> to List<String>
-  List<String> _convertStringListsFromDynamic(List<dynamic>? list, String errorName) {
+  List<String> _convertStringListsFromDynamic(List<dynamic>? list) {
     List<String> returnList = [];
 
     if (list != null) {
-      for (String element in list) {
-        returnList.add(element);
+      if (list.isNotEmpty) {
+        for (String element in list) {
+          returnList.add(element);
+        }
       }
     }
-    if (returnList.isEmpty) {
-      returnList.add(errorName);
-    }
+
     return returnList;
   }
 
@@ -406,6 +409,22 @@ class DatabaseService {
       returnList.add(-1);
       returnList.add(-1);
     }
+    return returnList;
+  }
+
+  /// Convert List<dynamic> to List<Map<String, double>>
+  List<Map<String, double>> _convertListOfMapsFromDynamic(List<dynamic>? list) {
+    List<Map<String, double>> returnList = [];
+
+    if (list != null) {
+      for (var element in list) {
+        returnList.add(_fillStringDoubleMaps(element));
+      }
+    }
+    if (returnList.isEmpty) {
+      returnList.add({DateFormat('dd.MM').format(DateTime.now()): 75.0});
+    }
+    // return [{DateFormat('dd.MM').format(DateTime.now()): 75.0}];
     return returnList;
   }
   // -----------------------------------------END - Get My Goal--------------------------------

@@ -37,7 +37,7 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
           height: 400,
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
             child: Form(
               key: formKey,
               child: Column(
@@ -49,7 +49,7 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
                       Flexible(
                         child: Text(
                           'How many repetitions did you do?',
-                          style: Styles.rpeScaleTitle.copyWith(color: Styles.hiGymText),
+                          style: Styles.subLine,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -61,14 +61,15 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
                     children: [
                       TextFormField(
                         controller: repetitonsController,
+                         style: Styles.normalText,
                         decoration: InputDecoration(
                           labelText: 'Repetitions',
-                          labelStyle: Styles.textFormFieldLabel,
+                          labelStyle: Styles.subLine,
                           hintText: 'Repetitions count',
-                          hintStyle: Styles.textFormFieldHintText,
+                          hintStyle: Styles.smalText,
                           isDense: true,
                           enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Styles.hiGymText, width: 2.0),
+                            borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
                           ),
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),

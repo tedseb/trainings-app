@@ -17,7 +17,7 @@ class DeloadWeigthInput extends StatefulWidget {
 }
 
 class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
-  final Color modeColor = Styles.backgroundYellow;
+  final Color modeColor = Styles.pastelYellow;
 
   final repetitonsController = TextEditingController();
 
@@ -47,7 +47,7 @@ class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
                       Flexible(
                         child: Text(
                           'We are calculating your start weigth. \n How many repetitions did you do?',
-                          style: Styles.rpeScaleTitle,
+                          style: Styles.normalText,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -59,11 +59,12 @@ class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
                     children: [
                       TextFormField(
                         controller: repetitonsController,
+                         style: Styles.normalText,
                         decoration: InputDecoration(
                           labelText: 'Repetitions',
-                          labelStyle: Styles.textFormFieldLabel.copyWith(color: Styles.white),
+                          labelStyle: Styles.subLine.copyWith(color: Styles.white),
                           hintText: 'Repetitions count',
-                          hintStyle: Styles.textFormFieldHintText.copyWith(color: Styles.white),
+                          hintStyle: Styles.smalText.copyWith(color: Styles.white),
                           isDense: true,
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Styles.white, width: 2.0),

@@ -57,7 +57,7 @@ class _AiGymEquipmentContentState extends State<AiGymEquipmentContent> {
               return Padding(
                 padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 26.0, bottom: 32.0),
                 child: SizedBox(
-                  height: 75.0,
+                  // height: 75.0,
                   // color: Colors.grey[50],
                   child: Row(
                     // crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class _AiGymEquipmentContentState extends State<AiGymEquipmentContent> {
                             children: [
                               Text(
                                 gymEquipment[index].keys.first,
-                                style: Styles.trainingsplanCardExeTitle,
+                                style: Styles.normalText,
                               ),
                               // Text(
                               //   'Learn more',

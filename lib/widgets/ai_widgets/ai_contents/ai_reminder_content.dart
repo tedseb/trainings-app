@@ -76,7 +76,7 @@ class _AiReminderContentState extends State<AiReminderContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('What Time?', style: Styles.headLine),
+        Text('What Time?', style: Styles.subLine),
         const SizedBox(height: 16.0),
         SizedBox(
           height: 130,
@@ -89,8 +89,8 @@ class _AiReminderContentState extends State<AiReminderContent> {
                 height: 40.0,
                 decoration: const BoxDecoration(
                   border: Border(
-                    top: BorderSide(width: 2.0, color: Styles.hiGymText),
-                    bottom: BorderSide(width: 2.0, color: Styles.hiGymText),
+                    top: BorderSide(width: 2.0, color: Styles.darkGrey),
+                    bottom: BorderSide(width: 2.0, color: Styles.darkGrey),
                   ),
                 ),
               ),
@@ -109,7 +109,7 @@ class _AiReminderContentState extends State<AiReminderContent> {
                         return Center(
                           child: Text(
                             hourList[hourIndex].toString(),
-                            style: Styles.headLine.copyWith(color: hourIndex == hourIndexSelected ? Styles.hiGymText : Styles.lightGrey),
+                            style: Styles.subLine.copyWith(color: hourIndex == hourIndexSelected ? Styles.darkGrey : Styles.lightGrey),
                           ),
                         );
                       },
@@ -127,20 +127,20 @@ class _AiReminderContentState extends State<AiReminderContent> {
                         return Center(
                           child: Text(
                             minutesList[minuteIndex].toString(),
-                            style: Styles.headLine.copyWith(color: minuteIndex == minuteIndexSelected ? Styles.hiGymText : Styles.lightGrey),
+                            style: Styles.subLine.copyWith(color: minuteIndex == minuteIndexSelected ? Styles.darkGrey : Styles.lightGrey),
                           ),
                         );
                       },
                     ),
                   ),
-                  Expanded(child: Row(children: [const SizedBox(width: 16.0), Text('Uhr', style: Styles.headLine)]))
+                  Expanded(child: Row(children: [const SizedBox(width: 16.0), Text('Uhr', style: Styles.subLine)]))
                 ],
               ),
             ],
           ),
         ),
         const SizedBox(height: 16.0),
-        Text('Which Days?', style: Styles.headLine),
+        Text('Which Days?', style: Styles.subLine),
         const SizedBox(height: 16.0),
         SizedBox(
           height: 200,

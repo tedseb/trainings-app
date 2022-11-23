@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: Styles.white, fontFamily: 'GreycliffCF', dividerColor: Colors.transparent, splashColor: Styles.primaryColor),
+        debugShowCheckedModeBanner: false,
         home: const Wrapper(),
       ),
     );

@@ -85,8 +85,8 @@ class TrainingProgramsDatabase {
               name: exercise['name'] ?? 'Exercise Name',
               subName: exercise['subName'] ?? 'Exercise SubName',
               info: exercise['info'] ?? 'Exercise Info',
-              media: exercise['eID'].toString() != null.toString() ? exercise['eID'] : 'noMedia',
-              eID: exercise['eID'] ?? -1,
+              media: exercise['eId'].toString() != null.toString() ? checkMedia(exercise['eId']) : 'noMedia',
+              eID: exercise['eId'].toInt() ?? -1,
               alternativeExercises: _convertIntListsFromDynamic(exercise['alternativeExercises']),
               station: _convertStringListsFromDynamic(exercise['station']),
               stationShort: _convertStringListsFromDynamic(exercise['stationShort']),
@@ -129,6 +129,14 @@ class TrainingProgramsDatabase {
         .toList();
   }
 
+  String checkMedia(num exeID) {
+    if (exeID == 1 || exeID == 8 || exeID == 18 || exeID == 27 || exeID == 39) {
+      return exeID.round().toString();
+    } else {
+      return 'noMedia';
+    }
+  }
+
   /// Ratio to list here
   List<double> ratioList(Map<dynamic, dynamic>? ratio) {
     int lvlOverEstimateProtection = userLevel != 0 ? userLevel - 1 : userLevel;
@@ -144,7 +152,7 @@ class TrainingProgramsDatabase {
   /// Start Weight Calculator
   double startWeight(List<double> ratioList, double? warmupWeight, double? weightInc) {
     double ratio = appUser.gender == 'Male' ? ratioList[0] : ratioList[1];
-    double userWeight = appUser.weigth ?? 70.0;
+    double userWeight = appUser.weigth != null ? appUser.weigth!.last.entries.first.value : 70.0;
     double userSize = appUser.size ?? 175.0;
     double userBMI = (userWeight / (userSize * userSize)) * 10000;
 
@@ -152,19 +160,31 @@ class TrainingProgramsDatabase {
       userWeight = (24 / 10000) * userSize * userSize;
     }
 
-    double startWeight = userWeight * ratio * 0.6;
-
     warmupWeight ??= 0.0;
     weightInc ??= 0.0;
 
+    double startWeight = 0.0;
+
     if (weightInc != 0.0) {
+      startWeight = userWeight * ratio * 0.6;
+
+      ///check if negative
+      if (startWeight < 0) {
+        startWeight = startWeight * (-1);
+        startWeight = startWeight - userWeight;
+        // startWeight = startWeight +(startWeight* 0.4);
+        startWeight = startWeight - (startWeight % 2.5);
+        return startWeight;
+      }
+
+      /// If it is a positiv ratio
+      // startWeight = startWeight * 0.6;
+
       if (startWeight < warmupWeight) {
         startWeight = warmupWeight;
       }
 
       startWeight = startWeight - (startWeight % 2.5);
-    } else {
-      startWeight = 0.0;
     }
 
     return startWeight;
@@ -175,11 +195,13 @@ class TrainingProgramsDatabase {
     List<String> returnList = [];
 
     if (list != null) {
-      for (String element in list) {
-        returnList.add(element);
+      if (list.isNotEmpty) {
+        for (String element in list) {
+          returnList.add(element);
+        }
       }
     }
-    
+
     return returnList;
   }
 

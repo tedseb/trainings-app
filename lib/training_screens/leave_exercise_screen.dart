@@ -49,7 +49,7 @@ class LeaveExerciseScreen extends StatelessWidget {
             child: Text(
               leaveText,
               style: const TextStyle(
-                color: Styles.hiGymText,
+                color: Styles.darkGrey,
                 fontWeight: FontWeight.normal,
                 fontSize: 40,
               ),
@@ -75,7 +75,7 @@ class LeaveExerciseScreen extends StatelessWidget {
                   child: const Text(
                     'Yes',
                     style: TextStyle(
-                      color: Styles.hiGymText,
+                      color: Styles.darkGrey,
                       fontWeight: FontWeight.normal,
                       fontSize: 36,
                     ),
@@ -97,7 +97,7 @@ class LeaveExerciseScreen extends StatelessWidget {
                   child: const Text(
                     'No',
                     style: TextStyle(
-                      color: Styles.hiGymText,
+                      color: Styles.darkGrey,
                       fontWeight: FontWeight.bold,
                       fontSize: 36,
                     ),

@@ -85,8 +85,8 @@ class _AiGoalContentState extends State<AiGoalContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.goalObjects[index]['titel'], style: Styles.headLine),
-                          Text(UsedObjects.goalObjects[index]['subTitel'], style: Styles.loginScreenPrivacyText),
+                          Text(UsedObjects.goalObjects[index]['titel'], style: Styles.subLine),
+                          Text(UsedObjects.goalObjects[index]['subTitel'], style: Styles.smalText.copyWith(color: Styles.midleDarkGrey)),
                         ],
                       ),
                     )

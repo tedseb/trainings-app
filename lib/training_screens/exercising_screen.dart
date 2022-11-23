@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:higym/app_utils/timer_utils.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/training_screens/deload_input_dialog.dart';
-import 'package:higym/training_screens/deload_weigth_input.dart';
+import 'package:higym/zzz_deleteable/deload_weigth_input.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
@@ -34,7 +34,7 @@ class ExercisingScreen extends StatefulWidget {
 
 class _ExercisingScreenState extends State<ExercisingScreen> {
   ///Screen Informations
-  Color modeColor = Styles.backgroundActivity;
+  Color modeColor = Styles.pastelGreen;
   late int actualSetNumber;
   late double actualWeight;
   late String actualTimeorRep;
@@ -47,7 +47,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   late String prepareFor;
   double progressValue = 0.0;
 
-  Color progressColor = Styles.white;
+  Color progressColor = Styles.exercisingWhite;
 
   late int selectedExerciseIndex;
   late List<int> doingExeIndexList;
@@ -193,8 +193,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                             ),
                             side: BorderSide.none,
                           ),
-                          primary: Styles.white,
-                          onPrimary: Styles.white,
+                          primary: Styles.exercisingWhite,
+                          onPrimary: Styles.exercisingWhite,
                           elevation: 0.0,
                           minimumSize: Size.zero,
                         ),
@@ -216,23 +216,23 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(prepareFor, style: Styles.exercisingSubTitle),
+                          Text(prepareFor, style: Styles.normalText.copyWith(color: Styles.exercisingWhite)),
                           Text(
-                            helper_utils.truncateExerciseName(exeriseName, Styles.exercisingTitle, MediaQuery.of(context).size.width),
-                            style: Styles.exercisingTitle,
+                            helper_utils.truncateExerciseName(exeriseName, Styles.subLine.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                            style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                           ),
                           Visibility(
                             visible: exerciseStation != '',
                             child: Text(
-                              helper_utils.truncateExerciseName(exerciseStation, Styles.exercisingSubTitle, MediaQuery.of(context).size.width),
-                              style: Styles.exercisingSubTitle,
+                              helper_utils.truncateExerciseName(exerciseStation, Styles.normalText.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                              style: Styles.normalText.copyWith(color: Styles.exercisingWhite),
                             ),
                           ),
                           Visibility(
                             visible: exerciseHandle != '',
                             child: Text(
-                              helper_utils.truncateExerciseName(exerciseHandle, Styles.exercisingSubTitle, MediaQuery.of(context).size.width),
-                              style: Styles.exercisingSubTitle,
+                              helper_utils.truncateExerciseName(exerciseHandle, Styles.normalText.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                              style: Styles.normalText.copyWith(color: Styles.exercisingWhite),
                             ),
                           ),
                         ],
@@ -244,7 +244,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                     const SizedBox(
                       height: 125,
                       child: VerticalDivider(
-                        color: Styles.white,
+                        color: Styles.exercisingWhite,
                         thickness: 1.5,
                       ),
                     ),
@@ -259,11 +259,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               children: [
                                 Text(
                                   '$actualSetNumber.',
-                                  style: Styles.exercisingTitle,
+                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                 ),
                                 Text(
                                   'set',
-                                  style: Styles.exercisingTitle,
+                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                 ),
                               ],
                             ),
@@ -274,12 +274,12 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  actualWeight.toString(),
-                                  style: Styles.exercisingTitle,
+                                  actualWeight.toStringAsFixed(1),
+                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                 ),
                                 Text(
                                   'kg',
-                                  style: Styles.exercisingTitle,
+                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                 ),
                               ],
                             ),
@@ -293,11 +293,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                                 children: [
                                   Text(
                                     actualTimeOrRepNumberToDo.toString(),
-                                    style: Styles.exercisingTitle,
+                                    style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                   ),
                                   Text(
                                     actualTimeorRep,
-                                    style: Styles.exercisingTitle,
+                                    style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
                                   ),
                                 ],
                               ),
@@ -386,7 +386,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                       iconSize: 72,
                       icon: Icon(
                         playDoneButton,
-                        color: Styles.white,
+                        color: Styles.exercisingWhite,
                       ),
                     ),
                     Expanded(
@@ -396,7 +396,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                           onPressed: () => doExerciseLater(),
                           icon: const Icon(
                             Icons.skip_next_rounded,
-                            color: Styles.white,
+                            color: Styles.exercisingWhite,
                           ),
                         ),
                       ),
@@ -406,7 +406,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
               ),
               LinearProgressIndicator(
                 value: exeCounter / (selectedPlan.exercises.length),
-                color: Styles.white,
+                color: Styles.exercisingWhite,
                 backgroundColor: Colors.transparent,
               ),
             ],
@@ -483,6 +483,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           ),
         );
       }
+      setState(() => deloadPhase = false);
 
       /// Pause Screen
       if (!skipExe) {
@@ -493,7 +494,6 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           selectedPlan.exercises[exeIndex].sets[setIndex].setRestTime[toDay] = actualTimeOrRepNumber;
         }
       }
-      setState(() => deloadPhase = false);
     }
 
     /// Exercise Pause/ RPE Scale Screen
@@ -615,7 +615,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         actualTimeOrRepNumber = newTick;
         if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
           progressValue = 1;
-          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+          progressColor = progressColor == Styles.exercisingWhite ? Styles.pastelRed : Styles.exercisingWhite;
         } else {
           progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
         }
@@ -638,7 +638,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         actualTimeOrRepNumber = newTick;
         if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
           progressValue = 1;
-          progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+          progressColor = progressColor == Styles.exercisingWhite ? Styles.pastelRed : Styles.exercisingWhite;
         } else {
           progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
         }
@@ -663,7 +663,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
           actualTimeOrRepNumber = newTick;
           if (actualTimeOrRepNumber / actualTimeOrRepNumberToDo > 1) {
             progressValue = 1;
-            progressColor = progressColor == Styles.white ? Styles.pastelRed : Styles.white;
+            progressColor = progressColor == Styles.exercisingWhite ? Styles.pastelRed : Styles.exercisingWhite;
           } else {
             progressValue = actualTimeOrRepNumber / actualTimeOrRepNumberToDo;
           }
@@ -687,17 +687,17 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       ///Trainings Mode
       if (trainingsMode) {
         prepareFor = 'train';
-        modeColor = Styles.backgroundActivity;
+        modeColor = Styles.pastelGreen;
         if (doingExercise.setDoTimeScale['actualToDo'] == 0) {
           actualTimeorRep = 'rep';
           actualTimeOrRepNumberToDo = doingExercise.repetitionsScale['actualToDo'] ?? 0;
           actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
           progressValue = 1;
-          progressColor = Styles.white;
+          progressColor = Styles.exercisingWhite;
           startPassiveTimerTrainignsMode(exeIndex, doingSetIndex);
         } else {
           progressValue = 0.0;
-          progressColor = Styles.white;
+          progressColor = Styles.exercisingWhite;
           actualTimeorRep = 'sec';
           actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
           actualTimeOrRepNumber = 0;
@@ -707,8 +707,8 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
         ///Pause Mode
       } else {
         progressValue = 0.0;
-        progressColor = Styles.white;
-        modeColor = Styles.backgroundPause;
+        progressColor = Styles.exercisingWhite;
+        modeColor = Styles.pastelBlue;
         actualTimeorRep = 'sec';
         actualTimeOrRepNumber = 0;
 
@@ -737,6 +737,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     //   smallTimeSubscription!.cancel();
     // }
     setState(() {
+      setExerciseVideo(doingExercise);
       exeriseName = doingExercise.name;
       selectedExerciseIndex = exeIndex;
       exerciseStation = helper_utils.listToString(doingExercise.stationShort);
@@ -748,7 +749,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       modeColor = Styles.pastelYellow;
 
       progressValue = 0.0;
-      progressColor = Styles.white;
+      progressColor = Styles.exercisingWhite;
       actualTimeorRep = 'sec';
       actualTimeOrRepNumberToDo = doingExercise.setRestTimeScale['actualToDo'] ?? 0;
       actualTimeOrRepNumber = 0;
@@ -763,14 +764,14 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       //   actualTimeOrRepNumber = actualTimeOrRepNumberToDo;
       //   trainModeTimeDone = 0;
       //   progressValue = 1;
-      //   progressColor = Styles.white;
+      //   progressColor = Styles.exercisingWhite;
       // } else {
       //   actualTimeorRep = 'sec';
       //   actualTimeOrRepNumberToDo = doingExercise.setDoTimeScale['actualToDo'] ?? 0;
       //   actualTimeOrRepNumber = 0;
       //   trainModeTimeDone = 0;
       //   progressValue = 0.0;
-      //   progressColor = Styles.white;
+      //   progressColor = Styles.exercisingWhite;
       // }
     });
   }
@@ -811,17 +812,32 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
       double newWeigth = weigth;
       if (repetitions != 15) {
-        ///after 30kg u can tripple the weigth with ease
-        if (repetitions < 29) {
-          newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
-          newWeigth = newWeigth * 0.9;
-        } else {
-          newWeigth = weigth * 2.5;
+        /// Negativ
+        if (weigth < 0) {
+          if (repetitions < 26) {
+            newWeigth = weigth * (2 - (0.6108 / (1.0278 - (0.0278 * repetitions))));
+            newWeigth = newWeigth + (newWeigth * 0.1);
+          } else {
+            newWeigth = -0.01;
+          }
+        }
+
+        /// Positiv
+        else {
+          if (repetitions < 29) {
+            newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
+            newWeigth = newWeigth * 0.9;
+          } else {
+            newWeigth = weigth * 2.5;
+          }
         }
       }
 
       newWeigth = newWeigth - (newWeigth % 2.5);
-      setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
+      setState(() {
+        selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth;
+        actualWeight = newWeigth;
+      });
     } else {
       int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
 
@@ -890,3 +906,26 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     );
   }
 }
+
+
+  // void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
+  //   if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
+  //     double newWeigth = weigth;
+  //     if (repetitions != 15) {
+  //       ///after 30kg u can tripple the weigth with ease
+  //       if (repetitions < 29) {
+  //         newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
+  //         newWeigth = newWeigth * 0.9;
+  //       } else {
+  //         newWeigth = weigth * 2.5;
+  //       }
+  //     }
+
+  //     newWeigth = newWeigth - (newWeigth % 2.5);
+  //     setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
+  //   } else {
+  //     int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
+
+  //     setState(() => selectedPlan.exercises[exeIndexUpdate].repetitionsScale['actualToDo'] = weightlessRepetitionsToDo);
+  //   }
+  // }

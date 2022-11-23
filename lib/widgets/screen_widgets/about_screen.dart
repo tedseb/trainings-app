@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/services/auth.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
@@ -20,7 +21,7 @@ class AboutScreen extends StatelessWidget {
                   iconSize: 38.0,
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Styles.hiGymText,
+                    color: Styles.darkGrey,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -38,10 +39,10 @@ class AboutScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text('About', style: Styles.title.copyWith(fontWeight: FontWeight.w300)),
+                    Text('About', style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(Icons.settings_outlined, color: Styles.hiGymText),
+                      child: Icon(GymionIcons_1_0.einstellungen, color: Styles.darkGrey),
                     ),
                   ],
                 ),
@@ -67,7 +68,7 @@ class AboutScreen extends StatelessWidget {
                 //           ),
                 //         ],
                 //       ),
-                //       ShadowIconButtonWidget(buttonIcon: Icons.chevron_right_rounded, onPressFunction: () {}),
+                //       ShadowIconButtonWidget(buttonIcon: GymionIcons_1_0.pfeil, onPressFunction: () {}),
                 //     ],
                 //   ),
                 // ),
@@ -79,7 +80,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Rate us on App Store', style: Styles.profileItemText),
+                          Text('Rate us on App Store', style: Styles.normalText),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
@@ -92,7 +93,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: Icons.chevron_right_rounded,
+                        buttonIcon: GymionIcons_1_0.pfeil,
                         onPressFunction: () {},
                         loggerText: 'Rate us on App Store',
                       ),
@@ -107,7 +108,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Terms & Conditions', style: Styles.profileItemText),
+                          Text('Terms & Conditions', style: Styles.normalText),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
@@ -120,7 +121,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: Icons.chevron_right_rounded,
+                        buttonIcon: GymionIcons_1_0.pfeil,
                         onPressFunction: () {},
                         loggerText: 'Terms & Conditions',
                       ),
@@ -135,7 +136,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Delete Account', style: Styles.profileItemText),
+                          Text('Delete Account', style: Styles.normalText),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
@@ -148,7 +149,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: Icons.chevron_right_rounded,
+                        buttonIcon: GymionIcons_1_0.pfeil,
                         onPressFunction: () {
                           // AuthService().deleteUser(context);
                           FirebaseAuth.instance.currentUser!.delete();

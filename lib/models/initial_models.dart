@@ -84,7 +84,7 @@ class InitialModels {
     email: null,
     age: null,
     size: null,
-    weigth: null,
+    weigth: [],
     gender: null,
     goalName: null,
     dayFrequenz: null,

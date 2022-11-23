@@ -2,7 +2,7 @@ class AppUser {
   final String? uid;
   String? name;
   String? email;
-  double? weigth;
+  List<Map<String,double>>? weigth;
   double? size;
   int? age;
   String? gender;

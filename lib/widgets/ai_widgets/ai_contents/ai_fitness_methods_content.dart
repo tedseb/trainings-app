@@ -75,8 +75,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.fitnessMethodObjects[index]['titel'], style: Styles.headLine),
-                          // Text(UsedObjects.fitnessMethodObjects[index]['subTitel'], style: Styles.loginScreenPrivacyText),
+                          Text(UsedObjects.fitnessMethodObjects[index]['titel'], style: Styles.subLine),
                         ],
                       ),
                     )

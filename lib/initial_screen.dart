@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:higym/adjustment/adjustment_screen.dart';
+import 'package:higym/body/body_screen.dart';
 import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/used_objects.dart';
-import 'package:higym/profile/profile_screen.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
-import 'package:higym/widgets/screen_widgets/expanded_example.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_programm_screen.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
@@ -28,11 +28,9 @@ class _InitialScreenState extends State<InitialScreen> {
   int _selectedItem = 0;
   final _pages = [
     const HomeScreen(),
-    const ProfileScreen(),
     const TrainingsProgrammScreen(),
-    const ExpandExample(),
-    // const GoalsScreen(),
-    // const Achievement(),
+    const BodyScreen(),
+    const AdjustmentScreen(),
   ];
 
   final List<Map<String, dynamic>> _icons = UsedObjects.navBarIcons;
@@ -154,7 +152,7 @@ class _InitialScreenState extends State<InitialScreen> {
                       Flexible(
                         child: Text(
                           'You have reached your goal! You need a new one!',
-                          style: Styles.rpeScaleTitle.copyWith(color: Styles.hiGymText),
+                          style: Styles.subLineLigth,
                           textAlign: TextAlign.center,
                         ),
                       ),

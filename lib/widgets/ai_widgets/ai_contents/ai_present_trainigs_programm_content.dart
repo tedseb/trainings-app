@@ -25,10 +25,9 @@ class AiPresentTrainingsProgrammContent extends StatefulWidget {
 }
 
 class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsProgrammContent> {
-
   late Goal goal;
 
-@override
+  @override
   void initState() {
     goal = widget.getNewGoal();
     super.initState();
@@ -37,7 +36,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-      dev.log('Width:  ${screenSize.width}');
+    dev.log('Width:  ${screenSize.width}');
     dev.log('Heigth:  ${screenSize.height}');
     return Stack(
       children: [
@@ -72,7 +71,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                     borderRadius: BorderRadius.circular(50.0),
+                    borderRadius: BorderRadius.circular(50.0),
                     child: Column(
                       children: [
                         ///Plan Name
@@ -85,14 +84,14 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                 children: [
                                   Text(
                                     'Workout',
-                                    style: Styles.trainingsplanTitle,
+                                    style: Styles.subLine.copyWith(color: Styles.darkGrey),
                                   ),
                                 ],
                               )
                             ],
                           ),
                         ),
-                  
+
                         ///Plan Parameter
                         Padding(
                           padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 0.0),
@@ -102,27 +101,33 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                             children: [
                               Column(
                                 children: [
-                                  Styles.getFitnessTypeIcons(goal.trainingsProgramms[0].fitnesstype),
-                                  Text(goal.trainingsProgramms[0].fitnesstype, style: Styles.trainingsplanIconTitle),
+                                  Icon(
+                                    UsedObjects.goalObjects
+                                        .firstWhere((element) => element['titel'] == goal.trainingsProgramms[0].fitnesstype)['icon'],
+                                    color: Styles.darkGrey,
+                                    size: 30.0,
+                                  ),
+                                  Text(goal.trainingsProgramms[0].fitnesstype, style: Styles.smalText.copyWith(color: Styles.darkGrey)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.levelIcon,
                                   Text(UsedObjects.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel],
-                                      style: Styles.trainingsplanIconTitle),
+                                      style: Styles.smalText.copyWith(color: Styles.darkGrey)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.timerIcon,
-                                  Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.trainingsplanIconTitle),
+                                  Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks',
+                                      style: Styles.smalText.copyWith(color: Styles.darkGrey)),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                  
+
                         /// Shadow Divider
                         Padding(
                           padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 0.0),
@@ -147,11 +152,10 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                       // trailing: Icon(Icons.arrow_drop_down_circle_rounded),
                                       // onExpansionChanged: ,
                                       tilePadding: const EdgeInsetsDirectional.fromSTEB(20, 0, 16, 10),
-                                      collapsedIconColor: Styles.hiGymText,
-                                      collapsedTextColor: Styles.hiGymText,
-                                      iconColor: Styles.secondaryColor,
+                                      collapsedIconColor: Styles.darkGrey,
+                                      collapsedTextColor: Styles.darkGrey,
+                                      iconColor: Styles.primaryColor,
                                       initiallyExpanded: index == 0,
-                                      textColor: Styles.secondaryColor,
                                       backgroundColor: Colors.transparent,
                                       title: Row(
                                         children: [
@@ -162,10 +166,10 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                               Text(
                                                 helper_utils.truncatePlanName(
                                                   goal.trainingsProgramms[0].plans[index].name,
-                                                  Styles.trainingsplanSubTitle,
+                                                  Styles.normalTextBold,
                                                   MediaQuery.of(context).size.width,
                                                 ),
-                                                style: Styles.trainingsplanSubTitle,
+                                                style: Styles.normalTextBold,
                                               ),
                                               Container(
                                                 margin: const EdgeInsets.only(top: 4.0),
@@ -229,8 +233,4 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
       ],
     );
   }
-
-
-
- 
 }

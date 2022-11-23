@@ -27,7 +27,7 @@ class _AiFrequencyContentState extends State<AiFrequencyContent> {
   final minutesController = TextEditingController();
 
 
-  List<int> daysList = [1,2,3,4];
+  List<String> daysList = ['Spontan','2','3','4','5'];
   // List<int> daysList = [1,2,3,4,5,6];
   List<String> minutesList = ['30-40','40-50', '50-60'];
 
@@ -93,10 +93,14 @@ class _AiFrequencyContentState extends State<AiFrequencyContent> {
     );
   }
 
-  changeDay(int val) {
+  changeDay(String val) {
+    String returnValue = val;
     setState(() {
-      widget.appUser.dayFrequenz = val;
-      daysController.text = val.toString();
+      if(val == 'Spontan'){
+        returnValue = '1';
+      }
+      widget.appUser.dayFrequenz = int.tryParse(returnValue) ?? 1;
+      daysController.text = val;
     });
   }
 

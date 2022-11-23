@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/models/goal.dart';
 
 enum PossibleAiScreens {
@@ -25,20 +26,21 @@ enum OnBoardingBottomNavBar {
 class UsedObjects {
   static final List<Map<String, dynamic>> navBarIcons = [
     {
-      'icon': Icons.home_outlined,
+      'icon': GymionIcons_1_0.home,
       'text': 'Home',
     },
+   
     {
-      'icon': Icons.person_outline_rounded,
-      'text': 'Profile',
-    },
-    {
-      'icon': Icons.phone_iphone_rounded,
+      'icon': GymionIcons_1_0.plans,
       'text': 'Plans',
     },
     {
-      'icon': Icons.widgets_rounded,
-      'text': 'Status',
+      'icon': GymionIcons_1_0.status,
+      'text': 'Body',
+    },
+     {
+      'icon': GymionIcons_1_0.profil,
+      'text': 'Adjust',
     },
   ];
 
@@ -51,7 +53,7 @@ class UsedObjects {
       // 'goalGroup': 'Abnehmen',
     },
     {
-      'icon': Icons.fitness_center_rounded,
+      'icon': GymionIcons_1_0.muskelAufbauen,
       'titel': 'Muskel Aufbau',
       'subTitel': 'Muskelwachstum Maximieren',
       'goalGroup': 'Muskelwachstum',
@@ -88,25 +90,25 @@ class UsedObjects {
 
   static final List<Map<String, dynamic>> fitnessMethodObjects = [
     {
-      'icon': Icons.sports_gymnastics_rounded,
+      'icon': GymionIcons_1_0.maschinentraining,
       'titel': 'Machinentraining',
     },
     {
-      'icon': Icons.fitness_center_rounded,
+      'icon': GymionIcons_1_0.freieGewichte,
       'titel': 'Training mit freien Gewichten',
     },
     {
-      'icon': Icons.monitor_weight_outlined,
+      'icon': GymionIcons_1_0.cardio,
       'titel': 'Cardio',
     },
     {
-      'icon': Icons.monitor_weight_outlined,
+      'icon': GymionIcons_1_0.mix,
       'titel': 'Mix',
     },
   ];
   static final List<Map<String, dynamic>> additionalMusclegroupObject = [
     {
-      'icon': Icons.sports_gymnastics_rounded,
+      'icon': GymionIcons_1_0.generelleFitness,
       'titel': 'General',
       'General': 'General',
     },
@@ -149,7 +151,6 @@ class UsedObjects {
   'Hard',
   'Advanced',
   'Elite',
-
  ];
 
 

@@ -48,26 +48,29 @@ class ExerciseCardWidget extends StatelessWidget {
                     Text(
                       helper_utils.truncateTrainingsProgrammExeCardName(
                         selectedExercise.name,
-                        Styles.trainingsplanCardExeSubTitle,
+                        Styles.normalTextBold,
                         MediaQuery.of(context).size.width,
                       ),
-                      style: Styles.trainingsplanCardExeTitle,
+                      style: Styles.normalTextBold,
                     ),
-                    Text(
-                      // helper_utils.truncateWithEllipsis(selectedExercise.subName),
-                      helper_utils.truncateTrainingsProgrammExeCardName(
-                        selectedExercise.subName,
-                        Styles.trainingsplanCardExeSubTitle,
-                        MediaQuery.of(context).size.width,
+                    Visibility(
+                      visible: true,
+                      // visible: selectedExercise.subName != '',
+                      child: Text(
+                        // helper_utils.truncateWithEllipsis(selectedExercise.subName),
+                        helper_utils.truncateTrainingsProgrammExeCardName(
+                          selectedExercise.subName,
+                          Styles.normalText,
+                          MediaQuery.of(context).size.width,
+                        ),
+                        style: Styles.normalText,
                       ),
-                      style: Styles.trainingsplanCardExeSubTitle,
                     ),
-                    const Expanded(
-                      child: SizedBox(),
-                    ),
+                   const Spacer(),
                     Text(
-                        '${selectedExercise.sets.length} Sets | ${selectedExercise.weigthScale['actualToDo']} kg | ${selectedExercise.repetitionsScale['actualToDo']} reps',
-                        style: Styles.trainingsplanCardExeinfo),
+                      '${selectedExercise.sets.length} Sets | ${selectedExercise.weigthScale['actualToDo']} kg | ${selectedExercise.repetitionsScale['actualToDo']} reps',
+                      style: Styles.smalText.copyWith(color: Styles.darkGrey),
+                    ),
                   ],
                 ),
               ),

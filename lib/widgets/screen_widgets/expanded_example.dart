@@ -67,7 +67,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                             Text(
                               // 'TRAINING 1',
                               'Build Muscles',
-                              style: Styles.goalsCardTitle,
+                              style: Styles.headline
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 4.0),
@@ -127,9 +127,9 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.fitness_center_rounded, color: Styles.hiGymText),
+                                  const Icon(Icons.fitness_center_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Kraft', style: Styles.homeCardText)
+                                  Text('Kraft', style: Styles.smalText.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -145,9 +145,9 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.self_improvement_rounded, color: Styles.hiGymText),
+                                  const Icon(Icons.self_improvement_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Koordination', style: Styles.homeCardText)
+                                  Text('Koordination', style: Styles.smalText.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -163,9 +163,9 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.directions_run_rounded, color: Styles.hiGymText),
+                                  const Icon(Icons.directions_run_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Cardio', style: Styles.homeCardText)
+                                  Text('Cardio', style: Styles.smalText.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -181,9 +181,9 @@ class _ExpandExampleState extends State<ExpandExample> {
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
-                                  const Icon(Icons.sports_gymnastics_rounded, color: Styles.hiGymText),
+                                  const Icon(Icons.sports_gymnastics_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Beweglichkeit', style: Styles.homeCardText)
+                                  Text('Beweglichkeit', style: Styles.smalText.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
                             ],
@@ -204,14 +204,14 @@ class _ExpandExampleState extends State<ExpandExample> {
                             onPressed: () {},
                             options: const ButtonOptions(
                               color: Styles.primaryColor,
-                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Styles.hiGymText),
+                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Styles.darkGrey),
                             ),
                           ),
                           ButtonWidget(
                             text: 'Details',
                             onPressed: () {},
                             options: const ButtonOptions(
-                              color: Styles.hiGymText,
+                              color: Styles.darkGrey,
                               textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                             ),
                           ),

@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/app_utils/styles.dart';
+import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class RowItemWithSelectWidget extends StatelessWidget {
@@ -29,18 +27,18 @@ class RowItemWithSelectWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundColor: Styles.hiGymText,
+                        backgroundColor: Styles.darkGrey,
                         child: Icon(leadingIcon, color: Styles.white),
                       ),
                       const SizedBox(width: 32.0),
                     ],
                   )
                 : const SizedBox(),
-            Text(widgetText, style: Styles.profileItemText),
+            Text(widgetText, style: Styles.normalText),
           ],
         ),
         ShadowIconButtonWidget(
-          buttonIcon: Icons.chevron_right_rounded,
+          buttonIcon: GymionIcons_1_0.pfeil,
           onPressFunction: () => onPressFunction(),
           loggerText: widgetText,
         ),
