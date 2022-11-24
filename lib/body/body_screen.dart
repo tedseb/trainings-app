@@ -111,7 +111,7 @@ class _BodyScreenState extends State<BodyScreen> {
 
                         const SizedBox(height: 8.0),
                         //  WeeklyChart(data),
-                        WeightChartWidget(userWeigth: user!.weigth!, xAxisLength: 7, key: ValueKey(user!.weigth!.last.entries.first.key)),
+                        WeightChartWidget(userWeigth: user!.weigth!, xAxisLength: 7, key: ValueKey(user!.weigth!.last.entries.first.value)),
                         const SizedBox(height: 8.0),
 
                         /// Update Weigth Button
@@ -126,7 +126,7 @@ class _BodyScreenState extends State<BodyScreen> {
                                       valueUnit: 'kg',
                                       pickerList: weightList,
                                       valueUpdater: changeWeigth,
-                                      initValue: user!.weigth.toString(),
+                                      initValue: user!.weigth!.last.entries.first.value.toString(),
                                     ));
                           },
                           loggerText: 'Update Weigth',
@@ -161,7 +161,7 @@ class _BodyScreenState extends State<BodyScreen> {
                         ),
 
                         const SizedBox(height: 8.0),
-                        BmiChartWidget(user: user!, key: ValueKey(user!.weigth!.last.entries.first.key * 2)),
+                        BmiChartWidget(user: user!, key: ValueKey(user!.size)),
                         const SizedBox(height: 8.0),
 
                     

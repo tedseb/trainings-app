@@ -348,7 +348,7 @@ class DatabaseService {
     Map<String, double> returnMap = {};
 
     map.forEach((key, value) {
-      returnMap[key.toString()] = value;
+      returnMap[key.toString()] = value.toDouble();
     });
 
     return returnMap;

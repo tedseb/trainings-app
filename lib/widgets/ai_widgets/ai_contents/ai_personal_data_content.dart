@@ -34,11 +34,13 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
   List<double> weightList = List<double>.generate(320, (i) => ((i / 2) + 40));
   List<double> sizeList = List<double>.generate(180, (i) => ((i / 2) + 130));
   List<String> genderList = ['Male', 'Female'];
-
+  
   @override
   void initState() {
     widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = '';
-    widget.appUser.weigth != null ? weightController.text = widget.appUser.weigth.toString() : weightController.text = '';
+    widget.appUser.weigth!.isNotEmpty
+        ? weightController.text = widget.appUser.weigth!.last.entries.first.value.toString()
+        : weightController.text = '';
     widget.appUser.size != null ? sizeController.text = widget.appUser.size.toString() : sizeController.text = '';
     widget.appUser.gender != null ? genderController.text = widget.appUser.gender! : genderController.text = '';
     super.initState();
