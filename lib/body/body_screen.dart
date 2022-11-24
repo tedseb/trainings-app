@@ -1,18 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/circle_painter.dart';
 import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/widgets/ai_widgets/ai_vertical_picker_widget.dart';
-import 'package:higym/widgets/ai_widgets/textfield_user_modifier_widget.dart';
+import 'package:higym/widgets/general_widgets/bmi_chart_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
-import 'package:higym/widgets/general_widgets/progress_chart_widget.dart';
+import 'package:higym/widgets/general_widgets/weight_chart_widget.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
-import 'package:higym/zzz_deleteable/weekly_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -41,12 +37,6 @@ class _BodyScreenState extends State<BodyScreen> {
 
   @override
   void initState() {
-    final newWeigthScores = List<WeigthScore>.generate(dayCount, (index) {
-      final y = rng.nextDouble() * 30.0;
-      final d = DateTime.now().add(Duration(days: -dayCount + index));
-      return WeigthScore(y, d);
-    });
-
     setState(() => weigthScores = [
           {now: 10.0},
           // {laterAsNow: 10.0},
@@ -94,6 +84,8 @@ class _BodyScreenState extends State<BodyScreen> {
                 //     ),
                 //   ),
                 // ),
+
+                /// Weight Chart
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 0.0),
                   child: Container(
@@ -111,19 +103,15 @@ class _BodyScreenState extends State<BodyScreen> {
                         Row(
                           children: [
                             Text(
-                              'Current Weigth',
+                              'Weigth Chart',
                               style: Styles.subLine,
                             ),
                           ],
                         ),
-                        // Text(
-                        //   user!.weigth.toString(),
-                        //   style: Styles.subLineLigth,
-                        // ),
 
                         const SizedBox(height: 8.0),
                         //  WeeklyChart(data),
-                        ProgressChartWidget(userWeigth: user!.weigth!, xAxisLength: 7, key: ValueKey(user!.weigth!.last.entries.first.key)),
+                        WeightChartWidget(userWeigth: user!.weigth!, xAxisLength: 7, key: ValueKey(user!.weigth!.last.entries.first.key)),
                         const SizedBox(height: 8.0),
 
                         /// Update Weigth Button
@@ -147,6 +135,41 @@ class _BodyScreenState extends State<BodyScreen> {
                     ),
                   ),
                 ),
+
+                /// BMI Chart
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      color: Styles.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        ///bottom right
+                        BoxShadow(color: Colors.grey.shade400, offset: const Offset(4, 4), blurRadius: 10, spreadRadius: 4),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'BMI Chart',
+                              style: Styles.subLine,
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8.0),
+                        BmiChartWidget(user: user!, key: ValueKey(user!.weigth!.last.entries.first.key * 2)),
+                        const SizedBox(height: 8.0),
+
+                    
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 100.0)
               ],
             )
           : const LoadingWidget(),
@@ -170,14 +193,12 @@ class _BodyScreenState extends State<BodyScreen> {
 
   changeWeigth(double val) {
     String now = DateFormat('dd.MM').format(DateTime.now());
-     setState(() {
-    if (user!.weigth!.isEmpty) {
-      user!.weigth!.add({now: val});
-    } else {
-      user!.weigth!.last.entries.first.key != now ? user!.weigth!.add({now: val}) : user!.weigth!.last = {now: val};
-    }
-   
-      
+    setState(() {
+      if (user!.weigth!.isEmpty) {
+        user!.weigth!.add({now: val});
+      } else {
+        user!.weigth!.last.entries.first.key != now ? user!.weigth!.add({now: val}) : user!.weigth!.last = {now: val};
+      }
     });
     // user!.weigth = val;
     DatabaseService(uid: user!.uid).updateUserData(user!);

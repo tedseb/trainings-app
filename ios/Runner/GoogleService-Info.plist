@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>898194498293-leeqs8p1i81b42jqf601rijkphq67rvt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.898194498293-leeqs8p1i81b42jqf601rijkphq67rvt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>898194498293-gcqkr04kekaa83un6fg73dr7b7saqomd.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBldwLPOFui79LPnc4rX8fpufl_kFxFu48</string>
+	<key>GCM_SENDER_ID</key>
+	<string>898194498293</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.higym</string>
+	<key>PROJECT_ID</key>
+	<string>higym-ecafb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>higym-ecafb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:898194498293:ios:a21e30e18b5456dbf79bbc</string>
+</dict>
+</plist>

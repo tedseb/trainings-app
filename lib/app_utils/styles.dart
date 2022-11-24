@@ -16,7 +16,7 @@ class Styles {
 
   static const Color orange = Color(0xFFf68b00);
   static const Color blue = Color(0xFF49a9e5);
-  static const Color progressCircleBackground = Color(0xFFe7e7e7);
+  static const Color progressBackground = Color(0xFFe7e7e7);
 
   static const Color pastelBlue = Color(0xFF7DB3BC);
   static const Color pastelGreen = Color(0xFF92AF5B);

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/styles.dart';
 
-class WeigthScore {
-  late double value;
-  late DateTime time;
-  WeigthScore(this.value, this.time);
-}
 
-class ProgressChartWidget extends StatefulWidget {
-  const ProgressChartWidget({
+class WeightChartWidget extends StatefulWidget {
+  const WeightChartWidget({
     required this.userWeigth,
     required this.xAxisLength,
     Key? key,
@@ -19,15 +14,14 @@ class ProgressChartWidget extends StatefulWidget {
   // final List<WeigthScore> weigthScores;
 
   @override
-  State<ProgressChartWidget> createState() => _ProgressChartWidgetState();
+  State<WeightChartWidget> createState() => _WeightChartWidgetState();
 }
 
-const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-class _ProgressChartWidgetState extends State<ProgressChartWidget> {
+class _WeightChartWidgetState extends State<WeightChartWidget> {
   late double min, max;
-  late List<double> _Y;
-  late List<String> _X;
+  late List<double> _y;
+  late List<String> _x;
 
   @override
   void initState() {
@@ -57,8 +51,8 @@ class _ProgressChartWidgetState extends State<ProgressChartWidget> {
       min = newMin;
       max = newMax;
       
-      _Y = showableWeigthList.map((p) =>  p.entries.first.value).toList();
-       _X = showableWeigthList.map((p) => p.entries.first.key).toList();
+      _y = showableWeigthList.map((p) =>  p.entries.first.value).toList();
+       _x = showableWeigthList.map((p) => p.entries.first.key).toList();
     });
 
     super.initState();
@@ -71,7 +65,7 @@ class _ProgressChartWidgetState extends State<ProgressChartWidget> {
       height: 90,
       width: screenSize.width - 98, //padding of the Parent Widget
       child: CustomPaint(
-        painter: ChartPainter(_X, _Y, min, max),
+        painter: ChartPainter(_x, _y, min, max),
         child: Container(),
       ),
     );
@@ -218,7 +212,7 @@ class ChartPainter extends CustomPainter {
   final Paint outlinePaint = Paint()
     ..strokeWidth = 1.0
     ..style = PaintingStyle.stroke
-    ..color = Colors.white;
+    ..color = Colors.black;
 
   void _drawOtline(Canvas canvas, Offset c, double width, double height) {
     for (var p in y) {

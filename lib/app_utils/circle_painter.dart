@@ -24,7 +24,7 @@ class BackgroundCirclePainter extends CustomPainter {
     double radiusSmall = size.width * (16 / 64);
 
     final paint = Paint()
-      ..color = Styles.progressCircleBackground
+      ..color = Styles.progressBackground
       ..strokeWidth = 23
       ..style = PaintingStyle.stroke;
 
