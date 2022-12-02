@@ -55,11 +55,11 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
                 children: [
                   Text(
                     widget.dialogName,
-                    style: Styles.subLine,
+                    style: Styles.subLinesBold,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8.0),
-                  Text(widget.valueUnit, style: Styles.smalText),
+                  Text(widget.valueUnit, style: Styles.smallLinesBold),
                 ],
               ),
             ),
@@ -90,7 +90,7 @@ class _AiVerticalPickerWidgetState extends State<AiVerticalPickerWidget> {
                         return Center(
                           child: Text(
                             widget.pickerList[i].toString(),
-                            style: Styles.headline.copyWith(color: i == _index ? Styles.darkGrey : Styles.lightGrey),
+                            style: Styles.headLinesBold.copyWith(color: i == _index ? Styles.darkGrey : Styles.lightGrey),
                           ),
                         );
                       },

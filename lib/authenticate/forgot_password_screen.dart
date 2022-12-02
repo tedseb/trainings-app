@@ -49,23 +49,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 110),
               Text(
                 'Reset password',
-                style: Styles.subLine,
+                style: Styles.subLinesBold,
               ),
               const SizedBox(height: 30),
               Text(
                 'Enter your HiGym account email and we\'ll send you instructions on how to reset your password',
-                style: Styles.smalText,
+                style: Styles.smallLinesBold,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
               TextFormField(
                 controller: emailController,
-                 style: Styles.normalText,
+                 style: Styles.normalLinesLight,
                 decoration: InputDecoration(
                   labelText: 'E-mail',
-                  labelStyle: Styles.subLine,
+                  labelStyle: Styles.subLinesBold,
                   hintText: 'Your Email Address',
-                  hintStyle: Styles.smalText,
+                  hintStyle: Styles.smallLinesBold,
                   isDense: true,
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -94,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 visible: resetResponse,
                 child: Text(
                   responseText,
-                  style: Styles.smalText.copyWith(color: resetResponseColor),
+                  style: Styles.smallLinesLight.copyWith(color: resetResponseColor),
                   textAlign: TextAlign.center,
                 ),
               ),

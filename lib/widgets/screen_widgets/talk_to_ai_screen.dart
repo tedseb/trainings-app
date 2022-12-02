@@ -72,19 +72,19 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
       {
         'index': 2,
         'key': PossibleAiScreens.aiPersonalDataContent,
-        'aiText': 'Kannst du mir etwas über dich erzählen?',
+        'aiText': 'Hey ${appUser.name}! Gerne kannst du deine persönlichen Daten nochmal updaten!',
         'aiContent': AiPersonalDataContent(appUser: appUser),
       },
       {
         'index': 3,
         'key': PossibleAiScreens.aiGoalContent,
-        'aiText': 'Was ist dein Ziel?',
+        'aiText': 'Was ist dein neues Ziel ${appUser.name}?',
         'aiContent': AiGoalContent(appUser: appUser),
       },
       {
         'index': 4,
         'key': PossibleAiScreens.aiFrequenzyContent,
-        'aiText': 'Wie viele Tage die Woche und wie lange möchtest du Trainieren?',
+        'aiText': 'Wie oft und für wie lange kannst du sicher pro Woche trainieren?',
         'aiContent': AiFrequencyContent(appUser: appUser),
       },
       // Following element is only to demonstrade that it is possible
@@ -145,8 +145,10 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
             child: Column(
               children: [
                 AiTextWidget(
-                  aiText: aiContentScreenChain[pageViewIndex]['aiText'],
-                  key: ValueKey(aiContentScreenChain[pageViewIndex]['aiText']),
+                  PossibleAiScreens: aiContentScreenChain[pageViewIndex]['key'],
+                  user: appUser,
+                  variation: 2,
+                  key: ValueKey(aiContentScreenChain[pageViewIndex]['key']),
                 ),
                 Expanded(
                   child: PageView.builder(
@@ -281,7 +283,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
                 {
                   'index': 5,
                   'key': PossibleAiScreens.aiAdditionalMusclegroupContent,
-                  'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
+                  'aiText': 'Gibt es einen Körperteil was du besonders gut entwickeln möchtest?',
                   'aiContent': AiAdditionalMusclegroupContent(appUser: appUser),
                 },
               ));

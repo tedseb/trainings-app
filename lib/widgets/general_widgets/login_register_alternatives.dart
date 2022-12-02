@@ -24,7 +24,7 @@ class LoginRegisterAlternatives extends StatelessWidget {
       children: [
         Image.asset('assets/logo/${platform}_login.png', height: 32),
         const SizedBox(width: 16.0),
-        Text('$registerSignIn $platform', style: Styles.normalText),
+        Text('$registerSignIn $platform', style: Styles.normalLinesLight),
         const Spacer(),
         ShadowIconButtonWidget(buttonIcon: GymionIcons_1_0.pfeil, onPressFunction: onPressFunction, loggerText: '${platform}_login'),
       ],

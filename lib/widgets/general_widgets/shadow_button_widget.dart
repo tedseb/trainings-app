@@ -51,7 +51,7 @@ class ShadowButtonWidget extends StatelessWidget {
           onPrimary: buttonTextColor,
           elevation: 0.0,
         ),
-        child: Text(buttonText, style: Styles.normalText,),
+        child: Text(buttonText, style: Styles.normalLinesLight,),
       ),
     );
   }

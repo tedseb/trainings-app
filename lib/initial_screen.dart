@@ -152,7 +152,7 @@ class _InitialScreenState extends State<InitialScreen> {
                       Flexible(
                         child: Text(
                           'You have reached your goal! You need a new one!',
-                          style: Styles.subLineLigth,
+                          style: Styles.subLinesBold,
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:higym/gymion_icons_1_0_icons.dart';
 import 'package:higym/models/goal.dart';
 
 enum PossibleAiScreens {
+  aiOnboardingScreen,
   talkToAiContent,
   aiNameContent,
   aiPersonalDataContent,
@@ -27,20 +28,20 @@ class UsedObjects {
   static final List<Map<String, dynamic>> navBarIcons = [
     {
       'icon': GymionIcons_1_0.home,
-      'text': 'Home',
+      'text': 'HOME',
     },
    
     {
       'icon': GymionIcons_1_0.plans,
-      'text': 'Plans',
+      'text': 'PLANS',
     },
     {
       'icon': GymionIcons_1_0.status,
-      'text': 'Body',
+      'text': 'BODY',
     },
      {
       'icon': GymionIcons_1_0.profil,
-      'text': 'Adjust',
+      'text': 'ADJUST',
     },
   ];
 
@@ -81,11 +82,12 @@ class UsedObjects {
   ];
 
   static final List<String> fitnessLevelText = [
-    'Gar kein Sport',
-    'Gelegenheits Sport',
-    'Regelmäßig Sport',
-    'Sehr oft Sport',
-    'Athlet',
+    'Im Alltag gerate ich schnell in Atemnot.',
+    'Damals habe ich viel Sport gemacht, aber ich bin schon lange davon abgekommen.',
+    'Ab und zu versuche ich, Sport zu treiben, was mich zum Schwitzen bringt.',
+    'Ich treibe zurzeit regelmäßig Fitness, mindestens 2 Mal pro Woche.',
+    'Ich treibe fast jeden Tag Fitness.',
+    'Ich bin ein Atleht!',
   ];
 
   static final List<Map<String, dynamic>> fitnessMethodObjects = [
@@ -146,11 +148,11 @@ class UsedObjects {
   ];
 
  static final List<String> trainingPlanDifficulty = [
-  'Easy',
-  'Medium',
-  'Hard',
+  'Novice',
+  'Beginners',
+  'Intermediate',
   'Advanced',
-  'Elite',
+  'Professional',
  ];
 
 

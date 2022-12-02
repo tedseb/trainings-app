@@ -75,7 +75,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.additionalMusclegroupObject[index]['titel'], style: Styles.subLine),
+                          Text(UsedObjects.additionalMusclegroupObject[index]['titel'], style: Styles.subLinesBold),
                         ],
                       ),
                     )

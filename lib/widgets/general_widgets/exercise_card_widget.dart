@@ -48,10 +48,10 @@ class ExerciseCardWidget extends StatelessWidget {
                     Text(
                       helper_utils.truncateTrainingsProgrammExeCardName(
                         selectedExercise.name,
-                        Styles.normalTextBold,
+                        Styles.normalLinesBold,
                         MediaQuery.of(context).size.width,
                       ),
-                      style: Styles.normalTextBold,
+                      style: Styles.normalLinesBold,
                     ),
                     Visibility(
                       visible: true,
@@ -60,16 +60,24 @@ class ExerciseCardWidget extends StatelessWidget {
                         // helper_utils.truncateWithEllipsis(selectedExercise.subName),
                         helper_utils.truncateTrainingsProgrammExeCardName(
                           selectedExercise.subName,
-                          Styles.normalText,
+                          Styles.normalLinesLight,
                           MediaQuery.of(context).size.width,
                         ),
-                        style: Styles.normalText,
+                        style: Styles.normalLinesLight,
                       ),
                     ),
-                   const Spacer(),
-                    Text(
-                      '${selectedExercise.sets.length} Sets | ${selectedExercise.weigthScale['actualToDo']} kg | ${selectedExercise.repetitionsScale['actualToDo']} reps',
-                      style: Styles.smalText.copyWith(color: Styles.darkGrey),
+                    const Spacer(),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(text: selectedExercise.sets.length.toString(), style: Styles.smallLinesBold),
+                          TextSpan(text: ' sets | ', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                          TextSpan(text: selectedExercise.weigthScale['actualToDo'].toString(), style: Styles.smallLinesBold),
+                          TextSpan(text: ' kg | ', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                          TextSpan(text: selectedExercise.repetitionsScale['actualToDo'].toString(), style: Styles.smallLinesBold),
+                          TextSpan(text: ' reps', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                        ],
+                      ),
                     ),
                   ],
                 ),

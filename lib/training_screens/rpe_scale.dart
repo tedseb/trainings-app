@@ -32,7 +32,7 @@ class RPEScale extends StatelessWidget {
                 children: [
                   Text(
                     'How Hard was your Exercise?',
-                    style: Styles.subLineLigth,
+                    style: Styles.headLinesLight.copyWith(color: Styles.exercisingWhite),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -51,11 +51,7 @@ class RPEScale extends StatelessWidget {
                 ),
                 child: Text(
                   'easy',
-                  style: TextStyle(
-                    color: modeColor,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 28,
-                  ),
+                  style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
               ElevatedButton(
@@ -71,12 +67,8 @@ class RPEScale extends StatelessWidget {
                   elevation: 0.0,
                 ),
                 child: Text(
-                  'moderat',
-                  style: TextStyle(
-                    color: modeColor,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 28,
-                  ),
+                  'okay',
+                  style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
               ElevatedButton(
@@ -93,11 +85,7 @@ class RPEScale extends StatelessWidget {
                 ),
                 child: Text(
                   'hard',
-                  style: TextStyle(
-                    color: modeColor,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 28,
-                  ),
+                  style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
               // Column(

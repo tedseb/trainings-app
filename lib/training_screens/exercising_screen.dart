@@ -181,6 +181,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    /// Exercise Info Button
                     SizedBox(
                       width: 40.0,
                       child: ElevatedButton(
@@ -211,36 +212,41 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                         ),
                       ),
                     ),
+
+                    /// Exercise Name and Information
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(prepareFor, style: Styles.normalText.copyWith(color: Styles.exercisingWhite)),
+                          Text(prepareFor, style: Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite)),
                           Text(
-                            helper_utils.truncateExerciseName(exeriseName, Styles.subLine.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
-                            style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                            helper_utils.truncateExerciseName(
+                                exeriseName, Styles.subLinesBold.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                            style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
                           ),
                           Visibility(
                             visible: exerciseStation != '',
                             child: Text(
-                              helper_utils.truncateExerciseName(exerciseStation, Styles.normalText.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
-                              style: Styles.normalText.copyWith(color: Styles.exercisingWhite),
+                              helper_utils.truncateExerciseName(exerciseStation, Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
+                                  MediaQuery.of(context).size.width),
+                              style: Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
                             ),
                           ),
                           Visibility(
                             visible: exerciseHandle != '',
                             child: Text(
-                              helper_utils.truncateExerciseName(exerciseHandle, Styles.normalText.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
-                              style: Styles.normalText.copyWith(color: Styles.exercisingWhite),
+                              helper_utils.truncateExerciseName(
+                                  exerciseHandle, Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                              style: Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Expanded(
-                      child: SizedBox(),
-                    ),
+                    const Spacer(),
+
+                    /// Vertical Divider
                     const SizedBox(
                       height: 125,
                       child: VerticalDivider(
@@ -259,11 +265,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               children: [
                                 Text(
                                   '$actualSetNumber.',
-                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                  style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
                                 ),
                                 Text(
                                   'set',
-                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                  style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
                                 ),
                               ],
                             ),
@@ -275,11 +281,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                               children: [
                                 Text(
                                   actualWeight.toStringAsFixed(1),
-                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                  style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
                                 ),
                                 Text(
                                   'kg',
-                                  style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                  style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
                                 ),
                               ],
                             ),
@@ -293,11 +299,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                                 children: [
                                   Text(
                                     actualTimeOrRepNumberToDo.toString(),
-                                    style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                    style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
                                   ),
                                   Text(
                                     actualTimeorRep,
-                                    style: Styles.subLine.copyWith(color: Styles.exercisingWhite),
+                                    style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
                                   ),
                                 ],
                               ),
@@ -346,19 +352,29 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                                 ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        trainingStarted ? actualTimeOrRepNumber.toString() : '',
-                                        style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
-                                      ),
-                                      Text(
-                                        trainingStarted ? actualTimeorRep : 'Get Ready',
-                                        style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
-                                      ),
+                                      trainingStarted
+                                          ? Column(
+                                              children: [
+                                                Text(
+                                                  actualTimeOrRepNumber.toString(),
+                                                  style: Styles.bigNumbers,
+                                                  // style: TextStyle(color: progressColor, fontSize: 100.0, fontWeight: FontWeight.w300),
+                                                ),
+                                                Text(
+                                                  actualTimeorRep,
+                                                  style: Styles.smallLinesBold.copyWith(color: Styles.exercisingWhite),
+                                                ),
+                                              ],
+                                            )
+                                          : Text(
+                                              'Get Ready',
+                                              style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
+                                            ),
                                     ],
                                   )
                                 : Text(
                                     'Do as much repetition as you can!',
-                                    style: TextStyle(color: progressColor, fontSize: 21.0, fontWeight: FontWeight.w600, height: 0.3),
+                                    style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
                                   ),
                           )
                         ],

@@ -44,8 +44,8 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: 'Hi ', style: Styles.headline.copyWith(fontWeight: FontWeight.w500)),
-                          TextSpan(text: user!.name.toString(), style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
+                          TextSpan(text: 'Hi ', style: Styles.headLinesBold.copyWith(fontWeight: FontWeight.w500)),
+                          TextSpan(text: user!.name.toString(), style: Styles.headLinesLight.copyWith(fontWeight: FontWeight.w300)),
                         ],
                       ),
                     ),

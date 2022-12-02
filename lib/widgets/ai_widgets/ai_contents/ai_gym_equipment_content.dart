@@ -72,7 +72,7 @@ class _AiGymEquipmentContentState extends State<AiGymEquipmentContent> {
                             children: [
                               Text(
                                 gymEquipment[index].keys.first,
-                                style: Styles.normalText,
+                                style: Styles.normalLinesBold,
                               ),
                               // Text(
                               //   'Learn more',

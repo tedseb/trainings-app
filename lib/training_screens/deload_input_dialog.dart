@@ -49,7 +49,7 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
                       Flexible(
                         child: Text(
                           'How many repetitions did you do?',
-                          style: Styles.subLine,
+                          style: Styles.subLinesBold,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -61,12 +61,12 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
                     children: [
                       TextFormField(
                         controller: repetitonsController,
-                         style: Styles.normalText,
+                         style: Styles.normalLinesLight,
                         decoration: InputDecoration(
                           labelText: 'Repetitions',
-                          labelStyle: Styles.subLine,
+                          labelStyle: Styles.subLinesBold,
                           hintText: 'Repetitions count',
-                          hintStyle: Styles.smalText,
+                          hintStyle: Styles.smallLinesBold,
                           isDense: true,
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),

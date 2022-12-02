@@ -6,7 +6,6 @@ import 'package:higym/app_utils/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/widgets/ai_widgets/ai_vertical_picker_widget.dart';
 import 'package:higym/widgets/ai_widgets/textfield_user_modifier_widget.dart';
-import 'package:higym/widgets/general_widgets/textfield_widget.dart';
 
 import 'dart:developer' as dev;
 

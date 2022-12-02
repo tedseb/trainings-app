@@ -79,7 +79,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
             ),
           ),
           const AiWaveWidget(),
-          AiTextWidget(aiText: aiText, key: ValueKey(aiText)),
+          // AiTextWidget(aiText: aiText, key: ValueKey(aiText)),
           Flexible(child: SingleChildScrollView(child: contentWidget)),
           aiContent != PossibleAiScreens.talkToAiContent ? const SizedBox() : const SizedBox(height: 32.0),
         ],

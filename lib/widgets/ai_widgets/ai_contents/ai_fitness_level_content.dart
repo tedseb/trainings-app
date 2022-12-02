@@ -31,35 +31,50 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(fitnessLevelText[sliderValue.toInt()], style: Styles.subLineLigth),
+          Text(fitnessLevelText[sliderValue.toInt()], style: Styles.subLinesLight, textAlign: TextAlign.center,),
           const SizedBox(height: 32.0),
-          Slider(
-            thumbColor: Styles.primaryColor,
-            activeColor: Styles.grey,
-            inactiveColor: Styles.lightGrey,
-            value: widget.appUser.fitnessLevel!.toDouble(),
-            min: 0,
-            max: fitnessLevelText.length - 1,
-            divisions: fitnessLevelText.length - 1,
-            // label: widget.appUser.fitnessLevel.toString(),
-            onChanged: (double value) {
-              setState(() {
-                widget.appUser.fitnessLevel = value ~/ 1;
-                sliderValue = value;
-              });
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
-              Text('Nicht Fit', style: Styles.subLineLigth),
-              Text('Sehr Fit',style: Styles.subLineLigth),
+          Column(
+            children: [
+              Slider(
+                thumbColor: Styles.primaryColor,
+                activeColor: Styles.grey,
+                inactiveColor: Styles.lightGrey,
+                value: widget.appUser.fitnessLevel!.toDouble(),
+                min: 0,
+                max: fitnessLevelText.length - 1,
+                divisions: fitnessLevelText.length - 1,
+                // label: widget.appUser.fitnessLevel.toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    sliderValue = value;
+                    if (value > 1) {
+                      if (value < 4) {
+                        widget.appUser.fitnessLevel = 2;
+                      } else {
+                        widget.appUser.fitnessLevel = (value ~/ 1) - 1;
+                      }
+                    } else {
+                      widget.appUser.fitnessLevel = value ~/ 1;
+                    }
+                  });
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Nicht Fit', style: Styles.subLinesLight),
+                  Text('Sehr Fit', style: Styles.subLinesLight),
+                ],
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

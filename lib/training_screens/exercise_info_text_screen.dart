@@ -49,7 +49,7 @@ class _ExerciseInfoTextScreenState extends State<ExerciseInfoTextScreen> {
                     children: [
                       Text(
                        widget.exeInfo,
-                        style: Styles.subLine,
+                        style: Styles.normalLinesLight,
                       ),
                      
                     ],

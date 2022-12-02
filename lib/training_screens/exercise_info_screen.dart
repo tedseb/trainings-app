@@ -124,15 +124,15 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                           children: [
                             Text(
                               selectedExercise.name,
-                              style: Styles.subLine,
+                              style: Styles.subLinesBold,
                             ),
                             Text(
                               helper_utils.listToString(selectedExercise.station),
-                              style: Styles.normalText,
+                              style: Styles.normalLinesLight,
                             ),
                             Text(
                               helper_utils.listToString(selectedExercise.handle),
-                              style: Styles.normalText,
+                              style: Styles.normalLinesLight,
                             ),
                           ],
                         ),
@@ -194,11 +194,11 @@ class _ExerciseInfoScreenState extends State<ExerciseInfoScreen> {
                     ),
                     Text(
                       swipeText,
-                      style: Styles.subLineLigth
+                      style: Styles.subLinesLight
                     ),
                     Text(
                       swipeSupText,
-                      style: Styles.normalText,
+                      style: Styles.smallLinesBold,
                     ),
                   ],
                 ),

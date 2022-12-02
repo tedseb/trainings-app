@@ -85,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: TextSpan(
                                   // style: Styles.homeCardName,
                                   children: [
-                                    TextSpan(text: 'Hi ', style: Styles.headline.copyWith(fontWeight: FontWeight.w500)),
-                                    TextSpan(text: user!.name.toString(), style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
+                                    TextSpan(text: 'Hi ', style: Styles.headLinesBold),
+                                    TextSpan(text: user!.name.toString(), style: Styles.headLinesLight),
                                   ],
                                 ),
                               ),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           children: [
                             Flexible(
-                              child: Text(welcomeCardText, style: Styles.normalText),
+                              child: Text(welcomeCardText, style: Styles.normalLinesLight),
                             ),
                           ],
                         ),
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'TE $timesTrainedThisWeek/$toTrainThisWeek',
-                                    style: Styles.normalText,
+                                    style: Styles.smallLinesLight,
                                   ),
                                 ),
                                 timesTrainedThisWeek < toTrainThisWeek
@@ -176,8 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Points', style: Styles.normalText),
-                                    Text(totalActivityPoints.round().toString(), style: Styles.normalText),
+                                    Text('Points', style: Styles.normalLinesLight),
+                                    Text(totalActivityPoints.round().toString(), style: Styles.normalLinesLight),
                                   ],
                                 ),
                               ),
@@ -204,8 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Weeks', style: Styles.normalText),
-                                    Text('$doneWeeks/$allWeeks', style: Styles.normalText),
+                                    Text('Weeks', style: Styles.normalLinesLight),
+                                    Text('$doneWeeks/$allWeeks', style: Styles.normalLinesLight),
                                   ],
                                 ),
                               ),

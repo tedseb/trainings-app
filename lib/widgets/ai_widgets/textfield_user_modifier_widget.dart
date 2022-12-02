@@ -27,12 +27,12 @@ class _TextFieldUserModifierWidgetState extends State<TextFieldUserModifierWidge
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      style: Styles.normalText,
+      style: Styles.normalLinesLight,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: Styles.subLine,
+        labelStyle: Styles.subLinesBold,
         hintText: widget.hintText,
-        hintStyle: Styles.smalText,
+        hintStyle: Styles.smallLinesBold,
         isDense: true,
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),

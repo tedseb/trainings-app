@@ -80,7 +80,7 @@ class ChartPainter extends CustomPainter {
     // Draw Background
     canvas.drawLine(Offset(0, height), Offset(size.width, height), progressBackground);
 
-    drawTextCentered(canvas, Offset(bmi * (size.width / 40), height - 20), bmi.toStringAsFixed(1), Styles.smalText, size.width);
+    drawTextCentered(canvas, Offset(bmi * (size.width / 40), height - 20), bmi.toStringAsFixed(1), Styles.smallLinesLight, size.width);
 
     /// Draw Obese BMI Line
     if (bmi > overweightBmiLimit) {

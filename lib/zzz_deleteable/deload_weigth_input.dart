@@ -47,7 +47,7 @@ class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
                       Flexible(
                         child: Text(
                           'We are calculating your start weigth. \n How many repetitions did you do?',
-                          style: Styles.normalText,
+                          style: Styles.subLinesBold,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -59,12 +59,12 @@ class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
                     children: [
                       TextFormField(
                         controller: repetitonsController,
-                         style: Styles.normalText,
+                         style: Styles.normalLinesLight,
                         decoration: InputDecoration(
                           labelText: 'Repetitions',
-                          labelStyle: Styles.subLine.copyWith(color: Styles.white),
+                          labelStyle: Styles.subLinesBold.copyWith(color: Styles.white),
                           hintText: 'Repetitions count',
-                          hintStyle: Styles.smalText.copyWith(color: Styles.white),
+                          hintStyle: Styles.smallLinesBold.copyWith(color: Styles.white),
                           isDense: true,
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Styles.white, width: 2.0),

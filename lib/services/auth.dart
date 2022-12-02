@@ -73,7 +73,7 @@ class AuthService {
         signOut();
 
         /// This causes "too many request if tried directly"
-        // user.sendEmailVerification();
+        user.sendEmailVerification();
         return 'Pleas Verify your Email at first!';
       }
     } catch (e) {

@@ -64,45 +64,63 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
   @override
   void initState() {
     ///Screens
-
     aiContentScreenChain = [
       {
         'aiText': 'Wie heißt du?',
         'aiContent': AiNameContent(appUser: onBoardingAppUser),
+        'screenContent': PossibleAiScreens.aiNameContent,
+        'variation': 1,
       },
       {
-        'aiText': 'Kannst du mir etwas über dich erzählen?',
+        'aiText': 'Ich erstelle dir einen Workout der perfekt auf dich abgestimmt ist. Dazu brauch ich einige Information von dir.',
         'aiContent': AiPersonalDataContent(appUser: onBoardingAppUser),
+        'screenContent': PossibleAiScreens.aiPersonalDataContent,
+        'variation': 1,
       },
       {
         'aiText': 'Was ist dein Ziel?',
+        // 'Interessant dein BMI beträgt ${2*10}. Was ist dein Ziel?',
         'aiContent': AiGoalContent(appUser: onBoardingAppUser),
+        'screenContent': PossibleAiScreens.aiGoalContent,
+        'variation': 1,
       },
       {
-        'aiText': 'Wie fit bist du?',
+        'aiText': 'Wie fit bist du? Damit ich deinen Schwierigkeitsgrad richtig einstellen kann, wähle die Option, die am besten zu dir passt!',
         'aiContent': AiFitnessLevelContent(appUser: onBoardingAppUser),
+        'screenContent': PossibleAiScreens.aiFitnessLevelContent,
+        'variation': 1,
       },
-      
+
       // {
-      //   'aiText': 'Welche Fitnessmethoden bevorzugst du eher?',
+      //   'aiText': 'Mit welcher Art von Fitness hast du die meiste Erfahrung?',
       // 'aiContent': AiFitnessMethodsContent(appUser: onBoardingAppUser),
+      // 'screenContent': PossibleAiScreens.aiFitnessMethodsContent,
+      //   'variation':1,
       // },
       {
-        'aiText': 'Wie viele Tage die Woche und wie lange möchtest du Trainieren?',
+        'aiText': 'Wie oft und für wie lange kannst du sicher pro Woche trainieren?',
         'aiContent': AiFrequencyContent(appUser: onBoardingAppUser),
+        'screenContent': PossibleAiScreens.aiFrequenzyContent,
+        'variation': 1,
       },
       // {
-      //   'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
+      //   'aiText': 'Gibt es einen Körperteil was du besonders gut entwickeln möchtest?',
       // 'aiContent': AiAdditionalMusclegroupContent(appUser: onBoardingAppUser),
+      // 'screenContent': PossibleAiScreens.aiAdditionalMusclegroupContent,
+      //   'variation':1,
       // },
       {
         'aiText': 'Diese Equipments solltest du parat haben!',
         // 'aiText': 'Welche Ausstattung bietet dein Fitnessstudio?',
         'aiContent': AiGymEquipmentContent(appUser: onBoardingAppUser, goalUpdater: goalUpdater),
+        'screenContent': PossibleAiScreens.aiGymEquipmentContent,
+        'variation': 1,
       },
       {
-        'aiText': 'Hier ist dein neues Trainings Programm, viel Erfolg!',
+        'aiText': 'Geschafft! Hier ist dein Trainingsprogramm.',
         'aiContent': AiPresentTrainingsProgrammContent(getNewGoal: getNewGoal),
+        'screenContent': PossibleAiScreens.aiPresentTrainingsProgrammContent,
+        'variation': 1,
       },
     ];
 
@@ -119,13 +137,15 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
           onboardingScreen == 0
               ? Flexible(
                   child: Column(
-                    children: const [
-                      Spacer(),
+                    children: [
+                      const Spacer(),
                       AiTextWidget(
-                        aiText: 'Hallo ich bin Higym, dein smarter Coach!',
-                        key: ValueKey('Hallo ich bin Higym, dein smarter Coach!'),
+                        PossibleAiScreens: PossibleAiScreens.aiOnboardingScreen,
+                        user: onBoardingAppUser,
+                        variation: 1,
+                        key: const ValueKey(PossibleAiScreens.aiOnboardingScreen),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                 )
@@ -133,8 +153,10 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                   child: Column(
                     children: [
                       AiTextWidget(
-                        aiText: aiContentScreenChain[currentContent]['aiText'],
-                        key: ValueKey(aiContentScreenChain[currentContent]['aiText']),
+                        PossibleAiScreens: aiContentScreenChain[currentContent]['screenContent'],
+                        user: onBoardingAppUser,
+                        variation: 1,
+                        key: ValueKey(aiContentScreenChain[currentContent]['screenContent']),
                       ),
                       Expanded(
                         child: PageView.builder(
@@ -319,8 +341,10 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
           aiContentScreenChain.insert(
             aiContentScreenNumber[PossibleAiScreens.aiFitnessMethodsContent]!,
             {
-              'aiText': 'Welche Fitnessmethode bevorzugst du eher?',
+              'aiText': 'Mit welcher Art von Fitness hast du die meiste Erfahrung?',
               'aiContent': AiFitnessMethodsContent(appUser: onBoardingAppUser),
+              'screenContent': PossibleAiScreens.aiFitnessMethodsContent,
+              'variation': 1,
             },
           );
         });
@@ -385,8 +409,10 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
             aiContentScreenChain.insert(
               aiContentScreenNumber[PossibleAiScreens.aiAdditionalMusclegroupContent]!,
               {
-                'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
+                'aiText': 'Gibt es einen Körperteil was du besonders gut entwickeln möchtest?',
                 'aiContent': AiAdditionalMusclegroupContent(appUser: onBoardingAppUser),
+                'screenContent': PossibleAiScreens.aiAdditionalMusclegroupContent,
+                'variation': 1,
               },
             );
           });
@@ -451,7 +477,10 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
   }
 
   void backToOnBoarding() {
-    setState(() => onboardingScreen = 0);
+    setState(() {
+      currentContent = 0;
+      onboardingScreen = 0;
+    });
   }
 
   void goalUpdater(Goal newGoal) {

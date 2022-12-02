@@ -30,53 +30,99 @@ class Styles {
 
   /// --- Text Sheet ---
 
-  static TextStyle get numbers => const TextStyle(
-        color: darkGrey,
-        fontWeight: FontWeight.w600,
-        fontSize: 35.01,
+  static TextStyle get bigNumbers => const TextStyle(
+        color: exercisingWhite,
+        fontWeight: FontWeight.w900,
+        fontSize: 60,
       );
-
-  static TextStyle get headline => const TextStyle(
+  static TextStyle get headLinesBold => const TextStyle(
         color: darkGrey,
         fontWeight: FontWeight.w600,
         fontSize: 35,
       );
-
-  static TextStyle get headlineLigth => const TextStyle(
+  static TextStyle get headLinesLight => const TextStyle(
         color: darkGrey,
         fontWeight: FontWeight.w400,
         fontSize: 35,
       );
-  static TextStyle get subLine => const TextStyle(
+  static TextStyle get subLinesBold => const TextStyle(
         color: darkGrey,
         fontWeight: FontWeight.w600,
-        fontSize: 22.0,
+        fontSize: 21.5,
       );
-  static TextStyle get subLineLigth => const TextStyle(
+  static TextStyle get subLinesLight => const TextStyle(
         color: darkGrey,
         fontWeight: FontWeight.w400,
-        fontSize: 22.0,
+        fontSize: 21.5,
       );
-  static TextStyle get normalText => const TextStyle(
-        color: darkGrey,
-        fontWeight: FontWeight.w500,
-        fontSize: 17,
-      );
-  static TextStyle get normalTextBold => const TextStyle(
+  static TextStyle get normalLinesBold => const TextStyle(
         color: darkGrey,
         fontWeight: FontWeight.w600,
-        fontSize: 17,
+        fontSize: 16,
       );
-  static TextStyle get fliessTextBold => const TextStyle(
+  static TextStyle get normalLinesLight => const TextStyle(
         color: darkGrey,
-        fontWeight: FontWeight.w600,
-        fontSize: 22,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
       );
-  static TextStyle get smalText => const TextStyle(
+  static TextStyle get smallLinesBold => const TextStyle(
         color: grey,
-        fontWeight: FontWeight.w500,
-        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        fontSize: 13.5,
       );
+  static TextStyle get smallLinesLight => const TextStyle(
+        color: darkGrey,
+        fontWeight: FontWeight.w400,
+        fontSize: 13.5,
+      );
+  static TextStyle get tinyLinesBold => const TextStyle(
+        color: darkGrey,
+        fontWeight: FontWeight.w600,
+        fontSize: 9,
+      );
+
+
+  // static TextStyle get headline => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w600,
+  //       fontSize: 35,
+  //     );
+
+  // static TextStyle get headlineLigth => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w400,
+  //       fontSize: 35,
+  //     );
+  // static TextStyle get subLine => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w600,
+  //       fontSize: 22.0,
+  //     );
+  // static TextStyle get subLineLigth => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w400,
+  //       fontSize: 22.0,
+  //     );
+  // static TextStyle get normalText => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w500,
+  //       fontSize: 17,
+  //     );
+  // static TextStyle get normalTextBold => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w600,
+  //       fontSize: 17,
+  //     );
+  // static TextStyle get fliessTextBold => const TextStyle(
+  //       color: darkGrey,
+  //       fontWeight: FontWeight.w600,
+  //       fontSize: 22,
+  //     );
+  // static TextStyle get smalText => const TextStyle(
+  //       color: grey,
+  //       fontWeight: FontWeight.w500,
+  //       fontSize: 12,
+  //     );
 
   /// --- Text Sheet ---
 

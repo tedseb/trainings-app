@@ -104,7 +104,7 @@ class _BodyScreenState extends State<BodyScreen> {
                           children: [
                             Text(
                               'Weigth Chart',
-                              style: Styles.subLine,
+                              style: Styles.subLinesBold,
                             ),
                           ],
                         ),
@@ -155,7 +155,7 @@ class _BodyScreenState extends State<BodyScreen> {
                           children: [
                             Text(
                               'BMI Chart',
-                              style: Styles.subLine,
+                              style: Styles.subLinesBold,
                             ),
                           ],
                         ),

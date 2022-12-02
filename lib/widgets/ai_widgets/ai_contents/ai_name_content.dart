@@ -3,7 +3,6 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/widgets/ai_widgets/textfield_user_modifier_widget.dart';
-import 'package:higym/widgets/general_widgets/textfield_widget.dart';
 
 class AiNameContent extends StatefulWidget {
   const AiNameContent({

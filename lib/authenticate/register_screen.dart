@@ -71,8 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   /// AI Sign Up Text
                   Text(
-                    'Sign up to save your workout progress and stats',
-                    style: Styles.subLine,
+                    'Registriere dich und starte dein Training!',
+                    style: Styles.subLinesBold,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
@@ -83,12 +83,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Email Field
                           TextFormField(
                             controller: emailController,
-                             style: Styles.normalText,
+                             style: Styles.normalLinesLight,
                             decoration: InputDecoration(
                               labelText: 'E-mail',
-                              labelStyle: Styles.subLine,
+                              labelStyle: Styles.subLinesBold,
                               hintText: 'Your Email Address',
-                              hintStyle: Styles.smalText,
+                              hintStyle: Styles.smallLinesBold,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -117,12 +117,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Password1 Field
                           TextFormField(
                             controller: passwordController,
-                             style: Styles.normalText,
+                             style: Styles.normalLinesLight,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: Styles.subLine,
+                              labelStyle: Styles.subLinesBold,
                               hintText: 'Your Password',
-                              hintStyle: Styles.smalText,
+                              hintStyle: Styles.smallLinesBold,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -163,12 +163,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Enter Password2 Field
                           TextFormField(
                             controller: passwordController2,
-                             style: Styles.normalText,
+                             style: Styles.normalLinesLight,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: Styles.subLine,
+                              labelStyle: Styles.subLinesBold,
                               hintText: 'Repeat your Password',
-                              hintStyle: Styles.smalText,
+                              hintStyle: Styles.smallLinesBold,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -211,7 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             visible: responseText != '',
                             child: Text(
                               responseText,
-                              style: Styles.smalText.copyWith(color: Styles.error),
+                              style: Styles.smallLinesLight.copyWith(color: Styles.error),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -229,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           /// Agree Terms Text
                           Text(
                             'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
-                            style: Styles.smalText,
+                            style: Styles.smallLinesBold,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 50),

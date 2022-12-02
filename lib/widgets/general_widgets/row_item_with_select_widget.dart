@@ -34,7 +34,7 @@ class RowItemWithSelectWidget extends StatelessWidget {
                     ],
                   )
                 : const SizedBox(),
-            Text(widgetText, style: Styles.normalText),
+            Text(widgetText, style: Styles.subLinesLight),
           ],
         ),
         ShadowIconButtonWidget(

@@ -82,8 +82,8 @@ class ChartPainter extends CustomPainter {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0;
 
-  final yLabelStyle = Styles.smalText;
-  final xLabelStyle = Styles.normalText;
+  final yLabelStyle = Styles.smallLinesBold;
+  final xLabelStyle = Styles.normalLinesBold;
   // final yLabelStyle = const TextStyle(color: Colors.white38, fontSize: 14);
   // final xLabelStyle = const TextStyle(color: Colors.white38, fontSize: 16, fontWeight: FontWeight.bold);
 

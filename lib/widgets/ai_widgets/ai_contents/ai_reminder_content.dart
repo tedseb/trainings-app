@@ -76,7 +76,7 @@ class _AiReminderContentState extends State<AiReminderContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('What Time?', style: Styles.subLine),
+        Text('What Time?', style: Styles.subLinesBold),
         const SizedBox(height: 16.0),
         SizedBox(
           height: 130,
@@ -109,7 +109,7 @@ class _AiReminderContentState extends State<AiReminderContent> {
                         return Center(
                           child: Text(
                             hourList[hourIndex].toString(),
-                            style: Styles.subLine.copyWith(color: hourIndex == hourIndexSelected ? Styles.darkGrey : Styles.lightGrey),
+                            style: Styles.subLinesBold.copyWith(color: hourIndex == hourIndexSelected ? Styles.darkGrey : Styles.lightGrey),
                           ),
                         );
                       },
@@ -127,20 +127,20 @@ class _AiReminderContentState extends State<AiReminderContent> {
                         return Center(
                           child: Text(
                             minutesList[minuteIndex].toString(),
-                            style: Styles.subLine.copyWith(color: minuteIndex == minuteIndexSelected ? Styles.darkGrey : Styles.lightGrey),
+                            style: Styles.subLinesBold.copyWith(color: minuteIndex == minuteIndexSelected ? Styles.darkGrey : Styles.lightGrey),
                           ),
                         );
                       },
                     ),
                   ),
-                  Expanded(child: Row(children: [const SizedBox(width: 16.0), Text('Uhr', style: Styles.subLine)]))
+                  Expanded(child: Row(children: [const SizedBox(width: 16.0), Text('Uhr', style: Styles.subLinesBold)]))
                 ],
               ),
             ],
           ),
         ),
         const SizedBox(height: 16.0),
-        Text('Which Days?', style: Styles.subLine),
+        Text('Which Days?', style: Styles.subLinesBold),
         const SizedBox(height: 16.0),
         SizedBox(
           height: 200,

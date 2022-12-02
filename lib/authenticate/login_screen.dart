@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 110),
                   Text(
                     'Log in to your HiGym account',
-                    style: Styles.subLine,
+                    style: Styles.subLinesBold,
                   ),
                   const SizedBox(height: 40),
                   Form(
@@ -77,12 +77,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           /// Enter Email Field
                           TextFormField(
                             controller: emailController,
-                             style: Styles.normalText,
+                             style: Styles.normalLinesLight,
                             decoration: InputDecoration(
                               labelText: 'E-mail',
-                              labelStyle: Styles.subLine,
+                              labelStyle: Styles.subLinesBold,
                               hintText: 'Your Email Address',
-                              hintStyle: Styles.smalText,
+                              hintStyle: Styles.smallLinesBold,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -111,12 +111,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           /// Enter Password Field
                           TextFormField(
                             controller: passwordController,
-                            style: Styles.normalText,
+                            style: Styles.normalLinesLight,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: Styles.subLine,
+                              labelStyle: Styles.subLinesBold,
                               hintText: 'Your Password',
-                              hintStyle: Styles.smalText,
+                              hintStyle: Styles.smallLinesBold,
                               isDense: true,
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextButton(
                                 style: TextButton.styleFrom(
                                   primary: Styles.darkGrey,
-                                  textStyle: Styles.normalText.copyWith(fontWeight: FontWeight.w600),
+                                  textStyle: Styles.smallLinesBold.copyWith(color: Styles.darkGrey),
                                 ),
                                 onPressed: () => _openResetPassword(),
                                 child: const Text('Forgot Password?'),
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             visible: responseText != '',
                             child: Text(
                               responseText,
-                              style: Styles.smalText.copyWith(color: Styles.error),
+                              style: Styles.smallLinesLight.copyWith(color: Styles.error),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           /// Agree Terms Text
                           Text(
                             'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
-                            style: Styles.smalText,
+                            style: Styles.smallLinesBold,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 50),

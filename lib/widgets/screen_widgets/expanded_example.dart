@@ -67,7 +67,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                             Text(
                               // 'TRAINING 1',
                               'Build Muscles',
-                              style: Styles.headline
+                              style: Styles.headLinesBold.copyWith(color: Styles.exercisingWhite),
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 4.0),
@@ -129,7 +129,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                                   const SizedBox(width: 8.0),
                                   const Icon(Icons.fitness_center_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Kraft', style: Styles.smalText.copyWith(color: Styles.darkGrey))
+                                  Text('Kraft', style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -147,7 +147,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                                   const SizedBox(width: 8.0),
                                   const Icon(Icons.self_improvement_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Koordination', style: Styles.smalText.copyWith(color: Styles.darkGrey))
+                                  Text('Koordination', style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -165,7 +165,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                                   const SizedBox(width: 8.0),
                                   const Icon(Icons.directions_run_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Cardio', style: Styles.smalText.copyWith(color: Styles.darkGrey))
+                                  Text('Cardio', style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
 
@@ -183,7 +183,7 @@ class _ExpandExampleState extends State<ExpandExample> {
                                   const SizedBox(width: 8.0),
                                   const Icon(Icons.sports_gymnastics_rounded, color: Styles.darkGrey),
                                   const SizedBox(width: 8.0),
-                                  Text('Beweglichkeit', style: Styles.smalText.copyWith(color: Styles.darkGrey))
+                                  Text('Beweglichkeit', style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey))
                                 ],
                               ),
                             ],

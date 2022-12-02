@@ -77,12 +77,12 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                           children: [
                             Text(
                               'next',
-                              style: Styles.normalText.copyWith(color: Styles.darkGrey),
+                              style: Styles.normalLinesLight,
                             ),
                             Text(
                               // 'Workout',
                               myGoal!.trainingsProgramms[0].actualPlan,
-                              style: Styles.subLine.copyWith(color: Styles.darkGrey),
+                              style: Styles.subLinesBold,
                             ),
                           ],
                         ),
@@ -122,20 +122,20 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                             size: 30.0,
                           ),
                           // Styles.getFitnessTypeIcons(myGoal!.trainingsProgramms[0].fitnesstype),
-                          Text(myGoal!.trainingsProgramms[0].fitnesstype, style: Styles.smalText.copyWith(color: Styles.darkGrey)),
+                          Text(myGoal!.trainingsProgramms[0].fitnesstype, style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                       Column(
                         children: [
                           Styles.levelIcon,
                           Text(UsedObjects.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel],
-                              style: Styles.smalText.copyWith(color: Styles.darkGrey)),
+                              style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                       Column(
                         children: [
                           Styles.timerIcon,
-                          Text('${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks', style:  Styles.smalText.copyWith(color: Styles.darkGrey)),
+                          Text('${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks', style:  Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
                         ],
                       ),
                     ],
@@ -182,10 +182,10 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                             Text(
                                               helper_utils.truncatePlanName(
                                                 myGoal!.trainingsProgramms[0].plans[index].name,
-                                                Styles.normalTextBold,
+                                                Styles.subLinesBold,
                                                 MediaQuery.of(context).size.width,
                                               ),
-                                              style: Styles.normalTextBold,
+                                              style: Styles.subLinesBold,
                                             ),
                                             Container(
                                               margin: const EdgeInsets.only(top: 4.0),

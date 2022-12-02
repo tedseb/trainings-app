@@ -10,6 +10,7 @@ import 'package:higym/models/used_objects.dart';
 import 'dart:developer' as dev;
 
 import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
+import 'package:higym/widgets/general_widgets/glas_box_widget.dart';
 
 class AiPresentTrainingsProgrammContent extends StatefulWidget {
   const AiPresentTrainingsProgrammContent({
@@ -84,7 +85,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                 children: [
                                   Text(
                                     'Workout',
-                                    style: Styles.subLine.copyWith(color: Styles.darkGrey),
+                                    style: Styles.subLinesBold,
                                   ),
                                 ],
                               )
@@ -107,21 +108,19 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                     color: Styles.darkGrey,
                                     size: 30.0,
                                   ),
-                                  Text(goal.trainingsProgramms[0].fitnesstype, style: Styles.smalText.copyWith(color: Styles.darkGrey)),
+                                  Text(goal.trainingsProgramms[0].fitnesstype, style: Styles.smallLinesLight),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.levelIcon,
-                                  Text(UsedObjects.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel],
-                                      style: Styles.smalText.copyWith(color: Styles.darkGrey)),
+                                  Text(UsedObjects.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel], style: Styles.smallLinesLight),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Styles.timerIcon,
-                                  Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks',
-                                      style: Styles.smalText.copyWith(color: Styles.darkGrey)),
+                                  Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.smallLinesLight),
                                 ],
                               ),
                             ],
@@ -166,10 +165,10 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                               Text(
                                                 helper_utils.truncatePlanName(
                                                   goal.trainingsProgramms[0].plans[index].name,
-                                                  Styles.normalTextBold,
+                                                  Styles.subLinesBold,
                                                   MediaQuery.of(context).size.width,
                                                 ),
-                                                style: Styles.normalTextBold,
+                                                style: Styles.subLinesBold,
                                               ),
                                               Container(
                                                 margin: const EdgeInsets.only(top: 4.0),
@@ -192,10 +191,89 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                                             itemCount: goal.trainingsProgramms[0].plans[index].exercises.length,
                                             itemBuilder: (context, exeIndex) {
                                               //Exercise Name is Loading...
-                                              return ExerciseCardWidget(
-                                                selectedExercise: goal.trainingsProgramms[0].plans[index].exercises[exeIndex],
-                                                showInfoScreen: () {},
-                                                active: index == 0,
+                                              return Padding(
+                                                padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 26.0, bottom: 32.0),
+                                                child: SizedBox(
+                                                  height: 75.0,
+                                                  // color: Colors.grey[50],
+                                                  child: Row(
+                                                    // crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      GlasBoxWidget(
+                                                          exerciseImage:
+                                                              goal.trainingsProgramms[0].plans[index].exercises[exeIndex].media.toString()),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.only(left: 26.0, top: 4.0, right: 26.0, bottom: 4.0),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 25.0,
+                                                                child: Divider(
+                                                                  height: 10.0,
+                                                                  thickness: 4,
+                                                                  color: index == 0 ? Styles.primaryColor : Styles.grey,
+                                                                ),
+                                                              ),
+                                                              const Spacer(),
+                                                              // Text(selectedExercise.name, style: Styles.trainingsplanCardExeTitle),
+                                                              Text(
+                                                                helper_utils.truncateTrainingsProgrammExeCardName(
+                                                                  goal.trainingsProgramms[0].plans[index].exercises[exeIndex].name,
+                                                                  Styles.normalLinesBold,
+                                                                  MediaQuery.of(context).size.width,
+                                                                ),
+                                                                style: Styles.normalLinesBold,
+                                                              ),
+                                                              Visibility(
+                                                                visible: true,
+                                                                // visible: selectedExercise.subName != '',
+                                                                child: Text(
+                                                                  // helper_utils.truncateWithEllipsis(selectedExercise.subName),
+                                                                  helper_utils.truncateTrainingsProgrammExeCardName(
+                                                                    goal.trainingsProgramms[0].plans[index].exercises[exeIndex].subName,
+                                                                    Styles.normalLinesLight,
+                                                                    MediaQuery.of(context).size.width,
+                                                                  ),
+                                                                  style: Styles.normalLinesLight,
+                                                                ),
+                                                              ),
+                                                              const Spacer(),
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                        text: goal.trainingsProgramms[0].plans[index].exercises[exeIndex].sets.length
+                                                                            .toString(),
+                                                                        style: Styles.smallLinesBold),
+                                                                    TextSpan(
+                                                                        text: ' sets | ', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                                                                    TextSpan(
+                                                                        text: goal.trainingsProgramms[0].plans[index].exercises[exeIndex]
+                                                                            .weigthScale['actualToDo']
+                                                                            .toString(),
+                                                                        style: Styles.smallLinesBold),
+                                                                    TextSpan(
+                                                                        text: ' kg | ', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                                                                    TextSpan(
+                                                                        text: goal.trainingsProgramms[0].plans[index].exercises[exeIndex]
+                                                                            .repetitionsScale['actualToDo']
+                                                                            .toString(),
+                                                                        style: Styles.smallLinesBold),
+                                                                    TextSpan(
+                                                                        text: ' reps', style: Styles.smallLinesLight.copyWith(color: Styles.grey)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               );
                                             }),
                                       ],

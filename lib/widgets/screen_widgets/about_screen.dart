@@ -39,7 +39,7 @@ class AboutScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text('About', style: Styles.headline.copyWith(fontWeight: FontWeight.w300)),
+                    Text('About', style: Styles.headLinesBold),
                     const Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Icon(GymionIcons_1_0.einstellungen, color: Styles.darkGrey),
@@ -80,7 +80,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Rate us on App Store', style: Styles.normalText),
+                          Text('Rate us on App Store', style: Styles.normalLinesLight),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
@@ -108,7 +108,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Terms & Conditions', style: Styles.normalText),
+                          Text('Terms & Conditions', style: Styles.normalLinesLight),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
@@ -136,7 +136,7 @@ class AboutScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Delete Account', style: Styles.normalText),
+                          Text('Delete Account', style: Styles.normalLinesLight),
                           Container(
                             margin: const EdgeInsets.only(top: 4.0),
                             width: 32.0,
