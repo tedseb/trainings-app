@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
 
 class Styles {
   /// --- Color Sheet ---
@@ -7,10 +6,14 @@ class Styles {
   static const Color primaryColor = Color(0xFFffcd16);
 
   static const Color white = Color(0xFFFFFFFF);
+  static const Color whiteTransparent = Colors.white70;
+  static Color veryLightGrey = Colors.grey.shade200;
   static Color lightGrey = Colors.grey.shade400;
-  static const Color grey = Colors.grey;
+  static const Color grey = Color.fromARGB(255, 158, 158, 158);
   static Color midleDarkGrey = Colors.grey.shade700;
   static const Color darkGrey = Color(0xFF333333);
+  static const Color blackTransparent = Colors.black87;
+  static const Color black = Color(0xFF000000);
 
   static const Color error = Colors.red;
 
@@ -25,8 +28,18 @@ class Styles {
   static const Color exercisingWhite = Color(0xFFFFFFFF);
 
 
-  /// --- Color Sheet ---
+  //   static const Color white = Color(0xFF333333);
+  // static const Color whiteTransparent = Colors.black87;
+  // static Color lightGrey = Colors.grey.shade400;
+  // static const Color grey = Color.fromARGB(255, 158, 158, 158);
+  // static Color midleDarkGrey = Colors.grey.shade700;
+  // static const Color darkGrey = Color(0xFFCCCCCC);
+  // static const Color blackTransparent = Colors.black87;
+  // static const Color black = Color(0xFF000000);
 
+  // static const Color progressBackground = Color(0xFF292929);
+
+  /// --- Color Sheet ---
 
   /// --- Text Sheet ---
 
@@ -77,86 +90,20 @@ class Styles {
       );
   static TextStyle get tinyLinesBold => const TextStyle(
         color: darkGrey,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         fontSize: 9,
       );
 
-
-  // static TextStyle get headline => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w600,
-  //       fontSize: 35,
-  //     );
-
-  // static TextStyle get headlineLigth => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w400,
-  //       fontSize: 35,
-  //     );
-  // static TextStyle get subLine => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w600,
-  //       fontSize: 22.0,
-  //     );
-  // static TextStyle get subLineLigth => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w400,
-  //       fontSize: 22.0,
-  //     );
-  // static TextStyle get normalText => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w500,
-  //       fontSize: 17,
-  //     );
-  // static TextStyle get normalTextBold => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w600,
-  //       fontSize: 17,
-  //     );
-  // static TextStyle get fliessTextBold => const TextStyle(
-  //       color: darkGrey,
-  //       fontWeight: FontWeight.w600,
-  //       fontSize: 22,
-  //     );
-  // static TextStyle get smalText => const TextStyle(
-  //       color: grey,
-  //       fontWeight: FontWeight.w500,
-  //       fontSize: 12,
-  //     );
-
   /// --- Text Sheet ---
+  
 
 
- /// --- Icon Sheet ---
-  static Icon get closeIcon => const Icon(
-        Icons.close_rounded,
-        color: white,
-      );
-  static Icon get skipIcon => const Icon(
-        Icons.fast_forward_rounded,
-        color: white,
-      );
-  static Icon get fitnessIcon => const Icon(
-        Icons.fitness_center_rounded,
-        color: darkGrey,
-        size: 30.0,
-      );
-  static Icon get bodyIcon => const Icon(
-        Icons.boy_rounded,
-        color: darkGrey,
-        size: 30.0,
-      );
-  static Icon get levelIcon => const Icon(
-        Icons.signal_cellular_alt_2_bar,
-        color: darkGrey,
-        size: 30.0,
-      );
-  static Icon get timerIcon => const Icon(
-        GymionIcons_1_0.zeit,
-        color: darkGrey,
-        size: 30.0,
-      );
 
- /// --- Icon Sheet ---
+  /// --- Fix Sizes --- ///
+  static const double iconSize = 24.0;
+  
+  
+  /// --- Fix Sizes --- ///
+   
 
 }

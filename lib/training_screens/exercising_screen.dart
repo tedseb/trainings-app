@@ -2,18 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:higym/app_utils/timer_utils.dart';
+import 'package:higym/constants/icon_constants.dart';
 import 'package:higym/models/app_user.dart';
+import 'package:higym/training_screens/change_weight_input_diolog.dart';
 import 'package:higym/training_screens/deload_input_dialog.dart';
-import 'package:higym/zzz_deleteable/deload_weigth_input.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/training_screens/leave_exercise_screen.dart';
 import 'package:higym/training_screens/rpe_scale.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/training_screens/training_ended_screen.dart';
+import 'package:higym/widgets/general_widgets/border_button_widget.dart';
+import 'package:higym/widgets/general_widgets/exercising_set_information_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:higym/models/goal.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 import 'dart:developer' as dev;
@@ -74,7 +76,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   Stream<int>? smallTimeStream;
   StreamSubscription<int>? smallTimeSubscription;
 
-  IconData playDoneButton = Icons.play_circle_fill_rounded;
+  IconData playDoneButton = IconConstants.startExerciseIconData;
 
   String toDay = DateFormat('yyyy-MM-dd_hh:mm').format(DateTime.now());
 
@@ -145,19 +147,23 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      iconSize: 32,
-                      icon: Styles.closeIcon,
-                      onPressed: () async {
-                        await helper_utils.myBottomSheet(context, LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining));
-                      },
-                    ),
-                    IconButton(
-                      iconSize: 32,
-                      icon: Styles.skipIcon,
+                      color: Styles.exercisingWhite,
+                      icon: IconConstants.closeIcon,
+                      // IconConstants.closeIcon,
                       onPressed: () async {
                         await helper_utils.myBottomSheet(
                           context,
-                          LeaveExerciseScreen(
+                          LeaveExerciseScreen(leaveTraining: true, endTraining: endTraining),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      color: Styles.exercisingWhite,
+                      icon: IconConstants.skipIcon,
+                      onPressed: () async {
+                        await helper_utils.myBottomSheet(
+                            context,
+                            LeaveExerciseScreen(
                               leaveTraining: false,
                               nextExercise: () {
                                 setState(() {
@@ -166,9 +172,9 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                                 });
                                 nextExeButtonPressed();
                               },
-                              exerciseOccupied: (!lastExe && playDoneButton != Icons.check_circle_rounded) ? doExerciseLater : null,
-                              endTraining: endTraining),
-                        );
+                              exerciseOccupied: (!lastExe && playDoneButton != IconConstants.doneExerciseIconData) ? doExerciseLater : null,
+                              endTraining: endTraining,
+                            ));
                       },
                     ),
                   ],
@@ -182,35 +188,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     /// Exercise Info Button
-                    SizedBox(
-                      width: 40.0,
-                      child: ElevatedButton(
-                        onPressed: () => openExerciseInfo(),
-                        style: ElevatedButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8.0),
-                              bottomRight: Radius.circular(8.0),
-                            ),
-                            side: BorderSide.none,
-                          ),
-                          primary: Styles.exercisingWhite,
-                          onPrimary: Styles.exercisingWhite,
-                          elevation: 0.0,
-                          minimumSize: Size.zero,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            'i',
-                            style: TextStyle(
-                              color: modeColor,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 38,
-                            ),
-                          ),
-                        ),
-                      ),
+                    BorderButtonWidget(
+                      buttonFunction: () => openExerciseInfo(),
+                      primaryColor: Styles.exercisingWhite,
+                      onPrimaryColor: modeColor,
+                      buttonIcon: IconConstants.infoIcon,
                     ),
 
                     /// Exercise Name and Information
@@ -219,20 +201,33 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          /// train - pause - pause_next - next
                           Text(prepareFor, style: Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite)),
+
+                          /// Exercise Name
                           Text(
                             helper_utils.truncateExerciseName(
-                                exeriseName, Styles.subLinesBold.copyWith(color: Styles.exercisingWhite), MediaQuery.of(context).size.width),
+                              exeriseName,
+                              Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
+                              MediaQuery.of(context).size.width,
+                            ),
                             style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
                           ),
+
+                          /// Exercise Station
                           Visibility(
                             visible: exerciseStation != '',
                             child: Text(
-                              helper_utils.truncateExerciseName(exerciseStation, Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
-                                  MediaQuery.of(context).size.width),
+                              helper_utils.truncateExerciseName(
+                                exerciseStation,
+                                Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
+                                MediaQuery.of(context).size.width,
+                              ),
                               style: Styles.normalLinesLight.copyWith(color: Styles.exercisingWhite),
                             ),
                           ),
+
+                          /// Exercise Handle
                           Visibility(
                             visible: exerciseHandle != '',
                             child: Text(
@@ -244,70 +239,37 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                         ],
                       ),
                     ),
+
+                    /// Spacer
                     const Spacer(),
 
                     /// Vertical Divider
-                    const SizedBox(
-                      height: 125,
-                      child: VerticalDivider(
-                        color: Styles.exercisingWhite,
-                        thickness: 1.5,
-                      ),
-                    ),
+                    const SizedBox(height: 125, child: VerticalDivider(color: Styles.exercisingWhite, thickness: 1.5)),
+
+                    /// Set Informations
                     SizedBox(
                       width: 90.0,
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '$actualSetNumber.',
-                                  style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
-                                ),
-                                Text(
-                                  'set',
-                                  style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  actualWeight.toStringAsFixed(1),
-                                  style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
-                                ),
-                                Text(
-                                  'kg',
-                                  style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: trainingStarted && !deloadPhase,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    actualTimeOrRepNumberToDo.toString(),
-                                    style: Styles.subLinesBold.copyWith(color: Styles.exercisingWhite),
-                                  ),
-                                  Text(
-                                    actualTimeorRep,
-                                    style: Styles.subLinesLight.copyWith(color: Styles.exercisingWhite),
-                                  ),
-                                ],
+                          /// Set Number
+                          ExercisingSetInformationWidget(value: '$actualSetNumber.', siUnits: 'set'),
+
+                          /// Set KG
+                          InkWell(
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) => ChangeWeightInputDiolog(
+                                weigthUpdater: weigthUpdaterUserInput,
+                                exeIndexUpdate: doingExeIndexList[doingExeIndex],
                               ),
                             ),
+                            child: ExercisingSetInformationWidget(value: actualWeight.toStringAsFixed(1), siUnits: 'kg'),
+                          ),
+
+                          /// Set Repetitions
+                          Visibility(
+                            visible: trainingStarted && !deloadPhase,
+                            child: ExercisingSetInformationWidget(value: actualTimeOrRepNumberToDo.toString(), siUnits: actualTimeorRep),
                           ),
                         ],
                       ),
@@ -381,7 +343,7 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                       ),
               ),
 
-              ///Play Button
+              /// Play and Occupied Button
               SizedBox(
                 height: 105,
                 // padding: const EdgeInsets.only(bottom: 18.0),
@@ -389,7 +351,10 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    /// Spacer
                     const Spacer(),
+
+                    /// Play Button
                     IconButton(
                       onPressed: () {
                         nextExeButtonPressed();
@@ -405,21 +370,19 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
                         color: Styles.exercisingWhite,
                       ),
                     ),
+
+                    /// Occupied Button
                     Expanded(
                       child: Visibility(
-                        visible: (!lastExe && playDoneButton != Icons.check_circle_rounded),
-                        child: IconButton(
-                          onPressed: () => doExerciseLater(),
-                          icon: const Icon(
-                            Icons.skip_next_rounded,
-                            color: Styles.exercisingWhite,
-                          ),
-                        ),
+                        visible: (!lastExe && playDoneButton != IconConstants.doneExerciseIconData),
+                        child: IconButton(onPressed: () => doExerciseLater(), icon: IconConstants.occupiedIcon),
                       ),
                     )
                   ],
                 ),
               ),
+
+              /// Exercise Progress
               LinearProgressIndicator(
                 value: exeCounter / (selectedPlan.exercises.length),
                 color: Styles.exercisingWhite,
@@ -455,11 +418,11 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
       if (!doLater) {
         addOccupiedExeToList();
         setState(() {
-          playDoneButton = Icons.check_circle_rounded;
+          playDoneButton = IconConstants.doneExerciseIconData;
         });
         await startExercise(doingExeIndexList[doingExe]);
         setState(() {
-          playDoneButton = Icons.play_circle_fill_rounded;
+          playDoneButton = IconConstants.startExerciseIconData;
         });
         // if (!lastExe) {
         //   await waitUserForUserButtonPress();
@@ -824,41 +787,55 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
     // return true;
   }
 
-  void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
+  void weigthUpdater(double weight, int repetitions, int exeIndexUpdate) {
     if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
-      double newWeigth = weigth;
+      double newWeight = weight;
       if (repetitions != 15) {
         /// Negativ
-        if (weigth < 0) {
+        if (weight < 0) {
           if (repetitions < 26) {
-            newWeigth = weigth * (2 - (0.6108 / (1.0278 - (0.0278 * repetitions))));
-            newWeigth = newWeigth + (newWeigth * 0.1);
+            newWeight = weight * (2 - (0.6108 / (1.0278 - (0.0278 * repetitions))));
+            newWeight = newWeight + (newWeight * 0.1);
           } else {
-            newWeigth = -0.01;
+            newWeight = -0.01;
           }
         }
 
         /// Positiv
         else {
-          if (repetitions < 29) {
-            newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
-            newWeigth = newWeigth * 0.9;
+          if (repetitions < 26) {
+            newWeight = (weight * 0.6108) / (1.0278 - (0.0278 * repetitions));
+            newWeight = newWeight * 0.9;
           } else {
-            newWeigth = weigth * 2.5;
+            /// same as 26 repetitions formel factos is 2.007 by 26 reetitions
+            newWeight = weight * 2 * 0.9;
           }
         }
+      }else{
+        newWeight *= 0.9;
       }
 
-      newWeigth = newWeigth - (newWeigth % 2.5);
+      newWeight = newWeight - (newWeight % 2.5);
+      if (repetitions > 15 && newWeight < weight) {
+        newWeight += 2.5;
+      }
+
       setState(() {
-        selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth;
-        actualWeight = newWeigth;
+        selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeight;
+        actualWeight = newWeight;
       });
     } else {
       int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
 
       setState(() => selectedPlan.exercises[exeIndexUpdate].repetitionsScale['actualToDo'] = weightlessRepetitionsToDo);
     }
+  }
+
+  void weigthUpdaterUserInput(double newWeigth, int exeIndexUpdate) {
+    setState(() {
+      selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth;
+      actualWeight = newWeigth;
+    });
   }
 
   void changeRpeScale(int addNewValue, int exeIndex) {
@@ -923,25 +900,24 @@ class _ExercisingScreenState extends State<ExercisingScreen> {
   }
 }
 
+// void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
+//   if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
+//     double newWeigth = weigth;
+//     if (repetitions != 15) {
+//       ///after 30kg u can tripple the weigth with ease
+//       if (repetitions < 29) {
+//         newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
+//         newWeigth = newWeigth * 0.9;
+//       } else {
+//         newWeigth = weigth * 2.5;
+//       }
+//     }
 
-  // void weigthUpdater(double weigth, int repetitions, int exeIndexUpdate) {
-  //   if (selectedPlan.exercises[exeIndexUpdate].weigthScale['stepWidth'] != 0.0) {
-  //     double newWeigth = weigth;
-  //     if (repetitions != 15) {
-  //       ///after 30kg u can tripple the weigth with ease
-  //       if (repetitions < 29) {
-  //         newWeigth = (weigth * 0.6108) / (1.0278 - (0.0278 * repetitions));
-  //         newWeigth = newWeigth * 0.9;
-  //       } else {
-  //         newWeigth = weigth * 2.5;
-  //       }
-  //     }
+//     newWeigth = newWeigth - (newWeigth % 2.5);
+//     setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
+//   } else {
+//     int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
 
-  //     newWeigth = newWeigth - (newWeigth % 2.5);
-  //     setState(() => selectedPlan.exercises[exeIndexUpdate].weigthScale['actualToDo'] = newWeigth);
-  //   } else {
-  //     int weightlessRepetitionsToDo = ((repetitions * 8) ~/ 10);
-
-  //     setState(() => selectedPlan.exercises[exeIndexUpdate].repetitionsScale['actualToDo'] = weightlessRepetitionsToDo);
-  //   }
-  // }
+//     setState(() => selectedPlan.exercises[exeIndexUpdate].repetitionsScale['actualToDo'] = weightlessRepetitionsToDo);
+//   }
+// }

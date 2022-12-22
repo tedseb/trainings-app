@@ -1,17 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/helper_utils.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/app_utils/validation_utils.dart';
+import 'package:higym/constants/value_constants.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/authenticate/forgot_password_screen.dart';
 import 'package:higym/services/auth.dart';
-import 'package:higym/widgets/general_widgets/button_widget.dart';
-
-import 'dart:developer' as dev;
-
+import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:higym/widgets/general_widgets/login_register_alternatives.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
-import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
+
+import 'dart:developer' as dev;
+
+import 'package:higym/widgets/general_widgets/text_form_field_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -37,11 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool passwordInVisible = true;
 
   /// Error Text
-  // bool loginError = false;
-  // String errorText = 'Ups... Something went wrong!';
-
-  /// Error Text
-
   String responseText = '';
 
   /// For Loading Screen
@@ -60,149 +56,115 @@ class _LoginScreenState extends State<LoginScreen> {
       body: loading
           ? const Center(child: LoadingWidget())
           : SingleChildScrollView(
-              padding: const EdgeInsets.all(32.0),
+              // padding: const EdgeInsets.all(32.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  /// Spacer
                   const SizedBox(height: 110),
-                  Text(
-                    'Log in to your HiGym account',
-                    style: Styles.subLinesBold,
-                  ),
-                  const SizedBox(height: 40),
-                  Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          /// Enter Email Field
-                          TextFormField(
-                            controller: emailController,
-                             style: Styles.normalLinesLight,
-                            decoration: InputDecoration(
-                              labelText: 'E-mail',
-                              labelStyle: Styles.subLinesBold,
-                              hintText: 'Your Email Address',
-                              hintStyle: Styles.smallLinesBold,
-                              isDense: true,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.error, width: 2.0),
-                              ),
-                              focusedErrorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value!.isEmpty || !RegExp(r'^[\w\.\-]+@[\w\-]+\.([\w\-]\.)?[a-z]{2,6}$').hasMatch(value)) {
-                                return 'Please enter a valid email address';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 30),
 
-                          /// Enter Password Field
-                          TextFormField(
-                            controller: passwordController,
-                            style: Styles.normalLinesLight,
-                            decoration: InputDecoration(
+                  /// AI Sign Up Text
+                  const AiTextWidget(possibleAiScreen: PossibleAiScreens.signInScreen, variation: 1),
+
+                  /// Spacer
+                  const SizedBox(height: 40),
+
+                  /// Login Form
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            /// Enter Email Field
+                            TextFormFieldWidget(
+                              textEditingController: emailController,
+                              labelText: 'E-mail',
+                              hintText: 'Your Email Address',
+                              textInputType: TextInputType.emailAddress,
+                              validator: ValidationUtils().mailValidation,
+                            ),
+
+                            /// Spacer
+                            const SizedBox(height: 30),
+
+                            /// Enter Password Field
+                            TextFormFieldWidget(
+                              textEditingController: passwordController,
                               labelText: 'Password',
-                              labelStyle: Styles.subLinesBold,
                               hintText: 'Your Password',
-                              hintStyle: Styles.smallLinesBold,
-                              isDense: true,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.error, width: 2.0),
-                              ),
-                              focusedErrorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorMaxLines: 2,
                               suffixIcon: InkWell(
+                                customBorder: const CircleBorder(),
                                 onTap: () => setState(
                                   () => passwordInVisible = !passwordInVisible,
                                 ),
-                                child: Icon(
-                                  passwordInVisible ? Icons.visibility_off_rounded : Icons.visibility_rounded,
-                                  color: Styles.grey,
-                                  size: 22,
+                                child: passwordInVisible ? IconConstants.passwordNotVisibleIcon : IconConstants.passwordVisibleIcon,
+                              ),
+                              textInputType: TextInputType.visiblePassword,
+                              obscureText: passwordInVisible,
+                              validator: ValidationUtils().passwordValidation,
+                            ),
+
+                            /// Forgot Password Button
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Styles.darkGrey,
+                                    textStyle: Styles.smallLinesBold,
+                                  ),
+                                  onPressed: () => _openResetPassword(),
+                                  child: const Text('Forgot Password?'),
                                 ),
+                              ],
+                            ),
+
+                            /// Spacer
+                            const SizedBox(height: 20),
+
+                            /// Login Error Text
+                            Visibility(
+                              visible: responseText != '',
+                              child: Text(
+                                responseText,
+                                style: Styles.smallLinesLight.copyWith(color: Styles.error),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: passwordInVisible,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 6) {
-                                return 'Your Password have to be at least 6 Characters!';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
 
-                          /// Forgot Password Button
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              /// Forget Password Button
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  primary: Styles.darkGrey,
-                                  textStyle: Styles.smallLinesBold.copyWith(color: Styles.darkGrey),
-                                ),
-                                onPressed: () => _openResetPassword(),
-                                child: const Text('Forgot Password?'),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
+                            /// Spacer
+                            const SizedBox(height: 20),
 
-                          /// Login Error Text
-                          Visibility(
-                            visible: responseText != '',
-                            child: Text(
-                              responseText,
-                              style: Styles.smallLinesLight.copyWith(color: Styles.error),
+                            /// LogIn Button
+                            ShadowButtonWidget(
+                              buttonText: 'Sign in',
+                              buttonWidth: double.infinity,
+                              onPressFunction: _signInWithEmail,
+                              loggerText: 'Home #SignIn#',
+                            ),
+
+                            /// Spacer
+                            const SizedBox(height: 20),
+
+                            /// Agree Terms Text
+                            Text(
+                              'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
+                              style: Styles.smallLinesBold,
                               textAlign: TextAlign.center,
                             ),
-                          ),
-                          const SizedBox(height: 20),
 
-                          /// LogIn Button
-                          ShadowButtonWidget(
-                            buttonText: 'Sign in',
-                            buttonWidth: double.infinity,
-                            onPressFunction: _signInWithEmail,
-                            loggerText: 'Home #SignIn#',
-                          ),
-                          const SizedBox(height: 20),
+                            /// Spacer
+                            const SizedBox(height: 50),
 
-                          /// Agree Terms Text
-                          Text(
-                            'By continuing forward, you agree to Higym\'s Privacy Policy and Terms & Conditions',
-                            style: Styles.smallLinesBold,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 50),
+                            /// LogIn With Google
+                            LoginRegisterAlternatives(platform: 'Google', registerSignIn: 'Sign in with', onPressFunction: _logInWithGoogle),
 
-                          /// LogIn With Google
-                          LoginRegisterAlternatives(platform: 'Google', registerSignIn: 'Sign in with', onPressFunction: _logInWithGoogle),
-                          const SizedBox(height: 20),
-                        ],
-                      )),
+                            /// Spacer
+                            const SizedBox(height: 20),
+                          ],
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -244,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
           responseText = '';
           loading = false;
           Navigator.pop(context);
-          dev.log('Login with Email Successfull');
+          dev.log('Login with Email Successfull', name: 'Login_Screen');
         }
       });
     }
@@ -268,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
         loading = false;
         responseText = '';
         Navigator.pop(context);
-        dev.log('Login with Google Successfull');
+        dev.log('Login with Google Successfull', name: 'Login_Screen');
       }
     });
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class WeigthScore {
   late double value;
@@ -23,8 +23,8 @@ const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 class _ProgressChartWidgetState extends State<ProgressChartWidget> {
   late double min, max;
-  late List<double> _Y;
-  late List<String> _X;
+  late List<double> _y;
+  late List<String> _x;
 
   @override
   void initState() {
@@ -39,8 +39,8 @@ class _ProgressChartWidgetState extends State<ProgressChartWidget> {
     setState(() {
       min = newMin;
       max = newMax;
-      _Y = widget.weigthScores.map((p) => p.value).toList();
-      _X = widget.weigthScores.map((p) => '${weekDays[p.time.weekday]}\n${p.time.day}').toList();
+      _y = widget.weigthScores.map((p) => p.value).toList();
+      _x = widget.weigthScores.map((p) => '${weekDays[p.time.weekday]}\n${p.time.day}').toList();
     });
 
     super.initState();
@@ -53,7 +53,7 @@ class _ProgressChartWidgetState extends State<ProgressChartWidget> {
       height: 100,
       width: screenSize.width - 98, //padding of the Parent Widget
       child: CustomPaint(
-        painter: ChartPainter(_X, _Y, min, max),
+        painter: ChartPainter(_x, _y, min, max),
         child: Container(),
       ),
     );
@@ -201,14 +201,14 @@ class ChartPainter extends CustomPainter {
     ..style = PaintingStyle.stroke
     ..color = Colors.white;
 
-  void _drawOtline(Canvas canvas, Offset c, double width, double height) {
-    for (var p in y) {
-      final rect = Rect.fromCenter(center: c, width: width, height: height);
-      canvas.drawRect(rect, outlinePaint);
+  // void _drawOtline(Canvas canvas, Offset c, double width, double height) {
+  //   for (var p in y) {
+  //     final rect = Rect.fromCenter(center: c, width: width, height: height);
+  //     canvas.drawRect(rect, outlinePaint);
 
-      c += Offset(width, 0);
-    }
-  }
+  //     c += Offset(width, 0);
+  //   }
+  // }
 
   List<String> _computeLabels() {
     return y.map((yp) => yp.toStringAsFixed(1)).toList();

@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
 
 class AiFitnessMethodsContent extends StatefulWidget {
@@ -24,7 +21,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
 
   @override
   void initState() {
-    _selectedItem = UsedObjects.fitnessMethodObjects.indexWhere((element) => element['titel'] == widget.appUser.fitnessMethod);
+    _selectedItem = ValueConstants.fitnessMethodObjects.indexWhere((element) => element['titel'] == widget.appUser.fitnessMethod);
 
     super.initState();
   }
@@ -34,7 +31,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: UsedObjects.fitnessMethodObjects.length,
+        itemCount: ValueConstants.fitnessMethodObjects.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
@@ -65,7 +62,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
                   children: [
                     NavbarIconButtonWidget(
                       onPressedFunction: () => _onItemTapped(index),
-                      iconData: UsedObjects.fitnessMethodObjects[index]['icon'],
+                      iconData: ValueConstants.fitnessMethodObjects[index]['icon'],
                       selectedItem: _selectedItem,
                       index: index,
                       borderHeigth: 4.0,
@@ -75,7 +72,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.fitnessMethodObjects[index]['titel'], style: Styles.subLinesBold),
+                          Text(ValueConstants.fitnessMethodObjects[index]['titel'], style: Styles.subLinesBold),
                         ],
                       ),
                     )
@@ -90,7 +87,7 @@ class _AiFitnessMethodsContentState extends State<AiFitnessMethodsContent> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
-      widget.appUser.fitnessMethod = UsedObjects.fitnessMethodObjects[index]['titel'];
+      widget.appUser.fitnessMethod = ValueConstants.fitnessMethodObjects[index]['titel'];
     });
   }
 }

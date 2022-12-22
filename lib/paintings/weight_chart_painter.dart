@@ -1,48 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
-class WeigthScore {
-  late double value;
-  late DateTime time;
-  WeigthScore(this.value, this.time);
-}
-
-class ProgressChartWidget extends StatefulWidget {
-  const ProgressChartWidget({
-    required this.weigthScores,
+class WeightChartPainter extends StatefulWidget {
+  const WeightChartPainter({
+    required this.userWeigth,
+    required this.xAxisLength,
     Key? key,
   }) : super(key: key);
 
-  final List<Map<DateTime, double>> weigthScores;
+  final List<Map<String, double>> userWeigth;
+  final int xAxisLength;
   // final List<WeigthScore> weigthScores;
 
   @override
-  State<ProgressChartWidget> createState() => _ProgressChartWidgetState();
+  State<WeightChartPainter> createState() => _WeightChartPainterState();
 }
 
-const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-class _ProgressChartWidgetState extends State<ProgressChartWidget> {
-  late double _min, _max;
-  late List<double> _Y;
-  late List<String> _X;
+class _WeightChartPainterState extends State<WeightChartPainter> {
+  late double min, max;
+  late List<double> _y;
+  late List<String> _x;
 
   @override
   void initState() {
-    var min = double.maxFinite;
-    var max = -double.maxFinite;
+    var newMin = double.maxFinite;
+    var newMax = -double.maxFinite;
 
-    for (var p in widget.weigthScores) {
-      min = min > p.entries.first.value ? p.entries.first.value : min;
-      max = max < p.entries.first.value ? p.entries.first.value : max;
+    List<Map<String, double>> showableWeigthList = [];
+    if (widget.userWeigth.length < widget.xAxisLength) {
+      showableWeigthList = List.from(widget.userWeigth);
+    } else {
+      int weightListLength = widget.userWeigth.length;
+      for (var i = 0; i < widget.xAxisLength; i++) {
+        showableWeigthList.add(widget.userWeigth[weightListLength - 1 - (5-i)]);
+      }
+    }
+
+    // showableWeigthList = showableWeigthList.reversed.toList();
+
+    for (var p in showableWeigthList) {
+      newMin = newMin > p.entries.first.value ? p.entries.first.value : newMin;
+      newMax = newMax < p.entries.first.value ? p.entries.first.value : newMax;
+    }
+    if (newMin == newMax) {
+      newMax = newMax ~/ 1 + 1.0;
+      newMin = newMin ~/ 1 - 1.0;
     }
 
     setState(() {
-      _min = min;
-      _max = max;
-      _Y = widget.weigthScores.map((p) => p.entries.first.value).toList();
-      _X = widget.weigthScores.map((p) => '${ p.entries.first.key.day}.${p.entries.first.key.month}').toList();
-      // _X = widget.weigthScores.map((p) => '${weekDays[p.time.weekday]}\n${p.time.day}').toList();
+      min = newMin;
+      max = newMax;
+
+      _y = showableWeigthList.map((p) => p.entries.first.value).toList();
+      _x = showableWeigthList.map((p) => p.entries.first.key).toList();
     });
 
     super.initState();
@@ -50,12 +60,11 @@ class _ProgressChartWidgetState extends State<ProgressChartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    // Size screenSize = MediaQuery.of(context).size;
     return SizedBox(
-      height: 100,
-      width: screenSize.width - 98, //padding of the Parent Widget
+      height: 90,
       child: CustomPaint(
-        painter: ChartPainter(_X, _Y, _min, _max),
+        painter: ChartPainter(_x, _y, min, max),
         child: Container(),
       ),
     );
@@ -70,7 +79,6 @@ class ChartPainter extends CustomPainter {
   final double min, max;
 
   final Color backgroundColor = Styles.white;
-  // final Color backgroundColor = const Color(0xff1a1e23);
 
   final linePaint = Paint()
     ..color = Styles.darkGrey
@@ -82,19 +90,14 @@ class ChartPainter extends CustomPainter {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0;
 
-  final yLabelStyle = Styles.smallLinesBold;
-  final xLabelStyle = Styles.normalLinesBold;
-  // final yLabelStyle = const TextStyle(color: Colors.white38, fontSize: 14);
-  // final xLabelStyle = const TextStyle(color: Colors.white38, fontSize: 16, fontWeight: FontWeight.bold);
+  final yLabelStyle = Styles.smallLinesLight;
+  final xLabelStyle = Styles.normalLinesLight;
 
-  // final dotPaintFill = Paint()
-  //   ..color = Colors.white
-  //   ..style = PaintingStyle.stroke
-  //   ..strokeWidth = 1.0;
 
-  static double border = 10.0;
+
+  static double borderWidth = 0.0;
+  static double borderHeight = 10.0;
   static double radius = 3.0;
-  // static double radius = 5.0;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -108,8 +111,8 @@ class ChartPainter extends CustomPainter {
     canvas.drawPaint(Paint()..color = backgroundColor);
 
     // compute the drawable chart width and height
-    final drawableHeight = size.height - 2.0 * border;
-    final drawableWidth = size.width - 2.0 * border;
+    final drawableHeight = size.height - 2.0 * borderHeight;
+    final drawableWidth = size.width - 2.0 * borderWidth;
     final hd = drawableHeight / 5.0;
     final wd = drawableWidth / x.length.toDouble();
 
@@ -122,8 +125,8 @@ class ChartPainter extends CustomPainter {
 
     final hr = height / (max - min); // height per unit value
 
-    final left = border;
-    final top = border;
+    final left = borderWidth;
+    final top = borderHeight;
     final c = Offset(left + wd / 2.0, top + height / 2.0);
 
     // _drawOtline(canvas, c, wd, height);
@@ -202,16 +205,16 @@ class ChartPainter extends CustomPainter {
   final Paint outlinePaint = Paint()
     ..strokeWidth = 1.0
     ..style = PaintingStyle.stroke
-    ..color = Colors.white;
+    ..color = Colors.black;
 
-  void _drawOtline(Canvas canvas, Offset c, double width, double height) {
-    for (var p in y) {
-      final rect = Rect.fromCenter(center: c, width: width, height: height);
-      canvas.drawRect(rect, outlinePaint);
+  // void _drawOtline(Canvas canvas, Offset c, double width, double height) {
+  //   for (var p in y) {
+  //     final rect = Rect.fromCenter(center: c, width: width, height: height);
+  //     canvas.drawRect(rect, outlinePaint);
 
-      c += Offset(width, 0);
-    }
-  }
+  //     c += Offset(width, 0);
+  //   }
+  // }
 
   List<String> _computeLabels() {
     return y.map((yp) => yp.toStringAsFixed(1)).toList();

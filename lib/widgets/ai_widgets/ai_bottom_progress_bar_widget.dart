@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class AiBottomProgressBarWidget extends StatefulWidget {

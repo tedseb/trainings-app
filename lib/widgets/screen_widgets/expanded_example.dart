@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/pie_painter.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/zzz_later_needed/pie_painter.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/button_widget.dart';
 
 class ExpandExample extends StatefulWidget {

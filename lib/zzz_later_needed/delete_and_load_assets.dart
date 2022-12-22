@@ -7,7 +7,6 @@ import 'package:higym/services/downloader.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'dart:developer' as dev;
 
 class Achievement extends StatefulWidget {
   const Achievement({Key? key}) : super(key: key);
@@ -56,30 +55,28 @@ class _AchievementState extends State<Achievement> {
   Widget buildFile(BuildContext context, FirebaseFiles file) {
     // Downloader.checkAndDownload( Plans());
 
-    return Container(
-      child: Row(
-        children: [
-          Text(file.name),
-          SizedBox(
-            height: 100,
-            child: File('$dir/${file.name}').existsSync() ? Image.file(File('$dir/${file.name}')) : const Icon(Icons.image_rounded),
-          ),
-          IconButton(
-            onPressed: () {
-              Downloader.downloadAndSaveSingle(file.ref);
-              setState(() {});
-            },
-            icon: const Icon(Icons.save_rounded),
-          ),
-          IconButton(
-            onPressed: () {
-              deleteFile('$dir/images/${file.name}');
-              setState(() {});
-            },
-            icon: const Icon(Icons.delete_rounded),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        Text(file.name),
+        SizedBox(
+          height: 100,
+          child: File('$dir/${file.name}').existsSync() ? Image.file(File('$dir/${file.name}')) : const Icon(Icons.image_rounded),
+        ),
+        IconButton(
+          onPressed: () {
+            Downloader.downloadAndSaveSingle(file.ref);
+            setState(() {});
+          },
+          icon: const Icon(Icons.save_rounded),
+        ),
+        IconButton(
+          onPressed: () {
+            deleteFile('$dir/images/${file.name}');
+            setState(() {});
+          },
+          icon: const Icon(Icons.delete_rounded),
+        ),
+      ],
     );
   }
 

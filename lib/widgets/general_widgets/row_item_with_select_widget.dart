@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class RowItemWithSelectWidget extends StatelessWidget {
@@ -38,7 +38,7 @@ class RowItemWithSelectWidget extends StatelessWidget {
           ],
         ),
         ShadowIconButtonWidget(
-          buttonIcon: GymionIcons_1_0.pfeil,
+          buttonIcon: IconConstants.arrowRightIconData,
           onPressFunction: () => onPressFunction(),
           loggerText: widgetText,
         ),

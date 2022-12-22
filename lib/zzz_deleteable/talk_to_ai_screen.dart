@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/models/goal.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/styles.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
@@ -10,10 +9,8 @@ import 'package:higym/widgets/ai_widgets/ai_contents/ai_goal_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_gym_equipment_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_name_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_personal_data_content.dart';
-import 'package:higym/widgets/ai_widgets/ai_contents/ai_present_trainigs_programm_content.dart';
-import 'package:higym/widgets/ai_widgets/ai_contents/ai_reminder_content.dart';
+import 'package:higym/zzz_later_needed/ai_reminder_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/talk_to_ai_content.dart';
-import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_wave_widget.dart';
 
 import 'dart:developer' as dev;

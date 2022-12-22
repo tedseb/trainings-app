@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class RandomScreenTree extends StatefulWidget {
   const RandomScreenTree({Key? key}) : super(key: key);

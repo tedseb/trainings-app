@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class PiePainter extends CustomPainter {
   double kraftPercent;
@@ -21,7 +21,7 @@ class PiePainter extends CustomPainter {
     const center = Offset(0, 0);
     // final center = Offset(size.width / 2, size.height / 2);
 
-    final screenMid = size.width / 2;
+    // final screenMid = size.width / 2;
 
     double durchmesser = size.width - 8;
     double durchmesserWhite = size.width;

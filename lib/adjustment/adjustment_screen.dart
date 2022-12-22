@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
+import 'package:higym/constants/icon_constants.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/widgets/general_widgets/row_item_with_select_widget.dart';
 import 'package:higym/widgets/screen_widgets/about_screen.dart';
 import 'package:higym/widgets/screen_widgets/talk_to_ai_screen.dart';
 import 'package:higym/services/auth.dart';
-import 'package:higym/services/database.dart';
-import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'dart:developer' as dev;
+import 'package:higym/widgets/general_widgets/user_name_badge_widget.dart';
 
 class AdjustmentScreen extends StatefulWidget {
   const AdjustmentScreen({Key? key}) : super(key: key);
@@ -30,61 +26,18 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        padding: const EdgeInsets.fromLTRB(32.0, 150.0, 32.0, 30.0),
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             /// User Name and Badge
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Flexible(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: 'Hi ', style: Styles.headLinesBold.copyWith(fontWeight: FontWeight.w500)),
-                          TextSpan(text: user!.name.toString(), style: Styles.headLinesLight.copyWith(fontWeight: FontWeight.w300)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Image.asset('assets/badges/${user.activityLevel}.png', height: 75),
-                  ),
-                ],
-              ),
-            ),
+            UserNameBadgeWidget(userName: user!.name.toString(), userLvl: user.activityLevel!),
             SizedBox(height: screenSize.height / 10),
-
-            /// Goals Button it will go
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            //   child: RowItemWithSelectWidget(
-            //     leadingIcon: Icons.flag_outlined,
-            //     widgetText: 'My Goals',
-            //     onPressFunction: () {
-            //       DatabaseService(uid: user.uid!).addGoal(shawanGoal);
-            //     },
-            //   ),
-            // ),
-
-            // /// My Body Button
-            // Padding(
-            //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            //     child: RowItemWithSelectWidget(
-            //       leadingIcon: Icons.accessibility_new_rounded,
-            //       widgetText: 'My Body',
-            //       onPressFunction: () {},
-            //     )),
 
             /// Talk to AI Button
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
-                leadingIcon: GymionIcons_1_0.kiAnpassen,
+                leadingIcon: IconConstants.talkToAiIconData,
                 widgetText: 'Talk AI',
                 onPressFunction: () async {
                   await Navigator.push(
@@ -101,7 +54,7 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
-                leadingIcon: GymionIcons_1_0.einstellungen,
+                leadingIcon: IconConstants.aboutIconData,
                 widgetText: 'About',
                 onPressFunction: () async {
                   await Navigator.push(
@@ -118,14 +71,13 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
-                leadingIcon: Icons.logout_rounded,
+                leadingIcon: IconConstants.signOutIconData,
                 widgetText: 'Log Out',
                 onPressFunction: () async {
                   await _auth.signOut();
                 },
               ),
             ),
-            const SizedBox(height: 30.0)
           ],
         ),
       ),

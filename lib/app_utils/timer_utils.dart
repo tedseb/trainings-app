@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 class StartTimer {
   Stream<int> stopWatchStream() {
     StreamController<int>? streamController;
@@ -20,8 +19,6 @@ class StartTimer {
     void pauseTimer() {
       if (timer != null) {
         timer?.cancel();
-        // counter = 0;
-        // streamController.close();
       }
     }
 
@@ -42,10 +39,6 @@ class StartTimer {
       }
     }
 
-    // int getTick(){
-    //   return counter;
-    // }
-
     streamController = StreamController<int>(
       onListen: startTimer,
       onCancel: stopTimer,
@@ -55,12 +48,9 @@ class StartTimer {
 
     return streamController.stream;
   }
-
-
 }
 
-class TimeLeft{
-
+class TimeLeft {
   String intToTimeLeft(int value, bool isHour) {
     int h, m, s;
 

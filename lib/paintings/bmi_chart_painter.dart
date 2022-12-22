@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/services/activity_calculator.dart';
 
-class BmiChartWidget extends StatefulWidget {
-  const BmiChartWidget({
+class BmiChartPainter extends StatefulWidget {
+  const BmiChartPainter({
     required this.user,
     Key? key,
   }) : super(key: key);
@@ -13,16 +12,15 @@ class BmiChartWidget extends StatefulWidget {
   // final List<WeigthScore> weigthScores;
 
   @override
-  State<BmiChartWidget> createState() => _BmiChartWidgetState();
+  State<BmiChartPainter> createState() => _BmiChartPainterState();
 }
 
-class _BmiChartWidgetState extends State<BmiChartWidget> {
+class _BmiChartPainterState extends State<BmiChartPainter> {
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
     return SizedBox(
       height: 70,
-      width: screenSize.width - 98, //padding of the Parent Widget
+      // width: screen(size.width-widthOffset) - 1, //padding of the Parent Widget
       child: CustomPaint(
         painter: ChartPainter(widget.user.weigth!.last.entries.first.value, widget.user.size!),
         child: Container(),
@@ -73,14 +71,16 @@ class ChartPainter extends CustomPainter {
     const double obeseBmiLimit = 39.99;
 
     double height = (size.height / 2) + 10.0;
+    //Width Offset is neede, cause the StrokeCap adds the rounded Caps width to the Actual Width
+    double widthOffset = 8.0;
 
     // double bmi = 30.09;
     double bmi = (userWeigth / (userSize * userSize)) * 10000;
 
     // Draw Background
-    canvas.drawLine(Offset(0, height), Offset(size.width, height), progressBackground);
+    canvas.drawLine(Offset(0 + widthOffset, height), Offset((size.width-widthOffset), height), progressBackground);
 
-    drawTextCentered(canvas, Offset(bmi * (size.width / 40), height - 20), bmi.toStringAsFixed(1), Styles.smallLinesLight, size.width);
+    drawTextCentered(canvas, Offset(bmi * ((size.width-widthOffset) / 40), height - 20), bmi.toStringAsFixed(1), Styles.smallLinesLight, (size.width-widthOffset));
 
     /// Draw Obese BMI Line
     if (bmi > overweightBmiLimit) {
@@ -88,27 +88,27 @@ class ChartPainter extends CustomPainter {
         bmi = 39.9999;
       }
 
-      canvas.drawLine(Offset(0, height), Offset(bmi * (size.width / 40), height), obeseBmiLinePaint);
+      canvas.drawLine(Offset(0 + widthOffset, height), Offset(bmi * ((size.width-widthOffset) / 40), height), obeseBmiLinePaint);
       bmi = overweightBmiLimit;
     }
 
     /// Draw Overweight BMI Line
     if (bmi > healthyBmiLimit) {
-      canvas.drawLine(Offset(0, height), Offset(bmi * (size.width / 40), height), overweightBmiLinePaint);
+      canvas.drawLine(Offset(0 + widthOffset, height), Offset(bmi * ((size.width-widthOffset) / 40), height), overweightBmiLinePaint);
       bmi = healthyBmiLimit;
     }
 
     /// Draw Underweight BMI Line
     if (bmi > underweightBmiLimit) {
-      canvas.drawLine(Offset(0, height), Offset(underweightBmiLimit * (size.width / 40), height), underweightBmiLinePaint);
+      canvas.drawLine(Offset(0 + widthOffset, height), Offset(underweightBmiLimit * ((size.width-widthOffset) / 40), height), underweightBmiLinePaint);
     } else {
-      canvas.drawLine(Offset(0, height), Offset(bmi * (size.width / 40), height), underweightBmiLinePaint);
+      canvas.drawLine(Offset(0 + widthOffset, height), Offset(bmi * ((size.width-widthOffset) / 40), height), underweightBmiLinePaint);
       return;
     }
 
     /// Draw Healthy BMI Line
     if (bmi > underweightBmiLimit) {
-      canvas.drawLine(Offset(underweightBmiLimit * (size.width / 40), height), Offset(bmi * (size.width / 40), height), healthyBmiLinePaint);
+      canvas.drawLine(Offset(underweightBmiLimit * ((size.width-widthOffset) / 40), height), Offset(bmi * ((size.width-widthOffset) / 40), height), healthyBmiLinePaint);
     }
   }
 

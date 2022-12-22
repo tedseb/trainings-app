@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/goal.dart';
-
-import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
-import 'package:higym/models/used_objects.dart';
-import 'dart:developer' as dev;
-
-import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 import 'package:higym/widgets/general_widgets/glas_box_widget.dart';
+
+import 'package:higym/constants/value_constants.dart';
+import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
+import 'dart:developer' as dev;
 
 class AiPresentTrainingsProgrammContent extends StatefulWidget {
   const AiPresentTrainingsProgrammContent({
@@ -103,7 +99,7 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                               Column(
                                 children: [
                                   Icon(
-                                    UsedObjects.goalObjects
+                                    ValueConstants.goalObjects
                                         .firstWhere((element) => element['titel'] == goal.trainingsProgramms[0].fitnesstype)['icon'],
                                     color: Styles.darkGrey,
                                     size: 30.0,
@@ -113,13 +109,14 @@ class _AiPresentTrainingsProgrammContentState extends State<AiPresentTrainingsPr
                               ),
                               Column(
                                 children: [
-                                  Styles.levelIcon,
-                                  Text(UsedObjects.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel], style: Styles.smallLinesLight),
+                                  ValueConstants.trainingPlanDifficultyIcons[goal.trainingsProgramms[0].difficultyLevel]!,
+                                  Text(ValueConstants.trainingPlanDifficulty[goal.trainingsProgramms[0].difficultyLevel],
+                                      style: Styles.smallLinesLight),
                                 ],
                               ),
                               Column(
                                 children: [
-                                  Styles.timerIcon,
+                                  IconConstants.timeIcon,
                                   Text('${goal.trainingsProgramms[0].durationWeeks.toString()} Weeks', style: Styles.smallLinesLight),
                                 ],
                               ),

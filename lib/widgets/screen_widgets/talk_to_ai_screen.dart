@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_progress_bar_widget.dart';
@@ -13,12 +13,10 @@ import 'package:higym/widgets/ai_widgets/ai_contents/ai_gym_equipment_content.da
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_name_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_personal_data_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_present_trainigs_programm_content.dart';
-import 'package:higym/widgets/ai_widgets/ai_contents/ai_reminder_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/talk_to_ai_content.dart';
 import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_wave_widget.dart';
 
-import 'dart:developer' as dev;
 
 class TalkToAiScreen extends StatefulWidget {
   const TalkToAiScreen({
@@ -60,56 +58,46 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
       {
         'index': 0,
         'key': PossibleAiScreens.talkToAiContent,
-        'aiText': 'Worauf willst du mich genauer einstimmen ${appUser.name}?',
         'aiContent': TalkToAiContent(openContent: setContentScreen),
       },
       {
         'index': 1,
         'key': PossibleAiScreens.aiNameContent,
-        'aiText': 'Wie heißt du?',
         'aiContent': AiNameContent(appUser: appUser),
       },
       {
         'index': 2,
         'key': PossibleAiScreens.aiPersonalDataContent,
-        'aiText': 'Hey ${appUser.name}! Gerne kannst du deine persönlichen Daten nochmal updaten!',
         'aiContent': AiPersonalDataContent(appUser: appUser),
       },
       {
         'index': 3,
         'key': PossibleAiScreens.aiGoalContent,
-        'aiText': 'Was ist dein neues Ziel ${appUser.name}?',
         'aiContent': AiGoalContent(appUser: appUser),
       },
       {
         'index': 4,
         'key': PossibleAiScreens.aiFrequenzyContent,
-        'aiText': 'Wie oft und für wie lange kannst du sicher pro Woche trainieren?',
         'aiContent': AiFrequencyContent(appUser: appUser),
       },
-      // Following element is only to demonstrade that it is possible
+      // Following element is only to demonstrade that it will be added when needed
       // {
       //   'index': 5,
       //   'key': PossibleAiScreens.aiAdditionalMusclegroupContent,
-      //   'aiText': 'Welche Muskelgruppe möchtest du zusätzlich beanspruchen?',
       //   'aiContent': AiAdditionalMusclegroupContent(appUser: appUser),
       // },
       {
         'index': 5,
         'key': PossibleAiScreens.aiGymEquipmentContent,
-        'aiText': 'Diese Equipments solltest du parat haben!',
-        // 'aiText': 'Welche Ausstattung bietet dein Fitnessstudio?',
         'aiContent': AiGymEquipmentContent(appUser: appUser, goalUpdater: goalUpdater),
       },
       {
         'index': 6,
         'key': PossibleAiScreens.aiPresentTrainingsProgrammContent,
-        'aiText': 'Hier ist dein neues Trainings Programm, viel Erfolg!',
         'aiContent': AiPresentTrainingsProgrammContent(getNewGoal: getNewGoal),
       },
     ];
 
-    // setContentScreen(PossibleAiScreens.talkToAiContent);
     super.initState();
   }
 
@@ -145,7 +133,7 @@ class _TalkToAiScreenState extends State<TalkToAiScreen> {
             child: Column(
               children: [
                 AiTextWidget(
-                  PossibleAiScreens: aiContentScreenChain[pageViewIndex]['key'],
+                  possibleAiScreen: aiContentScreenChain[pageViewIndex]['key'],
                   user: appUser,
                   variation: 2,
                   key: ValueKey(aiContentScreenChain[pageViewIndex]['key']),

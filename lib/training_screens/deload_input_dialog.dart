@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
+import 'package:higym/app_utils/validation_utils.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
+import 'package:higym/widgets/general_widgets/text_form_field_widget.dart';
 
 class DeloadInputDialog extends StatefulWidget {
   const DeloadInputDialog({
@@ -38,59 +38,37 @@ class _DeloadInputDialogState extends State<DeloadInputDialog> {
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
+
+            /// Deload Input Form
             child: Form(
               key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'How many repetitions did you do?',
-                          style: Styles.subLinesBold,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
+                  /// Deload Headline
+                  Text(
+                    'How many repetitions did you do?',
+                    style: Styles.subLinesBold,
+                    textAlign: TextAlign.center,
                   ),
 
-                  // Text
+                  // Deload Input and Confirm
                   Column(
                     children: [
-                      TextFormField(
-                        controller: repetitonsController,
-                         style: Styles.normalLinesLight,
-                        decoration: InputDecoration(
-                          labelText: 'Repetitions',
-                          labelStyle: Styles.subLinesBold,
-                          hintText: 'Repetitions count',
-                          hintStyle: Styles.smallLinesBold,
-                          isDense: true,
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                          ),
-                          errorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Styles.error, width: 2.0),
-                          ),
-                          focusedErrorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty || !RegExp(r'^(\d+)$').hasMatch(value)) {
-                            return 'Please enter only Positiv number of repetitions';
-                          } else {
-                            return null;
-                          }
-                        },
+                      /// Done Repetitions Input
+                      TextFormFieldWidget(
+                        textEditingController: repetitonsController,
+                        labelText: 'Repetitions',
+                        hintText: 'Repetitions count',
+                        textInputType: TextInputType.number,
+                        validator: ValidationUtils().positiveNumberCheck,
                       ),
+
+                      /// Spacer
                       const SizedBox(height: 30),
+
+                      /// Confirm Button
                       ShadowButtonWidget(
                         buttonText: 'Okay',
                         buttonWidth: 120.0,

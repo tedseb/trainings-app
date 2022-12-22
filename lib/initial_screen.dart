@@ -4,8 +4,8 @@ import 'package:higym/body/body_screen.dart';
 import 'package:higym/home/home_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/styles.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 import 'package:higym/training_screens/exercising_screen.dart';
 import 'package:higym/training_screens/trainings_programm_screen.dart';
@@ -33,7 +33,7 @@ class _InitialScreenState extends State<InitialScreen> {
     const AdjustmentScreen(),
   ];
 
-  final List<Map<String, dynamic>> _icons = UsedObjects.navBarIcons;
+  final List<Map<String, dynamic>> _icons = ValueConstants.navBarIcons;
 
   final _pageController = PageController();
 
@@ -59,11 +59,17 @@ class _InitialScreenState extends State<InitialScreen> {
             color: Styles.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.white,
+                color: Styles.white,
                 offset: Offset(0, -15),
                 blurRadius: 15,
                 spreadRadius: 10,
               ),
+              // BoxShadow(
+              //   color: Colors.white,
+              //   offset: Offset(0, -15),
+              //   blurRadius: 15,
+              //   spreadRadius: 10,
+              // ),
             ],
           ),
           child: Row(

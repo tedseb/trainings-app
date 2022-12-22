@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 import 'dart:developer' as dev;
 
@@ -17,29 +17,43 @@ class ShadowIconButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-      onTap: () {
-        dev.log('Open $loggerText Screen');
-        onPressFunction();
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(100.0),
-          boxShadow: [
-            ///bottom right
-            BoxShadow(
-              color: Colors.grey.shade400,
-              offset: const Offset(3, 3),
-              blurRadius: 3,
-            ),
-          ],
+    return Container(
+      // padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Styles.veryLightGrey,
+        borderRadius: BorderRadius.circular(100.0),
+        boxShadow: [
+          ///bottom right
+          BoxShadow(
+            color: Styles.lightGrey,
+            offset: const Offset(3, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        onPressed: () {
+          dev.log('Open $loggerText Screen', name: 'Shadow_Icon_Button');
+          onPressFunction();
+          // Styles.lightGrey = Colors.red;
+        },
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: const CircleBorder(),
+          primary: Styles.veryLightGrey,
+          onPrimary: Styles.darkGrey,
+          // onPrimary: Styles.primaryColor,//To Make the Splashcolor of the Button
+          elevation: 0.0,
         ),
-        child: Icon(
-          buttonIcon,
-          color: Styles.darkGrey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(
+            buttonIcon,
+            color: Styles.darkGrey,
+            size: 20.0,
+          ),
         ),
       ),
     );

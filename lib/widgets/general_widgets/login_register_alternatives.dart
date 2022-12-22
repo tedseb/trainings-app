@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class LoginRegisterAlternatives extends StatelessWidget {
@@ -26,7 +24,7 @@ class LoginRegisterAlternatives extends StatelessWidget {
         const SizedBox(width: 16.0),
         Text('$registerSignIn $platform', style: Styles.normalLinesLight),
         const Spacer(),
-        ShadowIconButtonWidget(buttonIcon: GymionIcons_1_0.pfeil, onPressFunction: onPressFunction, loggerText: '${platform}_login'),
+        ShadowIconButtonWidget(buttonIcon: IconConstants.arrowRightIconData, onPressFunction: onPressFunction, loggerText: '${platform}_login'),
       ],
     );
   }

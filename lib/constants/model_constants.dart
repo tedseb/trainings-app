@@ -2,7 +2,7 @@ import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:intl/intl.dart';
 
-class InitialModels {
+class ModelConstants {
   static Goal initialGoal = Goal(
     info: 'Goal Info is Loading...',
     name: 'Goal Name is Loading...',
@@ -75,8 +75,8 @@ class InitialModels {
     ],
   );
 
-  static  Map<String, dynamic> goalJson = initialGoal.goalToJson();
- static  Map<String, dynamic> plansJson = initialGoal.trainingsProgramms[0].plans[0].plansToJson();
+  static Map<String, dynamic> goalJson = initialGoal.goalToJson();
+  static Map<String, dynamic> plansJson = initialGoal.trainingsProgramms[0].plans[0].plansToJson();
 
   static AppUser initialAppUser = AppUser(
     uid: '',
@@ -96,4 +96,8 @@ class InitialModels {
     activityLevel: 0,
     activityPoints: {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
   );
+
+  static AppUser get getAppUser => AppUser.appUserFromJson(initialAppUser.appUserToJson());
+  
+
 }

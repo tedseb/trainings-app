@@ -1,15 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/app_utils/validation_utils.dart';
+import 'package:higym/constants/value_constants.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/services/auth.dart';
-
-import 'dart:developer' as dev;
-
+import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
 import 'package:higym/widgets/general_widgets/login_register_alternatives.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
+
+import 'dart:developer' as dev;
+
+import 'package:higym/widgets/general_widgets/text_form_field_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -24,7 +28,7 @@ class RegisterScreen extends StatefulWidget {
   final Function backToOnBoarding;
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -67,143 +71,70 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  /// Spacer
                   const SizedBox(height: 110),
 
                   /// AI Sign Up Text
-                  Text(
-                    'Registriere dich und starte dein Training!',
-                    style: Styles.subLinesBold,
-                    textAlign: TextAlign.center,
-                  ),
+                  AiTextWidget(user: widget.appUser, possibleAiScreen: PossibleAiScreens.signUpScreen, variation: 1),
+
+                  /// Spacer
                   const SizedBox(height: 40),
+
+                  /// Login Form
                   Form(
                       key: formKey,
                       child: Column(
                         children: [
                           /// Enter Email Field
-                          TextFormField(
-                            controller: emailController,
-                             style: Styles.normalLinesLight,
-                            decoration: InputDecoration(
-                              labelText: 'E-mail',
-                              labelStyle: Styles.subLinesBold,
-                              hintText: 'Your Email Address',
-                              hintStyle: Styles.smallLinesBold,
-                              isDense: true,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.error, width: 2.0),
-                              ),
-                              focusedErrorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value!.isEmpty || !RegExp(r'^[\w\.\-]+@[\w\-]+\.([\w\-]\.)?[a-z]{2,6}$').hasMatch(value)) {
-                                return 'Please enter a valid email address';
-                              } else {
-                                return null;
-                              }
-                            },
+                          TextFormFieldWidget(
+                            textEditingController: emailController,
+                            labelText: 'E-mail',
+                            hintText: 'Your Email Address',
+                            textInputType: TextInputType.emailAddress,
+                            validator: ValidationUtils().mailValidation,
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 30),
 
-                          /// Enter Password1 Field
-                          TextFormField(
-                            controller: passwordController,
-                             style: Styles.normalLinesLight,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: Styles.subLinesBold,
-                              hintText: 'Your Password',
-                              hintStyle: Styles.smallLinesBold,
-                              isDense: true,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
+                          /// Enter Password Field
+                          TextFormFieldWidget(
+                            textEditingController: passwordController,
+                            labelText: 'Password',
+                            hintText: 'Your Password',
+                            suffixIcon: InkWell(
+                              customBorder: const CircleBorder(),
+                              onTap: () => setState(
+                                () => passwordInVisible = !passwordInVisible,
                               ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.error, width: 2.0),
-                              ),
-                              focusedErrorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorMaxLines: 2,
-                              suffixIcon: InkWell(
-                                onTap: () => setState(
-                                  () => passwordInVisible = !passwordInVisible,
-                                ),
-                                child: Icon(
-                                  passwordInVisible ? Icons.visibility_off_rounded : Icons.visibility_rounded,
-                                  color: Styles.grey,
-                                  size: 22,
-                                ),
-                              ),
+                              child: passwordInVisible ? IconConstants.passwordNotVisibleIcon : IconConstants.passwordVisibleIcon,
                             ),
-                            keyboardType: TextInputType.visiblePassword,
+                            textInputType: TextInputType.visiblePassword,
                             obscureText: passwordInVisible,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 6) {
-                                return 'Your Password have to be at least 6 Characters!';
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: ValidationUtils().passwordValidation,
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 30),
 
                           /// Enter Password2 Field
-                          TextFormField(
-                            controller: passwordController2,
-                             style: Styles.normalLinesLight,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: Styles.subLinesBold,
-                              hintText: 'Repeat your Password',
-                              hintStyle: Styles.smallLinesBold,
-                              isDense: true,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
+                          TextFormFieldWidget(
+                            textEditingController: passwordController2,
+                            labelText: 'Password',
+                            hintText: 'Repeat your Password',
+                            suffixIcon: InkWell(
+                              customBorder: const CircleBorder(),
+                              onTap: () => setState(
+                                () => passwordInVisible2 = !passwordInVisible2,
                               ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.error, width: 2.0),
-                              ),
-                              focusedErrorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                              ),
-                              errorMaxLines: 2,
-                              suffixIcon: InkWell(
-                                onTap: () => setState(
-                                  () => passwordInVisible2 = !passwordInVisible2,
-                                ),
-                                child: Icon(
-                                  passwordInVisible2 ? Icons.visibility_off_rounded : Icons.visibility_rounded,
-                                  color: Styles.grey,
-                                  size: 22,
-                                ),
-                              ),
+                              child: passwordInVisible2 ? IconConstants.passwordNotVisibleIcon : IconConstants.passwordVisibleIcon,
                             ),
-                            keyboardType: TextInputType.visiblePassword,
+                            textInputType: TextInputType.visiblePassword,
                             obscureText: passwordInVisible2,
-                            validator: (value) {
-                              if (value != passwordController.text) {
-                                return 'Both Passwords have to match eachother!';
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: ValidationUtils(originalPasswordController: passwordController).password2Validation,
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 20),
 
                           /// Sign Up Error Text
@@ -215,6 +146,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               textAlign: TextAlign.center,
                             ),
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 20),
 
                           /// Sign Up Button
@@ -224,6 +157,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressFunction: _registerWithEmail,
                             loggerText: 'Home #SignUp#',
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 20),
 
                           /// Agree Terms Text
@@ -232,10 +167,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: Styles.smallLinesBold,
                             textAlign: TextAlign.center,
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 50),
 
                           /// LogIn With Google
                           LoginRegisterAlternatives(platform: 'Google', registerSignIn: 'Sign in with', onPressFunction: _registerWithGoogle),
+
+                          /// Spacer
                           const SizedBox(height: 20),
                         ],
                       )),
@@ -284,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           loading = false;
         });
         backToOnBoarding();
-        dev.log('Login with Email Successfull');
+        dev.log('Register with Email Successfull', name: 'Register_Screen');
       }
     }
   }
@@ -298,13 +237,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         responseText = 'Could not sign up with Google Account.';
         loading = false;
       });
-    }  else {
+    } else {
       setState(() {
         responseText = '';
         // loading = false;
       });
       navPop();
-      dev.log('Register with Email Successfull');
+      dev.log('Register with Google Successfull', name: 'Register_Screen');
     }
   }
 
@@ -312,7 +251,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     widget.backToOnBoarding();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
+
   void navPop() {
-   Navigator.pop(context);
+    Navigator.pop(context);
   }
 }

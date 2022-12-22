@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 import 'dart:developer' as dev;
 
@@ -38,7 +38,7 @@ class ShadowButtonWidget extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          dev.log('Open $loggerText Screen');
+          dev.log('Open $loggerText Screen', name: 'Shadow_Button');
           onPressFunction();
         },
         style: ElevatedButton.styleFrom(
@@ -49,9 +49,13 @@ class ShadowButtonWidget extends StatelessWidget {
           ),
           primary: Colors.grey[200],
           onPrimary: buttonTextColor,
+          // onPrimary: Styles.primaryColor,//To Make the Splashcolor of the Button
           elevation: 0.0,
         ),
-        child: Text(buttonText, style: Styles.normalLinesLight,),
+        child: Text(
+          buttonText,
+          style: Styles.normalLinesLight,
+        ),
       ),
     );
   }

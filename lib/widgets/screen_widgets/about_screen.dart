@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
-import 'package:higym/services/auth.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -40,9 +39,9 @@ class AboutScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text('About', style: Styles.headLinesBold),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(GymionIcons_1_0.einstellungen, color: Styles.darkGrey),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: IconConstants.gearIcon,
                     ),
                   ],
                 ),
@@ -93,7 +92,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: GymionIcons_1_0.pfeil,
+                        buttonIcon: IconConstants.arrowRightIconData,
                         onPressFunction: () {},
                         loggerText: 'Rate us on App Store',
                       ),
@@ -121,7 +120,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: GymionIcons_1_0.pfeil,
+                        buttonIcon: IconConstants.arrowRightIconData,
                         onPressFunction: () {},
                         loggerText: 'Terms & Conditions',
                       ),
@@ -149,7 +148,7 @@ class AboutScreen extends StatelessWidget {
                         ],
                       ),
                       ShadowIconButtonWidget(
-                        buttonIcon: GymionIcons_1_0.pfeil,
+                        buttonIcon: IconConstants.arrowRightIconData,
                         onPressFunction: () {
                           // AuthService().deleteUser(context);
                           FirebaseAuth.instance.currentUser!.delete();

@@ -1,14 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/goal.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
-import 'package:intl/intl.dart';
 
 class AiGoalContent extends StatefulWidget {
   const AiGoalContent({
@@ -34,7 +29,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
 
   @override
   void initState() {
-    _selectedItem = UsedObjects.goalObjects.indexWhere((element) => element['titel'] == widget.appUser.goalName);
+    _selectedItem = ValueConstants.goalObjects.indexWhere((element) => element['titel'] == widget.appUser.goalName);
 
     super.initState();
   }
@@ -44,7 +39,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: UsedObjects.goalObjects.length,
+        itemCount: ValueConstants.goalObjects.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
@@ -75,7 +70,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
                   children: [
                     NavbarIconButtonWidget(
                       onPressedFunction: () => _onItemTapped(index),
-                      iconData: UsedObjects.goalObjects[index]['icon'],
+                      iconData: ValueConstants.goalObjects[index]['icon'],
                       selectedItem: _selectedItem,
                       index: index,
                       borderHeigth: 4.0,
@@ -85,8 +80,8 @@ class _AiGoalContentState extends State<AiGoalContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.goalObjects[index]['titel'], style: Styles.subLinesBold),
-                          Text(UsedObjects.goalObjects[index]['subTitel'], style: Styles.smallLinesBold.copyWith(color: Styles.midleDarkGrey)),
+                          Text(ValueConstants.goalObjects[index]['titel'], style: Styles.subLinesBold),
+                          Text(ValueConstants.goalObjects[index]['subTitel'], style: Styles.smallLinesBold.copyWith(color: Styles.midleDarkGrey)),
                         ],
                       ),
                     )
@@ -101,7 +96,7 @@ class _AiGoalContentState extends State<AiGoalContent> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
-      widget.appUser.goalName = UsedObjects.goalObjects[index]['titel'];
+      widget.appUser.goalName = ValueConstants.goalObjects[index]['titel'];
       // Goal goalWithNewPhase = UsedObjects.shawanGoal;
       // goalWithNewPhase.trainingsProgramms[0].phases[0] = DateFormat('yyyy-MM-dd').format(phase1Start);
       // goalWithNewPhase.trainingsProgramms[0].phases[1] = DateFormat('yyyy-MM-dd').format(phase2Start);

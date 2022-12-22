@@ -1,18 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/services/training_programs_database.dart';
-import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 import 'package:higym/widgets/general_widgets/glas_box_widget.dart';
 
-import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
-import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 
 class AiGymEquipmentContent extends StatefulWidget {
   const AiGymEquipmentContent({
@@ -36,7 +31,7 @@ class _AiGymEquipmentContentState extends State<AiGymEquipmentContent> {
   Widget build(BuildContext context) {
     return FutureBuilder<Goal>(
       future: TrainingProgramsDatabase(
-        userGoalGroup: UsedObjects.goalObjects.firstWhere((goalObject) => goalObject['titel'] == widget.appUser.goalName)['goalGroup'],
+        userGoalGroup: ValueConstants.goalObjects.firstWhere((goalObject) => goalObject['titel'] == widget.appUser.goalName)['goalGroup'],
         userGoal: widget.appUser.goalName!,
         userLevel: widget.appUser.fitnessLevel!,
         userDayFrequenz: widget.appUser.dayFrequenz.toString(),

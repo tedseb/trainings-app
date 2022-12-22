@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class LeaveExerciseScreen extends StatelessWidget {
   const LeaveExerciseScreen({
@@ -27,12 +27,8 @@ class LeaveExerciseScreen extends StatelessWidget {
 
     void yesPress() {
       if (leaveTraining) {
-        // Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.pop(context);
         endTraining();
-        // Navigator.popUntil(context, (route) {
-        //   return pagepop++ == 2;
-        // });
       } else {
         nextExercise!();
         Navigator.pop(context);
@@ -40,106 +36,46 @@ class LeaveExerciseScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Styles.whiteTransparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          /// Headline Leave or Next
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              leaveText,
-              style: const TextStyle(
-                color: Styles.darkGrey,
-                fontWeight: FontWeight.normal,
-                fontSize: 40,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            child: Text(leaveText, style: Styles.headLinesLight, textAlign: TextAlign.center),
           ),
+
+          /// Decision Buttons
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
+                /// Yes Button
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Styles.darkGrey,
+                    textStyle: Styles.headLinesLight,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+                  ),
                   onPressed: () => yesPress(),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      side: BorderSide.none,
-                    ),
-                    primary: Colors.transparent,
-                    onPrimary: Styles.white,
-                    elevation: 0.0,
-                  ),
-                  child: const Text(
-                    'Yes',
-                    style: TextStyle(
-                      color: Styles.darkGrey,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 36,
-                    ),
-                  ),
+                  child: const Text('Yes'),
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      side: BorderSide.none,
-                    ),
-                    primary: Colors.transparent,
-                    onPrimary: Styles.white,
-                    elevation: 0.0,
+
+                /// No Button
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Styles.darkGrey,
+                    textStyle: Styles.headLinesBold,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                   ),
-                  child: const Text(
-                    'No',
-                    style: TextStyle(
-                      color: Styles.darkGrey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 36,
-                    ),
-                  ),
+                  onPressed: () async => Navigator.pop(context),
+                  child: const Text('No'),
                 ),
               ],
             ),
           ),
-          // Visibility(
-          //   visible: exerciseOccupied != null ? true : false,
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(16.0),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             exerciseOccupied!();
-          //             Navigator.pop(context);
-          //           },
-          //           style: ElevatedButton.styleFrom(
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(16.0),
-          //               side: BorderSide.none,
-          //             ),
-          //             primary: Colors.transparent,
-          //             onPrimary: Styles.white,
-          //             elevation: 0.0,
-          //           ),
-          //           child: const Text(
-          //             'Occupied - Do Later',
-          //             style: TextStyle(
-          //               color: Styles.hiGymText,
-          //               fontWeight: FontWeight.bold,
-          //               fontSize: 18,
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

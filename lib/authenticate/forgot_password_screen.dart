@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'dart:developer' as dev;
-
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/app_utils/validation_utils.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/services/auth.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
+import 'package:higym/widgets/general_widgets/text_form_field_widget.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -58,36 +56,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              TextFormField(
-                controller: emailController,
-                 style: Styles.normalLinesLight,
-                decoration: InputDecoration(
-                  labelText: 'E-mail',
-                  labelStyle: Styles.subLinesBold,
-                  hintText: 'Your Email Address',
-                  hintStyle: Styles.smallLinesBold,
-                  isDense: true,
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Styles.darkGrey, width: 2.0),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                  ),
-                  errorBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Styles.error, width: 2.0),
-                  ),
-                  focusedErrorBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Styles.primaryColor, width: 2.0),
-                  ),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value!.isEmpty || !RegExp(r'^[\w\.\-]+@[\w\-]+\.([\w\-]\.)?[a-z]{2,6}$').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  } else {
-                    return null;
-                  }
-                },
+              TextFormFieldWidget(
+                textEditingController: emailController,
+                labelText: 'E-mail',
+                hintText: 'Your Email Address',
+                textInputType: TextInputType.emailAddress,
+                validator: ValidationUtils().mailValidation,
               ),
               const SizedBox(height: 30),
               Visibility(

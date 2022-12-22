@@ -1,21 +1,19 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 
 class AiTextWidget extends StatefulWidget {
   const AiTextWidget({
-    required this.user,
-    required this.PossibleAiScreens,
+    this.user,
+    required this.possibleAiScreen,
     required this.variation,
     Key? key,
   }) : super(key: key);
 
-  final AppUser user;
-  final PossibleAiScreens;
+  final AppUser? user;
+  final PossibleAiScreens possibleAiScreen;
   final int variation;
 
   @override
@@ -30,22 +28,33 @@ class _AiTextWidgetState extends State<AiTextWidget> {
   @override
   void initState() {
     aiTextMap = {
+      PossibleAiScreens.signInScreen: {
+        1: 'Log in to your HiGym account',
+        2: 'Log in to your HiGym account',
+      },
+      PossibleAiScreens.signUpScreen: {
+        1: 'Registriere dich und starte dein Training!',
+        2: 'Registriere dich und starte dein Training!',
+      },
       PossibleAiScreens.aiOnboardingScreen: {
         1: 'Hallo, ich bin Gymion! Ich bin dein smarter Coach.',
         2: 'Hallo, ich bin Gymion! Ich bin dein smarter Coach.',
       },
+      PossibleAiScreens.talkToAiContent: {
+        1: 'Worauf willst du mich genauer einstimmen ${widget.user?.name}?',
+        2: 'Worauf willst du mich genauer einstimmen ${widget.user?.name}?',
+      },
       PossibleAiScreens.aiNameContent: {
         1: 'Wie heißt du?',
-        2: 'Wie heißt du?',
+        2: 'Welchen neuen Namen möctest du dir geben ${widget.user?.name}?',
       },
       PossibleAiScreens.aiPersonalDataContent: {
-        1: '${widget.user.name}, ich erstelle dir einen Workout der perfekt auf dich abgestimmt ist. Dazu brauch ich einige Information von dir.',
-        2: 'Welchen neuen NAmen möctest du dir geben ${widget.user.name}?',
+        1: '${widget.user?.name}, ich erstelle dir einen Workout der perfekt auf dich abgestimmt ist. Dazu brauch ich einige Information von dir.',
+        2: 'Hey ${widget.user?.name}! Gerne kannst du deine persönlichen Daten nochmal updaten!',
       },
       PossibleAiScreens.aiGoalContent: {
         1: 'Interessant dein BMI beträgt ${bmiCalculator()}. Was ist dein Ziel?',
-        2: 'Was ist dein neues Ziel ${widget.user.name}?',
-        //
+        2: 'Was ist dein neues Ziel ${widget.user?.name}?',
       },
       PossibleAiScreens.aiFitnessLevelContent: {
         1: 'Wie fit bist du? Damit ich deinen Schwierigkeitsgrad richtig einstellen kann, wähle die Option, die am besten zu dir passt!',
@@ -72,17 +81,18 @@ class _AiTextWidgetState extends State<AiTextWidget> {
         2: 'Hier ist dein neues Trainings Programm, viel Erfolg!',
       },
     };
-    aiText = aiTextMap[widget.PossibleAiScreens]![widget.variation]!;
+    aiText = aiTextMap[widget.possibleAiScreen]![widget.variation]!;
 
     super.initState();
   }
 
   String bmiCalculator() {
-    if (widget.user.weigth!.isNotEmpty) {
-      return ((widget.user.weigth!.last.entries.first.value / (widget.user.size! * widget.user.size!)) * 10000).toStringAsFixed(2);
-    } else {
-      return '22';
+    if (widget.user != null) {
+      if (widget.user!.weigth!.isNotEmpty) {
+        return ((widget.user!.weigth!.last.entries.first.value / (widget.user!.size! * widget.user!.size!)) * 10000).toStringAsFixed(2);
+      }
     }
+    return '22';
   }
 
   @override

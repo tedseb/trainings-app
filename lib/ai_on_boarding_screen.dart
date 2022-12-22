@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/authenticate/login_screen.dart';
 import 'package:higym/authenticate/register_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/initial_models.dart';
-import 'package:higym/models/used_objects.dart';
-import 'package:higym/services/training_programs_database.dart';
+import 'package:higym/constants/model_constants.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_progress_bar_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_bottom_simple_back_done_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_contents/ai_additional_musclegroup_content.dart';
@@ -21,10 +20,6 @@ import 'package:higym/widgets/ai_widgets/ai_contents/ai_present_trainigs_program
 import 'package:higym/widgets/ai_widgets/ai_text_widget.dart';
 import 'package:higym/widgets/ai_widgets/ai_wave_widget.dart';
 
-import 'dart:developer' as dev;
-
-import 'package:higym/widgets/general_widgets/loading_widget.dart';
-
 class AiOnBoardingScreen extends StatefulWidget {
   const AiOnBoardingScreen({Key? key}) : super(key: key);
 
@@ -33,7 +28,7 @@ class AiOnBoardingScreen extends StatefulWidget {
 }
 
 class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
-  AppUser onBoardingAppUser = InitialModels.initialAppUser;
+  AppUser onBoardingAppUser = ModelConstants.initialAppUser;
   Goal? onBoardingGoal;
 
   late Widget contentWidget;
@@ -140,7 +135,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                     children: [
                       const Spacer(),
                       AiTextWidget(
-                        PossibleAiScreens: PossibleAiScreens.aiOnboardingScreen,
+                        possibleAiScreen: PossibleAiScreens.aiOnboardingScreen,
                         user: onBoardingAppUser,
                         variation: 1,
                         key: const ValueKey(PossibleAiScreens.aiOnboardingScreen),
@@ -153,7 +148,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
                   child: Column(
                     children: [
                       AiTextWidget(
-                        PossibleAiScreens: aiContentScreenChain[currentContent]['screenContent'],
+                        possibleAiScreen: aiContentScreenChain[currentContent]['screenContent'],
                         user: onBoardingAppUser,
                         variation: 1,
                         key: ValueKey(aiContentScreenChain[currentContent]['screenContent']),
@@ -244,7 +239,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
           leftButtonText: 'Login',
           rightButtonText: 'Start',
           onPressedLeft: () => goToLogInScreen(),
-          onPressedRight: () => setState(() => onboardingScreen = 1),
+          onPressedRight: () => startOnBoardingScreen(),
         );
 
       case 1:
@@ -280,7 +275,7 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
           leftButtonText: 'Login',
           rightButtonText: 'Start',
           onPressedLeft: () => goToLogInScreen(),
-          onPressedRight: () => setState(() => onboardingScreen = 1),
+          onPressedRight: () => startOnBoardingScreen(),
         );
     }
   }
@@ -467,6 +462,13 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
     );
   }
 
+  void startOnBoardingScreen() {
+    setState(() {
+      onboardingScreen = 1;
+      onBoardingAppUser = ModelConstants.initialAppUser;
+    });
+  }
+
   void goToRegisterScreen() async {
     await Navigator.push(
       context,
@@ -490,21 +492,4 @@ class _AiOnBoardingScreenState extends State<AiOnBoardingScreen> {
   Goal getNewGoal() {
     return onBoardingGoal!;
   }
-
-  // void getGoal() async {
-  //   String userGoalGroup = UsedObjects.goalObjects.firstWhere((goalObject) => goalObject['titel'] == onBoardingAppUser.goalName)['goalGroup'];
-  //   onBoardingGoal = await TrainingProgramsDatabase(
-  //     userGoalGroup: userGoalGroup,
-  //     userGoal: onBoardingAppUser.goalName!,
-  //     userLevel: onBoardingAppUser.fitnessLevel!,
-  //     userDayFrequenz: onBoardingAppUser.dayFrequenz.toString(),
-  //     userAdditionalMusclegroup: onBoardingAppUser.additionalMusclegroup!,
-  //     userMinutesFrequenz: onBoardingAppUser.minutesFrequenz!,
-  //   ).getNewGoal();
-  //   setState(() {
-  //     onBoardingGoal;
-  //   });
-  //   dev.log(onBoardingGoal!.trainingsProgramms[0].plans[0].name);
-  //   // onBoardingGoal = Goal.goalFromJson(newGoal);
-  // }
 }

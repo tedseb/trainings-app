@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:higym/constants/icon_constants.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/services/database.dart';
 import 'package:higym/services/trainingsplan_updater.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import 'dart:developer' as dev;
 
@@ -129,10 +128,7 @@ class _TrainingEndedScreenState extends State<TrainingEndedScreen> {
               child: IconButton(
                   onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
                   iconSize: 72,
-                  icon: const Icon(
-                    Icons.check_circle_rounded,
-                    color: Styles.darkGrey,
-                  )),
+                  icon: Icon(IconConstants.doneExerciseIconData)),
             ),
           ],
         ),

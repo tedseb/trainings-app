@@ -25,7 +25,6 @@ class TrainingsplanUpdater {
         int exeIndex = selectedPlan.exercises.indexOf(exe);
 
         ///check exercise in deloadPhase
-
         if (isDelooadPhaseDone(appUser: appUser, exeIndex: exeIndex, plansQuantity: plansQuantity, selectedPlan: selectedPlan)) {
           if (exe.rpeScale.entries.last.value != -1) {
             if (exe.rpeScale.entries.last.value != 3) {

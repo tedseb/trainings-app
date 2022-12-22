@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/initial_models.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/model_constants.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/services/activity_calculator.dart';
-import 'dart:developer' as developer;
 
 import 'package:intl/intl.dart';
 
@@ -38,12 +37,12 @@ class TrainingProgramsDatabase {
       goalLocation = trainingProgramsCollection
           .doc(userGoalGroup)
           .collection(userDayFrequenz)
-          .doc(UsedObjects.additionalMusclegroupObject
+          .doc(ValueConstants.additionalMusclegroupObject
               .firstWhere((element) => element['titel'] == userAdditionalMusclegroup)[userAdditionalMusclegroup])
           .collection(userMinutesFrequenz);
     }
 
-    Goal newGoal = Goal.goalFromJson(InitialModels.goalJson);
+    Goal newGoal = Goal.goalFromJson(ModelConstants.goalJson);
 
     await goalLocation.get().then((QuerySnapshot snapshot) {
       int plansCounter = 0;
@@ -65,7 +64,7 @@ class TrainingProgramsDatabase {
       newGoal.trainingsProgramms[0].phases[3] = DateFormat('yyyy-MM-dd').format(ActivityCalculator.thisWeekStart(addWeeks: 10));
 
       while (newGoal.trainingsProgramms[0].plans.length != infoDoc.get('splitOrder').length) {
-        newGoal.trainingsProgramms[0].plans.add(Plans.plansFromJson(InitialModels.plansJson));
+        newGoal.trainingsProgramms[0].plans.add(Plans.plansFromJson(ModelConstants.plansJson));
       }
 
       for (var splitOrderElement in infoDoc.get('splitOrder')) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class RPEScale extends StatelessWidget {
   const RPEScale({
@@ -25,18 +25,19 @@ class RPEScale extends StatelessWidget {
         backgroundColor: modeColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50.0),
+
+          /// RPE Scale Question and Answer
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                children: [
-                  Text(
-                    'How Hard was your Exercise?',
-                    style: Styles.headLinesLight.copyWith(color: Styles.exercisingWhite),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+              /// RPE Headline
+              Text(
+                'How Hard was your Exercise?',
+                style: Styles.headLinesLight.copyWith(color: Styles.exercisingWhite),
+                textAlign: TextAlign.center,
               ),
+
+              /// Easy Button
               ElevatedButton(
                 onPressed: () async {
                   rpeScaleUpdater(1, exerciseIndex);
@@ -45,8 +46,8 @@ class RPEScale extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(28.0),
-                  primary: Styles.white,
-                  onPrimary: Styles.white,
+                  primary: Styles.exercisingWhite,
+                  onPrimary: Styles.exercisingWhite,
                   elevation: 0.0,
                 ),
                 child: Text(
@@ -54,6 +55,8 @@ class RPEScale extends StatelessWidget {
                   style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
+
+              /// Okay Button
               ElevatedButton(
                 onPressed: () async {
                   rpeScaleUpdater(2, exerciseIndex);
@@ -62,8 +65,8 @@ class RPEScale extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(28.0),
-                  primary: Styles.white,
-                  onPrimary: Styles.white,
+                  primary: Styles.exercisingWhite,
+                  onPrimary: Styles.exercisingWhite,
                   elevation: 0.0,
                 ),
                 child: Text(
@@ -71,6 +74,8 @@ class RPEScale extends StatelessWidget {
                   style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
+
+              /// Hard Button
               ElevatedButton(
                 onPressed: () async {
                   rpeScaleUpdater(3, exerciseIndex);
@@ -79,8 +84,8 @@ class RPEScale extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(28.0),
-                  primary: Styles.white,
-                  onPrimary: Styles.white,
+                  primary: Styles.exercisingWhite,
+                  onPrimary: Styles.exercisingWhite,
                   elevation: 0.0,
                 ),
                 child: Text(
@@ -88,19 +93,6 @@ class RPEScale extends StatelessWidget {
                   style: Styles.subLinesBold.copyWith(color: modeColor),
                 ),
               ),
-              // Column(
-              //   children: [
-              //     const Icon(
-              //       Icons.keyboard_arrow_up_rounded,
-              //       color: Styles.white,
-              //       size: 52.0,
-              //     ),
-              //     Text(
-              //       'Score $exeScore%',
-              //       style: Styles.title,
-              //     )
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -108,220 +100,3 @@ class RPEScale extends StatelessWidget {
     );
   }
 }
-
-
-   // Padding(
-              //   padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
-              //   child: Container(
-              //      width: double.infinity,
-              //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              //     decoration: BoxDecoration(
-              //       color: Styles.white,
-              //       borderRadius: BorderRadius.circular(12.0),
-              //       boxShadow: const [
-              //         ///bottom right
-              //         BoxShadow(
-              //           color: Color(0xFF9B7E40),
-              //           offset: Offset(3, 3),
-              //           blurRadius: 9,
-              //         ),
-              //       ],
-              //     ),
-              //     child: Column(
-              //       children: [
-              //         Text(
-              //           'Mehrere Wiederholungen möglich gewesen',
-              //           style: Styles.rpeText,
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         const SizedBox(height: 10.0),
-              //         ShadowButtonWidget(
-              //           buttonText: 'Zu Einfach',
-              //           buttonWidth: 120.0,
-              //           onPressFunction: () async {
-              //             rpeScaleUpdater(0, exerciseIndex);
-              //             Navigator.pop(context);
-              //           },
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
-              //   child: Container(
-              //      width: double.infinity,
-              //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              //     decoration: BoxDecoration(
-              //       color: Styles.white,
-              //       borderRadius: BorderRadius.circular(12.0),
-              //       boxShadow: const [
-              //         ///bottom right
-              //         BoxShadow(
-              //           color: Color(0xFF9B7E40),
-              //           offset: Offset(3, 3),
-              //           blurRadius: 9,
-              //         ),
-              //       ],
-              //     ),
-              //     child: Column(
-              //       children: [
-              //         Text(
-              //           'Eine Wiederholung möglich gewesen',
-              //           style: Styles.rpeText,
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         const SizedBox(height: 10.0),
-              //         ShadowButtonWidget(
-              //           buttonText: 'Einfach',
-              //           buttonWidth: 120.0,
-              //           onPressFunction: () async {
-              //             rpeScaleUpdater(0, exerciseIndex);
-              //             Navigator.pop(context);
-              //           },
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //    padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
-              //   child: Container(
-              //      width: double.infinity,
-              //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              //     decoration: BoxDecoration(
-              //       color: Styles.white,
-              //       borderRadius: BorderRadius.circular(12.0),
-              //       boxShadow: const [
-              //         ///bottom right
-              //         BoxShadow(
-              //           color: Color(0xFF9B7E40),
-              //           offset: Offset(3, 3),
-              //           blurRadius: 9,
-              //         ),
-              //       ],
-              //     ),
-              //     child: Column(
-              //       children: [
-              //         Text(
-              //           'Moderate bis Starke Anstrengung',
-              //           style: Styles.rpeText,
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         const SizedBox(height: 10.0),
-              //         ShadowButtonWidget(
-              //           buttonText: 'Optimal',
-              //           buttonWidth: 120.0,
-              //           onPressFunction: () async {
-              //             rpeScaleUpdater(0, exerciseIndex);
-              //             Navigator.pop(context);
-              //           },
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
-              //   child: Container(
-              //     width: double.infinity,
-              //     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-              //     decoration: BoxDecoration(
-              //       color: Styles.white,
-              //       borderRadius: BorderRadius.circular(12.0),
-              //       boxShadow: const [
-              //         ///bottom right
-              //         BoxShadow(
-              //           color: Color(0xFF9B7E40),
-              //           offset: Offset(3, 3),
-              //           blurRadius: 9,
-              //         ),
-              //       ],
-              //     ),
-              //     child: Column(
-              //       children: [
-              //         Text(
-              //           'Wiederholungen nicht geschafft',
-              //           style: Styles.rpeText,
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         const SizedBox(height: 10.0),
-              //         ShadowButtonWidget(
-              //           buttonText: 'Zu Hart',
-              //           buttonWidth: 120.0,
-              //           onPressFunction: () async {
-              //             rpeScaleUpdater(0, exerciseIndex);
-              //             Navigator.pop(context);
-              //           },
-              //         )
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-
-
-
-// ElevatedButton(
-//                 onPressed: () async {
-//                   rpeScaleUpdater(1, exerciseIndex);
-//                   Navigator.pop(context);
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   shape: const CircleBorder(),
-//                   padding: const EdgeInsets.all(28.0),
-//                   primary: Styles.white,
-//                   onPrimary: Styles.white,
-//                   elevation: 0.0,
-//                 ),
-//                 child: Text(
-//                   'easy',
-//                   style: TextStyle(
-//                     color: modeColor,
-//                     fontWeight: FontWeight.normal,
-//                     fontSize: 28,
-//                   ),
-//                 ),
-//               ),
-//               ElevatedButton(
-//                 onPressed: () async {
-//                   rpeScaleUpdater(2, exerciseIndex);
-//                   Navigator.pop(context);
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   shape: const CircleBorder(),
-//                   padding: const EdgeInsets.all(28.0),
-//                   primary: Styles.white,
-//                   onPrimary: Styles.white,
-//                   elevation: 0.0,
-//                 ),
-//                 child: Text(
-//                   'okay',
-//                   style: TextStyle(
-//                     color: modeColor,
-//                     fontWeight: FontWeight.normal,
-//                     fontSize: 28,
-//                   ),
-//                 ),
-//               ),
-//               ElevatedButton(
-//                 onPressed: () async {
-//                   rpeScaleUpdater(3, exerciseIndex);
-//                   Navigator.pop(context);
-//                 },
-//                 style: ElevatedButton.styleFrom(
-//                   shape: const CircleBorder(),
-//                   padding: const EdgeInsets.all(28.0),
-//                   primary: Styles.white,
-//                   onPrimary: Styles.white,
-//                   elevation: 0.0,
-//                 ),
-//                 child: Text(
-//                   'hard',
-//                   style: TextStyle(
-//                     color: modeColor,
-//                     fontWeight: FontWeight.normal,
-//                     fontSize: 28,
-//                   ),
-//                 ),
-//               ),

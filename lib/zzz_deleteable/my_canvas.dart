@@ -26,7 +26,7 @@ class MyCanvas extends CustomPainter {
   void drawFrame(Canvas canvas, Offset center) {
     var rect = Rect.fromCenter(center: center, width: W, height: W);
     // fill rect
-    var bg = Paint()..color = Color(0xfff2f3f0);
+    var bg = Paint()..color = const Color(0xfff2f3f0);
     canvas.drawRect(rect, bg);
     // draw border
     var border = Paint()
@@ -50,12 +50,12 @@ class MyCanvas extends CustomPainter {
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
 
-    var titleStyle = TextStyle(
+    var titleStyle = const TextStyle(
       color: Colors.black,
       fontSize: 40,
       fontWeight: FontWeight.w900,
     );
-    var labelStyle = TextStyle(
+    var labelStyle = const TextStyle(
       color: Colors.black,
       fontSize: 15,
       fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class MyCanvas extends CustomPainter {
     // draw chart guides
     drawChartGuides(canvas, chBorder, rect);
     // draw chart title
-    drawText(canvas, rect.topLeft + Offset(0, -60), rect.width, titleStyle,
+    drawText(canvas, rect.topLeft + const Offset(0, -60), rect.width, titleStyle,
         "Weekly Data");
     drawLabels(canvas, rect, labelStyle);
   }
@@ -95,14 +95,14 @@ class MyCanvas extends CustomPainter {
   }
 
   void drawDataPoints(Canvas canvas, dpPaint, Rect rect) {
-    if (weekData == null) return;
+    // if (weekData == null) return;
     // this ratio is the number of y pixels per unit data
     var yRatio = chartH / rangeD;
     var colW = chartW / 6.0;
     var p = Path();
     var x = rect.left;
     bool first = true;
-    weekData.forEach((d) {
+    for (var d in weekData) {
       // (d-minD) because we start our range at min value
       var y = (d - minD) * yRatio * percentage;
       if (first) {
@@ -112,7 +112,7 @@ class MyCanvas extends CustomPainter {
         p.lineTo(x, rect.bottom - y);
       }
       x += colW;
-    });
+    }
 
     p.moveTo(x - colW, rect.bottom);
     p.moveTo(rect.left, rect.bottom);
@@ -139,9 +139,9 @@ class MyCanvas extends CustomPainter {
     }
 
     //draw y Label
-    drawText(canvas, rect.bottomLeft + Offset(-35, -10), 40, labelStyle,
+    drawText(canvas, rect.bottomLeft + const Offset(-35, -10), 40, labelStyle,
         minD.toStringAsFixed(1)); // print min value
-    drawText(canvas, rect.topLeft + Offset(-35, 0), 40, labelStyle,
+    drawText(canvas, rect.topLeft + const Offset(-35, 0), 40, labelStyle,
         maxD.toStringAsFixed(1)); // print max value
   }
 }

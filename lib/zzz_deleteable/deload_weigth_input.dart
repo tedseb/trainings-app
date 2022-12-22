@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 
 
-import 'dart:developer' as dev;
 
 class DeloadWeigthInput extends StatefulWidget {
   const DeloadWeigthInput({
@@ -111,7 +110,7 @@ class _DeloadWeigthInputState extends State<DeloadWeigthInput> {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (formKey.currentState!.validate()) {
-      int repetitionsCount = int.parse(repetitonsController.text);
+      // int repetitionsCount = int.parse(repetitonsController.text);
       
       widget.weigthUpdater();
       Navigator.pop(context);

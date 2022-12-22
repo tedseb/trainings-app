@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 
 class AiBottomSimpleBackDoneWidget extends StatelessWidget {

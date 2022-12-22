@@ -4,7 +4,7 @@ import 'package:higym/ai_on_boarding_screen.dart';
 import 'package:higym/initial_screen.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/initial_models.dart';
+import 'package:higym/constants/model_constants.dart';
 import 'package:higym/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -20,11 +20,11 @@ class Wrapper extends StatelessWidget {
       providers: [
         StreamProvider<AppUser>.value(
           value: DatabaseService(uid: user?.uid).getUserData,
-          initialData: InitialModels.initialAppUser,
+          initialData: ModelConstants.initialAppUser,
         ),
         StreamProvider<Goal>.value(
           value: DatabaseService(uid: user?.uid).getGoal,
-          initialData: InitialModels.initialGoal,
+          initialData: ModelConstants.initialGoal,
         ),
       ],
       // child: _userAuthAndVerified(user),

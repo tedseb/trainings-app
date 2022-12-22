@@ -1,17 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:flutter/services.dart';
-import 'package:higym/authenticate/login_screen.dart';
-import 'package:higym/models/app_user.dart';
 import 'package:higym/services/auth.dart';
 import 'package:higym/wrapper.dart';
 import 'package:provider/provider.dart';
-import 'initial_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'dart:developer' as dev;
-
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +20,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -36,13 +29,21 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: Styles.white, fontFamily: 'GreycliffCF', dividerColor: Colors.transparent, splashColor: Styles.primaryColor),
+        theme: ThemeData(
+          scaffoldBackgroundColor: Styles.white,
+          fontFamily: 'GreycliffCF',
+          dividerColor: Colors.transparent,
+          splashColor: Styles.primaryColor,
+          iconTheme: const IconThemeData(
+            color: Styles.darkGrey,
+            size: Styles.iconSize,
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         home: const Wrapper(),
       ),
     );
-    
-    
+
     // MaterialApp(
     //   theme: ThemeData(scaffoldBackgroundColor: Styles.white, fontFamily: 'Montserrat'),
     //   home: const MainPage(),

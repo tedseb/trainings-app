@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/widgets/ai_widgets/textfield_user_modifier_widget.dart';
 
@@ -40,7 +38,9 @@ class _AiNameContentState extends State<AiNameContent> {
 
   changeName(String val){
     // widget.appUser.name = val;
-    widget.appUser.name = gowanNameCheck(val);
+    setState(() {
+  widget.appUser.name = gowanNameCheck(val);
+});
   }
 
   String gowanNameCheck(String gowanName){

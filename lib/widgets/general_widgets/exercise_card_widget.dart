@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/icon_constants.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/widgets/general_widgets/shadow_icon_button_widget.dart';
 import 'package:higym/app_utils/helper_utils.dart' as helper_utils;
@@ -84,7 +85,7 @@ class ExerciseCardWidget extends StatelessWidget {
               ),
             ),
             ShadowIconButtonWidget(
-              buttonIcon: Icons.info_outline_rounded,
+              buttonIcon: IconConstants.infoIconData,
               onPressFunction: () => showInfoScreen(selectedExercise),
               loggerText: '${selectedExercise.name}_info',
             ),

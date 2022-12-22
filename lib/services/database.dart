@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'dart:developer' as dev;
 
 import 'package:intl/intl.dart';
 
@@ -355,15 +354,15 @@ class DatabaseService {
   }
 
   // Convert Map<dynamic, dynamic> to Map<String, String>
-  Map<String, String> _fillStringStringMaps(Map<dynamic, dynamic> map) {
-    Map<String, String> returnMap = {};
+  // Map<String, String> _fillStringStringMaps(Map<dynamic, dynamic> map) {
+  //   Map<String, String> returnMap = {};
 
-    map.forEach((key, value) {
-      returnMap[key] = value;
-    });
+  //   map.forEach((key, value) {
+  //     returnMap[key] = value;
+  //   });
 
-    return returnMap;
-  }
+  //   return returnMap;
+  // }
 
   /// Convert List<dynamic> to List<String>
   List<String> _convertStringListsFromDynamic(List<dynamic>? list) {

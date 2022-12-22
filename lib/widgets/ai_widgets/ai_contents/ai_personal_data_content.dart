@@ -1,14 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/widgets/ai_widgets/ai_vertical_picker_widget.dart';
 import 'package:higym/widgets/ai_widgets/textfield_user_modifier_widget.dart';
-
-import 'dart:developer' as dev;
-
 import 'package:intl/intl.dart';
 
 class AiPersonalDataContent extends StatefulWidget {
@@ -29,11 +23,11 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
   final sizeController = TextEditingController();
   final genderController = TextEditingController();
 
-  List<int> ageList = List<int>.generate(90, (i) => i + 10);
-  List<double> weightList = List<double>.generate(320, (i) => ((i / 2) + 40));
-  List<double> sizeList = List<double>.generate(180, (i) => ((i / 2) + 130));
-  List<String> genderList = ['Male', 'Female'];
-  
+  List<int> ageList = ValueConstants.ageList;
+  List<double> weightList = ValueConstants.weightList;
+  List<double> sizeList = ValueConstants.sizeList;
+  List<String> genderList = ValueConstants.genderList;
+
   @override
   void initState() {
     widget.appUser.age != null ? ageController.text = widget.appUser.age.toString() : ageController.text = '';
@@ -51,11 +45,15 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
       children: [
         Container(
           height: 68,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Stack(
             children: [
-              TextFieldUserModifierWidget(controller: ageController, label: 'Alter', hintText: 'Dein Alter', changeVal: changeAge),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: TextFieldUserModifierWidget(controller: ageController, label: 'Alter', hintText: 'Dein Alter', changeVal: changeAge),
+              ),
               InkWell(
+                borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
                   showDialog(
                       context: context,
@@ -73,11 +71,15 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
         ),
         Container(
           height: 68,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Stack(
             children: [
-              TextFieldUserModifierWidget(controller: weightController, label: 'Gewicht', hintText: 'Dein Gewicht', changeVal: changeWeigth),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: TextFieldUserModifierWidget(controller: weightController, label: 'Gewicht', hintText: 'Dein Gewicht', changeVal: changeWeigth),
+              ),
               InkWell(
+                borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
                   showDialog(
                       context: context,
@@ -95,11 +97,15 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
         ),
         Container(
           height: 68,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Stack(
             children: [
-              TextFieldUserModifierWidget(controller: sizeController, label: 'Größe', hintText: 'Deine Größe', changeVal: changeWeigth),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: TextFieldUserModifierWidget(controller: sizeController, label: 'Größe', hintText: 'Deine Größe', changeVal: changeWeigth),
+              ),
               InkWell(
+                borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
                   showDialog(
                       context: context,
@@ -117,11 +123,16 @@ class _AiPersonalDataContentState extends State<AiPersonalDataContent> {
         ),
         Container(
           height: 68,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Stack(
             children: [
-              TextFieldUserModifierWidget(controller: genderController, label: 'Geschlecht', hintText: 'Dein Geschlecht', changeVal: changeWeigth),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: TextFieldUserModifierWidget(
+                    controller: genderController, label: 'Geschlecht', hintText: 'Dein Geschlecht', changeVal: changeWeigth),
+              ),
               InkWell(
+                borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
                   showDialog(
                       context: context,

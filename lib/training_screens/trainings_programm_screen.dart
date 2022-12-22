@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:higym/constants/icon_constants.dart';
 
-import 'package:higym/app_utils/styles.dart';
-import 'package:higym/gymion_icons_1_0_icons.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
-import 'package:higym/models/initial_models.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/model_constants.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/training_screens/exercise_info_screen.dart';
 import 'package:higym/widgets/general_widgets/exercise_card_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
@@ -23,14 +23,8 @@ class TrainingsProgrammScreen extends StatefulWidget {
 }
 
 class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
-  Plans selectedPlan = InitialModels.initialGoal.trainingsProgramms[0].plans[0];
+  Plans selectedPlan = ModelConstants.initialGoal.trainingsProgramms[0].plans[0];
   Goal? myGoal;
-  // late Goal goal;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,68 +35,52 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
       body: goalNotNullTester()
           ? Column(
               children: [
-                ///Talk to AI Button
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 28.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ShadowIconButtonWidget(
-                        buttonIcon: GymionIcons_1_0.kiAnpassen,
-                        onPressFunction: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TalkToAiScreen(appUser: user!.appUserToJson(), goal: myGoal!.goalToJson()),
-                            ),
-                          );
-                        },
-                        loggerText: 'Talk to AI',
-                      )
-                    ],
-                  ),
+                /// TrainingsProgram TopBar
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ///Talk to AI Button
+                    ShadowIconButtonWidget(
+                      buttonIcon: IconConstants.talkToAiIconData,
+                      onPressFunction: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TalkToAiScreen(appUser: user!.appUserToJson(), goal: myGoal!.goalToJson()),
+                          ),
+                        );
+                      },
+                      loggerText: 'Talk to AI',
+                    ),
+
+                    /// Spacer
+                    const SizedBox(height: 100.0, width: 16.0),
+                  ],
                 ),
 
                 ///Plan Name
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 40.0),
+                  padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 30.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'next',
-                              style: Styles.normalLinesLight,
-                            ),
-                            Text(
-                              // 'Workout',
-                              myGoal!.trainingsProgramms[0].actualPlan,
-                              style: Styles.subLinesBold,
-                            ),
-                          ],
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// TrainingsProgramm next
+                          Text(
+                            'upcoming',
+                            style: Styles.normalLinesLight,
+                          ),
+
+                          /// TrainingsProgram Name
+                          Text(
+                            myGoal!.trainingsProgramms[0].actualPlan,
+                            style: Styles.subLinesBold,
+                          ),
+                        ],
                       ),
-                      // Flexible(
-                      //   flex: 1,
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Text(
-                      //         'Phase',
-                      //         style: Styles.trainingsplanSubTitle,
-                      //       ),
-                      //       Text(
-                      //         myGoal!.trainingsProgramms[0].actualPhase.toString(),
-                      //         style: Styles.trainingsplanTitle,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -112,30 +90,43 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                   padding: const EdgeInsets.only(left: 16.0, top: 0.0, right: 16.0, bottom: 0.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      /// Actual Goal
                       Column(
                         children: [
                           Icon(
-                            UsedObjects.goalObjects.firstWhere((element) => element['titel'] == myGoal!.trainingsProgramms[0].fitnesstype)['icon'],
-                            color: Styles.darkGrey,
-                            size: 30.0,
+                            ValueConstants.goalObjects.firstWhere((element) => element['titel'] == myGoal!.trainingsProgramms[0].fitnesstype)['icon'],
                           ),
-                          // Styles.getFitnessTypeIcons(myGoal!.trainingsProgramms[0].fitnesstype),
-                          Text(myGoal!.trainingsProgramms[0].fitnesstype, style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            myGoal!.trainingsProgramms[0].fitnesstype,
+                            style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey),
+                          ),
                         ],
                       ),
+
+                      /// Trainings Level
                       Column(
                         children: [
-                          Styles.levelIcon,
-                          Text(UsedObjects.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel],
-                              style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
+                          ValueConstants.trainingPlanDifficultyIcons[myGoal!.trainingsProgramms[0].difficultyLevel]!,
+                          const SizedBox(height: 4.0),
+                          Text(
+                            ValueConstants.trainingPlanDifficulty[myGoal!.trainingsProgramms[0].difficultyLevel],
+                            style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey),
+                          ),
                         ],
                       ),
+
+                      /// Goal Duration
                       Column(
                         children: [
-                          Styles.timerIcon,
-                          Text('${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks', style:  Styles.smallLinesBold.copyWith(color: Styles.darkGrey)),
+                          IconConstants.timeIcon,
+                          const SizedBox(height: 4.0),
+                          Text(
+                            '${myGoal!.trainingsProgramms[0].durationWeeks.toString()} Weeks',
+                            style: Styles.smallLinesBold.copyWith(color: Styles.darkGrey),
+                          ),
                         ],
                       ),
                     ],
@@ -144,24 +135,29 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
 
                 /// Shadow Divider
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0, bottom: 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     height: 20,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: <BoxShadow>[BoxShadow(blurRadius: 10, offset: Offset(0, 13), color: Colors.grey, spreadRadius: -7)],
+                      color: Styles.white,
+                      boxShadow: <BoxShadow>[BoxShadow(blurRadius: 10, offset: Offset(0, 13), color: Styles.grey, spreadRadius: -7)],
                     ),
                   ),
                 ),
+
+                /// Trainings Programms
                 Expanded(
                   child: myGoal == null
                       ? const LoadingWidget()
+
+                      /// Trainings Programs List
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 0.0),
                           child: ListView.builder(
                               padding: const EdgeInsets.only(top: 50.0, bottom: 100.0),
                               itemCount: myGoal!.trainingsProgramms[0].plans.length,
                               itemBuilder: (context, index) {
+                                /// One Trainings Program
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 30.0),
                                   child: ExpansionTile(
@@ -173,12 +169,15 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                     iconColor: Styles.primaryColor,
                                     initiallyExpanded: activeExerciseCheck(index),
                                     backgroundColor: Colors.transparent,
+
+                                    /// TrainingsProgramm Name
                                     title: Row(
                                       children: [
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            /// Name
                                             Text(
                                               helper_utils.truncatePlanName(
                                                 myGoal!.trainingsProgramms[0].plans[index].name,
@@ -187,6 +186,8 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                               ),
                                               style: Styles.subLinesBold,
                                             ),
+
+                                            /// Name Underline
                                             Container(
                                               margin: const EdgeInsets.only(top: 4.0),
                                               width: 30.0,
@@ -201,13 +202,14 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
                                       ],
                                     ),
                                     children: [
+                                      /// Trainings PLAN
                                       ListView.builder(
                                           physics: const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
                                           itemCount: myGoal!.trainingsProgramms[0].plans[index].exercises.length,
                                           itemBuilder: (context, exeIndex) {
-                                            //Exercise Name is Loading...
+                                            /// One Exercise
                                             return ExerciseCardWidget(
                                               selectedExercise: myGoal!.trainingsProgramms[0].plans[index].exercises[exeIndex],
                                               showInfoScreen: openExerciseInfo,
@@ -226,20 +228,21 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
     );
   }
 
+  /// Check Goal or User Null to Avoid Error
   bool goalNotNullTester() {
     if (myGoal == null) {
-      dev.log('Goal is null, Wait Goal Stream');
+      dev.log('Goal NULL', name: 'TrainingProgram_Screen');
       return false;
     }
     if (myGoal!.trainingsProgramms.isEmpty) {
-      dev.log('Trainings Programm is null');
+      dev.log('TrainingProgram NULL', name: 'TrainingProgram_Screen');
       return false;
     }
-    dev.log('Trainings Programm Loaded!');
+    dev.log('Goal and TrainingProgram OK', name: 'TrainingProgram_Screen');
     return true;
   }
 
-  /// Check If the selected Exerci is the Actual Plan
+  /// Check If the selected Exercise is the Actual Plan
   bool activeExerciseCheck(int index) {
     if (myGoal!.trainingsProgramms[0].actualPlan == myGoal!.trainingsProgramms[0].plans[index].name) {
       return true;
@@ -248,31 +251,7 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
     }
   }
 
-  void checkTrainingsPhaseAndUpdate(TrainingPrograms trainingsProgramm) {
-    DateTime now = DateTime.now();
-    DateTime phase1Start = DateTime.parse(trainingsProgramm.phases[0]);
-    DateTime phase2Start = DateTime.parse(trainingsProgramm.phases[1]);
-    DateTime phase3Start = DateTime.parse(trainingsProgramm.phases[2]);
-    DateTime phase3End = DateTime.parse(trainingsProgramm.phases[3]);
-
-    // if(phase3Start.isBefore(now)){
-    //   //Update actualPhase to 3
-    // }else if{
-
-    // }
-    //  Plans myPlan = trainingsProgramm.plans.firstWhere((element) => element.name == trainingsProgramm.actualPlan);
-  }
-
-  // void getAndUpdateSelectedPlan() {
-  //   if (myGoal != null) {
-  //     Plans myPlan = myGoal!.trainingsProgramms[0].plans.firstWhere((element) => element.name == myGoal!.trainingsProgramms[0].actualPlan);
-
-  //     setState(() {
-  //       selectedPlan = myPlan;
-  //     });
-  //   }
-  // }
-
+  /// Open Exercise Info
   Future<void> openExerciseInfo(Exercises selectedExercise) async {
     await Navigator.push(
       context,
@@ -284,17 +263,3 @@ class _TrainingsProgrammScreenState extends State<TrainingsProgrammScreen> {
     );
   }
 }
-
-
-
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     if (myGoal.trainingsProgramms.isNotEmpty) {
-  //       getAndUpdateSelectedPlan(myGoal.trainingsProgramms[0]);
-  //     }
-  //   });
-  // }

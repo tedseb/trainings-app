@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 
 class AiFitnessLevelContent extends StatefulWidget {
   const AiFitnessLevelContent({
@@ -18,7 +16,7 @@ class AiFitnessLevelContent extends StatefulWidget {
 }
 
 class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
-  List<String> fitnessLevelText = UsedObjects.fitnessLevelText;
+  List<String> fitnessLevelText = ValueConstants.fitnessLevelText;
 
   double sliderValue = 0.0;
 
@@ -46,7 +44,8 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
                 thumbColor: Styles.primaryColor,
                 activeColor: Styles.grey,
                 inactiveColor: Styles.lightGrey,
-                value: widget.appUser.fitnessLevel!.toDouble(),
+                value: sliderValue,
+                // value: widget.appUser.fitnessLevel!.toDouble(),
                 min: 0,
                 max: fitnessLevelText.length - 1,
                 divisions: fitnessLevelText.length - 1,
@@ -55,7 +54,7 @@ class _AiFitnessLevelContentState extends State<AiFitnessLevelContent> {
                   setState(() {
                     sliderValue = value;
                     if (value > 1) {
-                      if (value < 4) {
+                      if (value < 3) {
                         widget.appUser.fitnessLevel = 2;
                       } else {
                         widget.appUser.fitnessLevel = (value ~/ 1) - 1;

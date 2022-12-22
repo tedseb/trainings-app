@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/circle_painter.dart';
-import 'package:higym/app_utils/styles.dart';
-
-import 'dart:developer' as dev;
-
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
+import 'package:higym/paintings/circle_painter.dart';
+import 'package:higym/paintings/rounded_dot_painter.dart';
 import 'package:higym/services/activity_calculator.dart';
 import 'package:higym/services/database.dart';
+import 'package:higym/widgets/general_widgets/shadow_card_widget.dart';
 import 'package:higym/widgets/general_widgets/loading_widget.dart';
+import 'package:higym/widgets/general_widgets/user_name_badge_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:developer' as dev;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,9 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     user = Provider.of<AppUser?>(context);
     goal = Provider.of<Goal?>(context);
     Size screenSize = MediaQuery.of(context).size;
-    calculateActivity();
-    calculateManyTimesTrainedThisWeek();
-    calculateActualWeekAndPhase();
+
     dev.log('Width:  ${screenSize.width}');
     dev.log('Heigth:  ${screenSize.height}');
     return Scaffold(
@@ -48,99 +48,50 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.zero,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /// Home Welcome Card height ca 195
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32.0, 96.0, 32.0, 0.0),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-                    decoration: BoxDecoration(
-                      color: Styles.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                      boxShadow: [
-                        ///bottom right
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          offset: const Offset(3, 3),
-                          blurRadius: 3,
-                        ),
+                /// Spacer
+                const SizedBox(height: 96),
 
-                        ///top left
-                        BoxShadow(
-                          color: Colors.grey.shade200,
-                          offset: const Offset(-3, -3),
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        /// Name and Badge
-                        /// User Name and Badge
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Flexible(
-                              child: RichText(
-                                text: TextSpan(
-                                  // style: Styles.homeCardName,
-                                  children: [
-                                    TextSpan(text: 'Hi ', style: Styles.headLinesBold),
-                                    TextSpan(text: user!.name.toString(), style: Styles.headLinesLight),
-                                  ],
+                /// Home Welcome Card height ca 195
+                ShadowCardWidget(
+                  cardChild: Column(
+                    children: [
+                      /// User Name and Badge
+                      UserNameBadgeWidget(userName: user!.name.toString(), userLvl: user!.activityLevel!),
+
+                      /// Spacer
+                      const SizedBox(height: 24.0),
+
+                      /// Welcome Card Text
+                      Text(welcomeCardText, style: Styles.normalLinesLight),
+
+                      /// Spacer
+                      const SizedBox(height: 24.0),
+
+                      /// Training Unit Counter
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: Text(
+                                  'TE $timesTrainedThisWeek/$toTrainThisWeek',
+                                  style: Styles.smallLinesLight,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Image.asset('assets/badges/${user!.activityLevel}.png', height: 75),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24.0),
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(welcomeCardText, style: Styles.normalLinesLight),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
-                                  child: Text(
-                                    'TE $timesTrainedThisWeek/$toTrainThisWeek',
-                                    style: Styles.smallLinesLight,
-                                  ),
-                                ),
-                                timesTrainedThisWeek < toTrainThisWeek
-                                    ? Container(
-                                        width: 7.0,
-                                        height: 7.0,
-                                        decoration: const BoxDecoration(
-                                          color: Styles.primaryColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              ],
-                            ),
-                            // Text(
-                            //   'Parameter',
-                            //   style: Styles.homeCardText,
-                            // ),
-                          ],
-                        )
-                      ],
-                    ),
+                              timesTrainedThisWeek < toTrainThisWeek
+                                  ? const RoundedDotPainter(radius: 7.0, dotColor: Styles.primaryColor)
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 100.0),
                   child: SizedBox(
@@ -153,23 +104,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         progressSmallPercet: weekPercentage,
                         progressSmallReachPercet: weekNextPhasePercentage,
                       ),
+
+                      /// Activity Points and Goal Weeks
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          /// Activity Points
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 2.0),
-                                width: 15.0,
-                                height: 15.0,
-                                decoration: const BoxDecoration(
-                                  color: Styles.orange,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                              /// Activity Points Orange Dot
+                              const RoundedDotPainter(radius: 15.0, dotColor: Styles.orange, topMargin: 2.0),
+
+                              /// Spacer
                               const SizedBox(width: 4),
+
+                              /// Activity Points Text
                               SizedBox(
                                 width: 56.0,
                                 child: Column(
@@ -183,21 +134,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
+
+                          /// Spacer
                           const SizedBox(height: 5),
+
+                          /// Goal Weeks
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 2.0),
-                                width: 15.0,
-                                height: 15.0,
-                                decoration: const BoxDecoration(
-                                  color: Styles.blue,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                              /// Goal Weeks Blue Dot
+                              const RoundedDotPainter(radius: 15.0, dotColor: Styles.blue, topMargin: 2.0),
+
+                              /// Spacer
                               const SizedBox(width: 4),
+
+                              /// Goal Weeks Text
                               SizedBox(
                                 width: 56.0,
                                 child: Column(
@@ -224,16 +176,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool userTester() {
     if (user == null) {
-      dev.log('User IST null');
+      dev.log('User NULL', name: 'Home_Screen');
       return false;
     }
 
     if (user!.activityLevel == null) {
-      dev.log('user!.activityLevel IST null');
+      dev.log('Activity_Level NULL', name: 'Home_Screen');
       return false;
     }
 
-    dev.log('user!.activityLevel != null');
+    dev.log('User OK', name: 'Home_Screen');
+    calculateActivity();
+    calculateManyTimesTrainedThisWeek();
+    calculateActualWeekAndPhase();
+
     return true;
   }
 

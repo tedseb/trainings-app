@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
-import 'package:higym/models/used_objects.dart';
+import 'package:higym/constants/value_constants.dart';
 import 'package:higym/widgets/general_widgets/navbar_icon_button_widget.dart';
 
 class AiAdditionalMusclegroupContent extends StatefulWidget {
@@ -24,7 +21,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
 
   @override
   void initState() {
-    _selectedItem = UsedObjects.additionalMusclegroupObject.indexWhere((element) => element['titel'] == widget.appUser.additionalMusclegroup);
+    _selectedItem = ValueConstants.additionalMusclegroupObject.indexWhere((element) => element['titel'] == widget.appUser.additionalMusclegroup);
 
     super.initState();
   }
@@ -34,7 +31,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: UsedObjects.additionalMusclegroupObject.length,
+        itemCount: ValueConstants.additionalMusclegroupObject.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
@@ -65,7 +62,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
                   children: [
                     NavbarIconButtonWidget(
                       onPressedFunction: () => _onItemTapped(index),
-                      iconData: UsedObjects.additionalMusclegroupObject[index]['icon'],
+                      iconData: ValueConstants.additionalMusclegroupObject[index]['icon'],
                       selectedItem: _selectedItem,
                       index: index,
                       borderHeigth: 4.0,
@@ -75,7 +72,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(UsedObjects.additionalMusclegroupObject[index]['titel'], style: Styles.subLinesBold),
+                          Text(ValueConstants.additionalMusclegroupObject[index]['titel'], style: Styles.subLinesBold),
                         ],
                       ),
                     )
@@ -90,7 +87,7 @@ class _AiAdditionalMusclegroupContentState extends State<AiAdditionalMusclegroup
   void _onItemTapped(int index) {
     setState(() {
       _selectedItem = index;
-      widget.appUser.additionalMusclegroup = UsedObjects.additionalMusclegroupObject[index]['titel'];
+      widget.appUser.additionalMusclegroup = ValueConstants.additionalMusclegroupObject[index]['titel'];
     });
   }
 }

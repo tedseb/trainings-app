@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 
 class NavbarIconButtonWidget extends StatefulWidget {
   const NavbarIconButtonWidget({
@@ -11,7 +11,6 @@ class NavbarIconButtonWidget extends StatefulWidget {
     required this.index,
     this.borderHeigth = 2.0,
     this.borderWidth = 20.0,
-
   }) : super(key: key);
 
   final Function onPressedFunction;
@@ -27,7 +26,6 @@ class NavbarIconButtonWidget extends StatefulWidget {
 }
 
 class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
- 
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -41,10 +39,11 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
             children: [
               Icon(
                 widget.iconData,
-                size: 26,
+                size: 25,
                 color: Styles.darkGrey,
               ),
-              widget.iconText != null ? Text(widget.iconText! , style: Styles.tinyLinesBold,) : const SizedBox(),
+              const SizedBox(height: 2),
+              widget.iconText != null ? Text(widget.iconText!, style: Styles.tinyLinesBold) : const SizedBox(),
             ],
           ),
           AnimatedContainer(

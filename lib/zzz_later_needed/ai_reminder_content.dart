@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:higym/app_utils/styles.dart';
+import 'package:higym/constants/styles.dart';
 import 'package:higym/models/app_user.dart';
 import 'package:higym/widgets/general_widgets/shadow_button_widget.dart';
 
