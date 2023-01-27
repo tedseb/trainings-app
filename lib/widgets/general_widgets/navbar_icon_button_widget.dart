@@ -5,7 +5,7 @@ class NavbarIconButtonWidget extends StatefulWidget {
   const NavbarIconButtonWidget({
     Key? key,
     required this.onPressedFunction,
-    required this.iconData,
+    this.iconData,
     this.iconText,
     required this.selectedItem,
     required this.index,
@@ -14,7 +14,7 @@ class NavbarIconButtonWidget extends StatefulWidget {
   }) : super(key: key);
 
   final Function onPressedFunction;
-  final IconData iconData;
+  final IconData? iconData;
   final String? iconText;
   final int selectedItem;
   final int index;
@@ -37,11 +37,13 @@ class _NavbarIconButtonWidgetState extends State<NavbarIconButtonWidget> {
         children: [
           Column(
             children: [
-              Icon(
-                widget.iconData,
-                size: 25,
-                color: Styles.darkGrey,
-              ),
+              widget.iconData != null
+                  ? Icon(
+                      widget.iconData,
+                      size: 25,
+                      color: Styles.darkGrey,
+                    )
+                  : const SizedBox(),
               const SizedBox(height: 2),
               widget.iconText != null ? Text(widget.iconText!, style: Styles.tinyLinesBold) : const SizedBox(),
             ],

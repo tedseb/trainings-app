@@ -95,9 +95,8 @@ class ModelConstants {
     fitnessMethod: null,
     activityLevel: 0,
     activityPoints: {DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now()): 0.0},
+    gceq: null,
   );
 
   static AppUser get getAppUser => AppUser.appUserFromJson(initialAppUser.appUserToJson());
-  
-
 }

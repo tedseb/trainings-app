@@ -16,6 +16,13 @@ class DatabaseService {
 
   // START - User Related Data------------------------------------------------------------------------------------------------
   /// Update User
+  Future addGceqToUser(AppUser appUser) {
+    return usersCollection.doc(uid).update({
+      /// User Credentials
+      'gceq': appUser.gceq,
+    });
+  }
+  /// Update User
   Future signUpNewUser(AppUser appUser) {
     return usersCollection.doc(uid).set({
       /// User Credentials

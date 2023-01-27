@@ -16,6 +16,7 @@ enum PossibleAiScreens {
   aiFitnessMethodsContent,
   aiAdditionalMusclegroupContent,
   aiPresentTrainingsProgrammContent,
+  aiGCEQ,
 }
 
 enum OnBoardingBottomNavBar {
@@ -166,4 +167,107 @@ class ValueConstants {
   static final List<double> weightList = List<double>.generate(320, (i) => ((i / 2) + 40));
   static final List<double> sizeList = List<double>.generate(180, (i) => ((i / 2) + 130));
   static final List<String> genderList = ['Male', 'Female'];
+
+  static final List<Map<String, String>> gceqList = [
+    {
+      'question': 'Die folgenden Fragen helfen der KI dich besser zu Unterstützen!',
+      'answer': '',
+    },
+    {
+      'question': 'Wie wichtig sind Ihnen die folgenden Ziele beim Sporttreiben?',
+      'answer': '',
+    },
+    {
+      'question': 'Mit Anderen in einer sinnvollen Art und Weise zusammen zu kommen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Das Erscheinungsbild meiner Körperform zu verbessern, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Meine Widerstandsfähigkeit gegen Unwohlsein und Krankheit zu verbessern, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Von Anderen günstig beurteilt zu werden, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Neue sportliche Fähigkeiten zu erwerben, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Meine sportlichen Erfahrungen mit Menschen zu teilen, die mich mögen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Mein Aussehen zu verbessern, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Mein Leistungsvermögen zu verbessern, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Bei Anderen sozial angesehen zu sein, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Neue Techniken zu lernen und zu üben, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Enge Freundschaften aufzubauen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Schlank zu sein, um attraktiver auszusehen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Meine Gesundheit insgesamt zu verbessern, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Von Anderen positive Anerkennung zu erfahren, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Bestimmte Übungen oder Aktivitäten kompetent ausführen zu können, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Enge Bindungen mit Anderen einzugehen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Mein Aussehen zu verbessern, in dem ich bestimmte Bereiche meines Körpers verändere, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Meine Ausdauerfähigkeit zu erhöhen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Dass Andere mich als Sporttreibenden erkennen, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Meine sportlichen Fähigkeiten zu entwickeln, ist mir ...',
+      'answer': '',
+    },
+    {
+      'question': 'Gratulation, du hast alle Fragen beantwortet!',
+      'answer': '',
+    },
+  ];
+  static final List<String> gceqAnswer = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+  ];
 }

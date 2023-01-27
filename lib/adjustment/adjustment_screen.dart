@@ -4,6 +4,7 @@ import 'package:higym/models/app_user.dart';
 import 'package:higym/models/goal.dart';
 import 'package:higym/widgets/general_widgets/row_item_with_select_widget.dart';
 import 'package:higym/widgets/screen_widgets/about_screen.dart';
+import 'package:higym/widgets/screen_widgets/enhance_the_ai_screen.dart';
 import 'package:higym/widgets/screen_widgets/talk_to_ai_screen.dart';
 import 'package:higym/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +39,28 @@ class _AdjustmentScreenState extends State<AdjustmentScreen> {
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
               child: RowItemWithSelectWidget(
                 leadingIcon: IconConstants.talkToAiIconData,
-                widgetText: 'Talk AI',
+                widgetText: 'Talk to AI',
                 onPressFunction: () async {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => TalkToAiScreen(appUser: user.appUserToJson(), goal: goal!.goalToJson()),
+                    ),
+                  );
+                },
+              ),
+            ),
+            /// Enhance the AI Button
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+              child: RowItemWithSelectWidget(
+                leadingIcon: IconConstants.enhanceTheAiIconData,
+                widgetText: 'Enhance the AI',
+                onPressFunction: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EnhanceTheAiScreen(appUser: user),
                     ),
                   );
                 },

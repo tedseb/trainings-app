@@ -15,6 +15,7 @@ class AppUser {
   String? additionalMusclegroup;
   Map<String, double>? activityPoints;
   int? activityLevel;
+  List<Map<String, String>>? gceq;
 
   AppUser({
     this.uid,
@@ -33,6 +34,7 @@ class AppUser {
     this.additionalMusclegroup,
     this.activityPoints,
     this.activityLevel,
+    this.gceq,
   });
 
   Map<String, dynamic> appUserToJson() => {
@@ -52,6 +54,7 @@ class AppUser {
         'additionalMusclegroup': additionalMusclegroup,
         'activityPoints': activityPoints,
         'activityLevel': activityLevel,
+        'gceq': gceq,
       };
 
   static AppUser appUserFromJson(Map<String, dynamic> json) {
@@ -72,6 +75,7 @@ class AppUser {
       additionalMusclegroup: json['additionalMusclegroup'],
       activityPoints: json['activityPoints'],
       activityLevel: json['activityLevel'],
+      gceq: json['gceq'],
     );
   }
 }

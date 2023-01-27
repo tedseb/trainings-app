@@ -61,6 +61,7 @@ class IconConstants {
   static IconData get signOutIconData => GymionIcons.signOut;
   static IconData get aboutIconData => GymionIcons.gear;
   static IconData get talkToAiIconData => GymionIcons.aiwave;
+  static IconData get enhanceTheAiIconData => Icons.list_alt_rounded;
 
   /// Exercising Screen
 
